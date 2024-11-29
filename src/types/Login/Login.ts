@@ -1,4 +1,4 @@
-export type Inputs = {
+export type LoginType = {
   mail: string;
   password: string;
 };
