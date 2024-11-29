@@ -1,29 +1,10 @@
 import Head from 'next/head';
 // import Image from 'next/image';
-import localFont from 'next/font/local';
 // import styles from '@/styles/Home.module.css';
-import Button from '@/components/Button';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Board from './Board';
 
-const inter = localFont({
-  src: [
-    {
-      path: './fonts/Inter-Medium.ttf',
-      weight: '500',
-    },
-    {
-      path: './fonts/Inter-Regular.ttf',
-      weight: '400',
-    },
-    {
-      path: './fonts/Inter-SemiBold.ttf',
-      weight: '600',
-    },
-  ],
-  variable: '--font-inter',
-});
 
 export default function Home() {
   return (
@@ -36,19 +17,7 @@ export default function Home() {
       </Head>
 
       <Header />
-      <div className="container">
-        <div className={`${inter.className}`}>
-          <main className="main">
-            <Button
-              inlineStyle={{ width: '300px' }}
-              text="Войти"
-              // eslint-disable-next-line no-console
-              onClick={() => console.log('click')}
-              type="submit"
-            />
-          </main>
-        </div>
-      </div>
+
       <Footer />
 
       <Board />
