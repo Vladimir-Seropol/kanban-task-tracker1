@@ -113,18 +113,17 @@
   width: 264px;
 }
 
-.board__right_tasks{
-    display: flex;
-    gap: 16px;
-    overflow-x: auto;
-   
+.board__right_tasks {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
 }
 
-.board__right_tasks_item{
-    display: flex;
-    flex-direction: column;
-    min-height: 550px;
-    width: 264px;
-    flex-shrink: 0;
-     overflow: hidden;
+.board__right_tasks_item {
+  display: flex;
+  flex-direction: column;
+  min-height: 550px;
+  width: 264px;
+  flex-shrink: 0;
+  overflow: hidden;
 }

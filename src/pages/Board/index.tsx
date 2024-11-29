@@ -41,7 +41,17 @@ export default function Board() {
                 <input type="checkbox" />
               </div>
 
-              <Button text="Добавить задачу" type="button" />
+              <Button
+                svg={
+                  <img
+                    src="/icon_create.svg"
+                    alt="icon_create"
+                    style={{ verticalAlign: 'middle', marginRight: '8px' }}
+                  />
+                }
+                text="Добавить задачу"
+                type="button"
+              />
             </div>
             <div className={style.board__right_selection}>
               <div className={style.board__right_selection_item}>
@@ -81,14 +91,18 @@ export default function Board() {
                 name="endDate"
               />
             </div>
-            <div className={style.board__right_tasks} >
-                <div className={style.board__right_tasks_item}>Новые</div>
-                <div className={style.board__right_tasks_item}>В работе</div>
-                <div className={style.board__right_tasks_item}>Выполнено</div>
-                <div className={style.board__right_tasks_item}>В ревью</div>
-                <div className={style.board__right_tasks_item}>Готовы к тестированию</div>
-                <div className={style.board__right_tasks_item}>В тестировании</div>
-                <div className={style.board__right_tasks_item}>Решены</div>
+            <div className={style.board__right_tasks}>
+              <div className={style.board__right_tasks_item}>Новые</div>
+              <div className={style.board__right_tasks_item}>В работе</div>
+              <div className={style.board__right_tasks_item}>Выполнено</div>
+              <div className={style.board__right_tasks_item}>В ревью</div>
+              <div className={style.board__right_tasks_item}>
+                Готовы к тестированию
+              </div>
+              <div className={style.board__right_tasks_item}>
+                В тестировании
+              </div>
+              <div className={style.board__right_tasks_item}>Решены</div>
             </div>
           </div>
         </div>

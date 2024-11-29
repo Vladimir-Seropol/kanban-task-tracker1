@@ -3,8 +3,7 @@ import Head from 'next/head';
 // import styles from '@/styles/Home.module.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import Board from './Board';
-
+// import Board from './board';
 
 export default function Home() {
   return (
@@ -19,8 +18,6 @@ export default function Home() {
       <Header />
 
       <Footer />
-
-      <Board />
     </>
   );
 }

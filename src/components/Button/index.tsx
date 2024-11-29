@@ -13,6 +13,9 @@ interface ButtonProps {
   disabled?: boolean;
   // eslint-disable-next-line react/require-default-props
   inlineStyle?: React.CSSProperties; // Используем inlineStyle
+  // Добавляем пропс для SVG
+  // eslint-disable-next-line react/require-default-props
+  svg?: React.ReactNode;
 }
 
 // eslint-disable-next-line react/function-component-definition
@@ -22,6 +25,7 @@ const Button: React.FC<ButtonProps> = ({
   disabled = false,
   type,
   inlineStyle, // Используем inlineStyle
+  svg, // Используем пропс для SVG
 }) => {
   return (
     <button
@@ -32,6 +36,8 @@ const Button: React.FC<ButtonProps> = ({
       type={type}
       style={inlineStyle} // Применяем inline-стили
     >
+      {/* Выводим SVG, если он передан */}
+      {svg && svg}
       {text}
     </button>
   );
