@@ -44,30 +44,52 @@ export default function Board() {
               <Button text="Добавить задачу" type="button" />
             </div>
             <div className={style.board__right_selection}>
-              <div>
+              <div className={style.board__right_selection_item}>
                 <p>Название задачи</p>
-                <input type="text" />
+                <input type="text" placeholder="Название задачи" />
               </div>
-              <div>
+              <div className={style.board__right_selection_item}>
                 <p>Выбрать пользователей</p>
                 <select name="" id="">
                   Пользователь
                 </select>
               </div>
-              <div>
+              <div className={style.board__right_selection_item}>
                 <p>Выбрать тип</p>
                 <select name="" id="">
                   Выбрать тип
                 </select>
               </div>
-              <div>
+              <div className={style.board__right_selection_item}>
                 <p>Выбрать компонент</p>
                 <select name="" id="">
                   Выбрать компонент
                 </select>
               </div>
             </div>
-            <div className={style.board__right_tasks} />
+            <div className={style.board__right_date}>
+              <input
+                className={style.doard__right_date_input}
+                type="date"
+                id="startDate"
+                name="startDate"
+              />
+              <input
+                className={style.doard__right_date_input}
+                type="date"
+                id="endDate"
+                name="endDate"
+              />
+            </div>
+            <div className={style.board__right_tasks} >
+                <div className={style.board__right_tasks_item}>Новые</div>
+                <div className={style.board__right_tasks_item}>В работе</div>
+                <div className={style.board__right_tasks_item}>Выполнено</div>
+                <div className={style.board__right_tasks_item}>В ревью</div>
+                <div className={style.board__right_tasks_item}>Готовы к тестированию</div>
+                <div className={style.board__right_tasks_item}>В тестировании</div>
+                <div className={style.board__right_tasks_item}>Решены</div>
+            </div>
           </div>
         </div>
       </main>
