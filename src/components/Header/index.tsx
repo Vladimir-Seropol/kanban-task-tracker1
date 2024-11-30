@@ -22,8 +22,15 @@ export default function Header() {
   };
 
   return (
-    <div className="container">
-      <header className={style.header}>
+    <header className={style.header}>
+      <div
+        className="container"
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '100%',
+        }}
+      >
         <div className={style.logo}>
           <img src="/logo.png" alt="Logo" />
         </div>
@@ -33,7 +40,7 @@ export default function Header() {
           type="button"
           inlineStyle={{ width: '106px' }}
         />
-      </header>
-    </div>
+      </div>
+    </header>
   );
 }

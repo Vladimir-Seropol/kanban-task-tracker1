@@ -2,12 +2,17 @@ import style from './style.module.css';
 
 export default function Footer() {
   return (
-    <div className="container">
-      <footer className={style.footer}>
-        <p>Лучший разработчик </p>
-        <p>Лучший разработчик </p>
-        <p>Лучший разработчик </p>
-      </footer>
-    </div>
+    <footer className={style.footer}>
+      <div className="container">
+        <div className={style.footerContent}>
+          <div className={style.topDevelopers}>
+            <strong>Developers:</strong>
+            <p>Дмитрий Варенов</p>
+            <p>Vladimir S</p>
+            <p>Aleksandr</p>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 }
