@@ -13,10 +13,10 @@
     "react": "18.3.0",
     "react-dom": "18.3.0",
     "react-hook-form": "^7.53.2",
-    "swr": "^2.2.5",
-    "yup": "^1.4.0"
+    "swr": "^2.2.5"
   },
   "devDependencies": {
+    "@hookform/resolvers": "^3.9.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -30,6 +30,7 @@
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "prettier": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "yup": "^1.4.0"
   }
 }
