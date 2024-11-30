@@ -43,6 +43,16 @@
   height: 41px;
   background-color: #f4f6f8;
   margin-bottom: 40px;
+  padding: 12px 20px;
+}
+
+.board__right_header span {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.94px;
+  text-align: left;
+  color: #a6a6a6;
 }
 
 .board__right_title {

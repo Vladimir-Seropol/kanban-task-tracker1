@@ -42,7 +42,7 @@ a {
 }
 
 .main {
-  height: 750px;
+  min-height: 750px;
   display: flex;
   flex-direction: column;
   gap: 32px;

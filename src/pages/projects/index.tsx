@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
@@ -40,7 +41,9 @@ export default function Board() {
           <div className={style.board__right}>
             <div className={style.board__right_header}>
               <nav>
-                <Link href="/">Главная / </Link>
+                <Link href="/">
+                  <span>Главная /</span>{' '}
+                </Link>
                 <span>Проекты</span>
               </nav>
             </div>
