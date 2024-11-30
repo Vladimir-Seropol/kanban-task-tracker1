@@ -17,7 +17,13 @@ export default function Home() {
       </Head>
 
       <Header />
-
+      <main className="main">
+        <div className="container">
+          <div className="main__title">
+            <h1>Полет фантазии</h1>
+          </div>
+        </div>
+      </main>
       <Footer />
     </>
   );

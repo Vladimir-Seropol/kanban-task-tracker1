@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import Button from '@/components/Button';
+import Link from 'next/link';
+import Button from '../../../components/Button';
 import style from './style.module.css';
 
 export default function Board() {
@@ -36,7 +37,13 @@ export default function Board() {
             </div>
           </div>
           <div className={style.board__right}>
-            <div className={style.board__right_header} />
+            <div className={style.board__right_header}>
+              <nav>
+                <Link href="/">Главная / </Link>
+                <Link href="/projects">Проекты / </Link>
+                <span>Demo Project</span>
+              </nav>
+            </div>
             <div className={style.board__right_title}>
               <div className={style.board__right_title_checkbox}>
                 <h2>Demo Project</h2>

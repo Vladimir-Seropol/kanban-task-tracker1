@@ -41,13 +41,25 @@ a {
   margin: 0 auto;
 }
 
-/*.main {*/
-/*  height: 750px;*/
-/*  display: flex;*/
-/*  flex-direction: column;*/
-/*  gap: 32px;*/
-/*  grid-row-start: 2;*/
-/*}*/
+.main {
+  height: 750px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  grid-row-start: 2;
+}
+
+.main__title {
+  width: 891px;
+  height: 351px;
+  background: #d9d9d9;
+  margin: 192.5px auto;
+}
+
+.main__title h1 {
+  text-align: center;
+  padding: 135px;
+}
 
 /*.main ol {*/
 /*  font-family: var(--font-geist-mono);*/
