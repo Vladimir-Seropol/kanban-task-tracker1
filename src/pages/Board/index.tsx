@@ -26,6 +26,8 @@ export default function Board() {
                   color: '#787878',
                 }}
                 type="button"
+                // eslint-disable-next-line no-console
+                onClick={() => console.log('click')}
               />
             </div>
             <div className={style.board__left_project}>
@@ -51,6 +53,8 @@ export default function Board() {
                 }
                 text="Добавить задачу"
                 type="button"
+                // eslint-disable-next-line no-console
+                onClick={() => console.log('click')}
               />
             </div>
             <div className={style.board__right_selection}>
