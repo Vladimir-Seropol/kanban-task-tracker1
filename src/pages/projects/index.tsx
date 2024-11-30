@@ -1,19 +1,46 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable @next/next/no-img-element */
+import { useState } from 'react';
 import Link from 'next/link';
 import Button from '../../components/Button';
 import style from './style.module.css';
 
 export default function Board() {
+  const [isClicked, setIsClicked] = useState(false); // Состояние для отслеживания клика
+
+  const handleClick = () => {
+    setIsClicked(!isClicked); // Меняем состояние при клике
+  };
+
   return (
     <div className="container">
       <main className="main">
         <div className={style.board}>
-          <div className={style.board__left}>
+          <div
+            className={`${style.board__left} ${isClicked ? style.is_clicked : ''}`}
+          >
             <div className={style.board__left_header}>
-              <img src="/logo_board.png" alt="logo_board" />
-              <img src="icon_board1.svg" alt="icon_board" />
+              <img
+                className={style.board__left_header_logo}
+                src="/logo_board.png"
+                alt="logo_board"
+              />
+              <img
+                className={style.board__left_header_icon}
+                src="/icon_board1.svg"
+                alt="icon_board"
+                onClick={handleClick}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    handleClick();
+                  }
+                }}
+                // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
+                role="button"
+                tabIndex={0}
+                style={{ cursor: 'pointer' }}
+              />
             </div>
             <div className={style.board__left_user}>
               <h2 style={{ color: '#fff' }}>User</h2>
@@ -67,18 +94,28 @@ export default function Board() {
               <label htmlFor="checkbox">Показать архивные проекты</label>
             </div>
 
-            <div className={style.board__right_tasks}>
-              <div className={style.board__right_tasks_item}>Новые</div>
-              <div className={style.board__right_tasks_item}>В работе</div>
-              <div className={style.board__right_tasks_item}>Выполнено</div>
-              <div className={style.board__right_tasks_item}>В ревью</div>
-              <div className={style.board__right_tasks_item}>
-                Готовы к тестированию
+            <div className={style.board__right_projects}>
+              <h5 style={{ marginBottom: '16px' }}>Избранные проекты</h5>
+              <div className={style.board__right_selected_projects}>
+                <div className={style.board__right_selected_project_item}>
+                  DS Внутренние проекты
+                </div>
+                <div className={style.board__right_selected_project_item}>
+                  Demo
+                </div>
               </div>
-              <div className={style.board__right_tasks_item}>
-                В тестировании
+
+              <div className={style.board__right_internal_projects}>
+                {Array.from({ length: 15 }).map((_, index) => (
+                  <div
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={index}
+                    className={style.board__right_selected_internal_item}
+                  >
+                    DS Внутренние проекты
+                  </div>
+                ))}
               </div>
-              <div className={style.board__right_tasks_item}>Решены</div>
             </div>
           </div>
         </div>

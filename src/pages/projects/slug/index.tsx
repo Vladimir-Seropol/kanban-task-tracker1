@@ -5,9 +5,10 @@ import style from './style.module.css';
 // eslint-disable-next-line import/order
 import { useState, useEffect } from 'react';
 
-export default function Board() {
+export default function Slug() {
   // Состояние для хранения данных о пользователе
   const [user, setUser] = useState(null);
+  const [isClicked, setIsClicked] = useState(false); // Состояние для отслеживания клика
 
   // Эмуляция запроса данных о пользователе (например, через fetch)
   useEffect(() => {
@@ -24,14 +25,38 @@ export default function Board() {
     fetchUserData();
   }, []); // Запрашиваем данные только один раз при монтировании компонента
 
+  const handleClick = () => {
+    setIsClicked(!isClicked); // Меняем состояние при клике
+  };
+
   return (
     <div className="container">
       <main className="main">
         <div className={style.board}>
-          <div className={style.board__left}>
+          <div
+            className={`${style.board__left} ${isClicked ? style.is_clicked : ''}`}
+          >
             <div className={style.board__left_header}>
-              <img src="/logo_board.png" alt="logo_board" />
-              <img src="/icon_board1.svg" alt="icon_board" />
+              <img
+                className={style.board__left_header_logo}
+                src="/logo_board.png"
+                alt="logo_board"
+              />
+              <img
+                className={style.board__left_header_icon}
+                src="/icon_board1.svg"
+                alt="icon_board"
+                onClick={handleClick}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    handleClick();
+                  }
+                }}
+                // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
+                role="button"
+                tabIndex={0}
+                style={{ cursor: 'pointer' }}
+              />
             </div>
             <div className={style.board__left_user}>
               <h2 style={{ color: '#fff' }}>{user?.name}</h2>
@@ -53,11 +78,21 @@ export default function Board() {
             </div>
             <div className={style.board__left_project}>
               <Link href="/projects">
-                <img src="/icon_board3.svg" alt="icon_board" />
+                <img
+                  src="/icon_board3.svg"
+                  alt="icon_board"
+                  style={{ verticalAlign: 'top', marginRight: '8px' }}
+                />
+                <h4
+                  //   className={style.board__left_project_text}
+                  style={{ color: '#fff', display: 'inline-block' }}
+                >
+                  Проекты
+                </h4>
               </Link>
-              <h4 style={{ color: '#fff' }}>Проекты</h4>
             </div>
           </div>
+
           <div className={style.board__right}>
             <div className={style.board__right_header}>
               <nav>
