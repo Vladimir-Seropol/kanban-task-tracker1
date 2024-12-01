@@ -23,7 +23,10 @@ const schema = yup
       .email('Нужно заполнить')
       .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 'Нужно заполнить')
       .required('Электронная почта обязательна'),
-    password: yup.string().min(8, '').required('Нужно заполнить'),
+    password: yup
+      .string()
+      .min(8, 'Минимум 8 символов')
+      .required('Нужно заполнить'),
   })
   .required();
 export default function Login() {
@@ -70,7 +73,7 @@ export default function Login() {
               {...register('email')}
             />
             {errors.email && (
-              <span className={style.errorText}>{errors.email.message}</span>
+              <p className={style.errorText}>{errors.email.message}</p>
             )}
           </label>
           <label htmlFor="password">
@@ -80,7 +83,9 @@ export default function Login() {
               placeholder="Пароль"
               {...register('password')}
             />
-            {errors.password && <span>{errors.password.message}</span>}
+            {errors.password && (
+              <p className={style.errorText}>{errors.password.message}</p>
+            )}
           </label>
           <Button
             inlineStyle={{ width: '300px' }}
