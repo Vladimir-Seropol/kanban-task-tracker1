@@ -1,3 +1,5 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable import/order */
 import Button from '@/components/Button';
 import { inter } from '@/assets/fonts/fonts';
 import style from './login.module.css';

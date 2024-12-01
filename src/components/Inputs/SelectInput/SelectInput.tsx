@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect, useRef } from 'react';
 import styles from '../InputBase.module.css';
 import stylesSelect from './SelectInput.module.css';
@@ -13,6 +15,7 @@ interface MultiSelectProps {
   options: User[];
   value: User[];
   onChange: (value: User[]) => void;
+  // eslint-disable-next-line react/require-default-props
   disabled?: boolean;
 }
 
@@ -65,6 +68,8 @@ export default function MultiSelectInput({
       <label className={styles.label}>{label}</label>
       <div
         className={`${styles.input} ${disabled ? styles.disabled : ''} ${stylesSelect.input}`}
+        role="button"
+        tabIndex={0}
         onClick={toggleDropdown}
       >
         {value.length > 0

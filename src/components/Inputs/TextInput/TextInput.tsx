@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import styles from '../InputBase.module.css';
 
@@ -6,7 +7,9 @@ interface TextInputProps {
   placeholder: string;
   value: string;
   onChange: (value: string) => void;
+  // eslint-disable-next-line react/require-default-props
   disabled?: boolean;
+  // eslint-disable-next-line react/require-default-props
   status?: 'default' | 'warning' | 'error' | 'success' | 'loading';
 }
 

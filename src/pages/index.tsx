@@ -4,7 +4,6 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import TextInput from '@/components/Inputs/TextInput/TextInput';
 import SelectInput from '@/components/Inputs/SelectInput/SelectInput';
-import CustomDatePicker from '@/components/Inputs/DatePicker/CustomDatePicker';
 import styles from '../styles/Home.module.css';
 
 // Интерфейс для пользователей выпадающего списка
@@ -48,11 +47,6 @@ export default function Home() {
                 options={users}
                 value={selectedUsers}
                 onChange={setSelectedUsers}
-              />
-              <CustomDatePicker
-                label="Выбрать дату"
-                value={null}
-                onChange={() => {}}
               />
             </div>
           </div>

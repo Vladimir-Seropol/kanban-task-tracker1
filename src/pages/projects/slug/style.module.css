@@ -1,12 +1,13 @@
 .board {
   display: flex;
   margin: 0 auto;
+  height: 100%;
   width: 100%;
 }
 
 .board__left {
     width: 272px;
-    height: 874px;
+    /* height: auto; */
     background: #1b1a1d;
     display: flex;
     flex-direction: column;
@@ -70,8 +71,9 @@
 .board__right {
   display: flex;
   flex-direction: column;
-  padding: 32px;
+  padding: 32px 32px 0;
   width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -136,12 +138,12 @@
 }
 
 .board__right_selection_item input {
-  width: 264px;
-  height: 40px;
+  /* width: 264px; */
+  /* height: 40px;
   border: none;
   background: #f4f6f8;
   padding: 11.5px 20px;
-  border-radius: 8px;
+  border-radius: 8px;  */
 }
 
 .board__right_selection_item input ::placeholder {
@@ -162,6 +164,10 @@
   margin-bottom: 40px;
 }
 
+.my_custom_class{
+    width: 100%;
+}
+
 .doard__right_date_input {
   width: 264px;
 }
@@ -170,6 +176,7 @@
   display: flex;
   gap: 16px;
   overflow-x: auto;
+  height: 100%;
 }
 
 .board__right_tasks::-webkit-scrollbar {
@@ -182,7 +189,7 @@
 .board__right_tasks_item {
   display: flex;
   flex-direction: column;
-  min-height: 550px;
+  height: 100%;
   width: 264px;
   flex-shrink: 0;
   overflow: hidden;
