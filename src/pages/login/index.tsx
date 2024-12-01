@@ -58,6 +58,7 @@ export default function Login() {
       console.error('Ошибка при входе:', err);
     }
   };
+
   useEffect(() => {
     if (tokenSuccess && tokenData?.token) {
       dispatch(setUser({ token: tokenData.token }));

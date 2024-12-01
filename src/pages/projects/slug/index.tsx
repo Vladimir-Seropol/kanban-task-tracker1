@@ -1,15 +1,11 @@
-/* eslint-disable react/jsx-curly-brace-presence */
-/* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
-// eslint-disable-next-line import/order
-import Button from '../../../components/Button';
-// eslint-disable-next-line import/order
-import style from './style.module.css';
-// eslint-disable-next-line import/order
+import Button from '@/components/Button';
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import CustomDatePicker from '@/components/Inputs/DatePicker/CustomDatePicker';
 import SelectInput from '@/components/Inputs/SelectInput/SelectInput';
 import TextInput from '@/components/Inputs/TextInput/TextInput';
+import style from './style.module.css';
 
 interface User {
   id: number;
@@ -60,12 +56,12 @@ export default function Slug() {
           className={`${style.board__left} ${isClicked ? style.is_clicked : ''}`}
         >
           <div className={style.board__left_header}>
-            <img
+            <Image
               className={style.board__left_header_logo}
               src="/logo_board.png"
               alt="logo_board"
             />
-            <img
+            <Image
               className={style.board__left_header_icon}
               src="/icon_board1.svg"
               alt="icon_board"
@@ -75,7 +71,6 @@ export default function Slug() {
                   handleClick();
                 }
               }}
-              // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
               role="button"
               tabIndex={0}
               style={{ cursor: 'pointer' }}
@@ -101,7 +96,7 @@ export default function Slug() {
           </div>
           <div className={style.board__left_project}>
             <Link href="/projects">
-              <img
+              <Image
                 src="/icon_board3.svg"
                 alt="icon_board"
                 style={{ verticalAlign: 'top', marginRight: '8px' }}
@@ -135,8 +130,7 @@ export default function Slug() {
             {user?.is_admin && (
               <Button
                 svg={
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <Image
                     src="/icon_create.svg"
                     alt="icon_create"
                     style={{ verticalAlign: 'middle', marginRight: '8px' }}
@@ -144,8 +138,7 @@ export default function Slug() {
                 }
                 text="Добавить задачу"
                 type="button"
-                // eslint-disable-next-line no-console
-                onClick={() => console.log('click')}
+                onClick={() => {}}
               />
             )}
           </div>
