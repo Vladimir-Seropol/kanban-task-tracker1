@@ -1,0 +1,24 @@
+.board__right_projects {
+  width: 264px;
+  height: 124px;
+  background-color: #f4f6f8;
+  padding: 16px;
+}
+
+.board__right_selected_project_item {
+  margin-bottom: 16px;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 16.8px;
+  color: #1b1a1d;
+}
+
+.board__right_selected_projects p{
+    font-family: Inter;
+font-size: 12px;
+font-weight: 500;
+line-height: 14.52px;
+text-align: left;
+color: #A6A6A6;
+}

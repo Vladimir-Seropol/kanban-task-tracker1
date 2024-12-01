@@ -3,10 +3,14 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState } from 'react';
 import Link from 'next/link';
+// eslint-disable-next-line import/order
 import Button from '../../components/Button';
+// eslint-disable-next-line import/order
 import style from './style.module.css';
 // eslint-disable-next-line import/order
 import TextInput from '@/components/Inputs/TextInput/TextInput';
+import CardInternal from '@/components/ProjectsCard/CardInternal';
+import CardDemo from '@/components/ProjectsCard/CardDemo';
 
 export default function Board() {
   const [isClicked, setIsClicked] = useState(false); // Состояние для отслеживания клика
@@ -109,29 +113,25 @@ export default function Board() {
             </div>
           </div>
           <div className={style.board__right_selection_checkbox}>
-            <input type="checkbox" />
+            <input type="checkbox" id="checkbox" />
             <label htmlFor="checkbox">Показать архивные проекты</label>
           </div>
 
           <div className={style.board__right_projects}>
             <h5 style={{ marginBottom: '16px' }}>Избранные проекты</h5>
             <div className={style.board__right_selected_projects}>
-              <div className={style.board__right_selected_project_item}>
-                DS Внутренние проекты
-              </div>
-              <div className={style.board__right_selected_project_item}>
-                Demo
-              </div>
+              <CardInternal />
+              <CardDemo />
             </div>
 
             <div className={style.board__right_internal_projects}>
-              {Array.from({ length: 15 }).map((_, index) => (
+              {Array.from({ length: 16 }).map((_, index) => (
                 <div
                   // eslint-disable-next-line react/no-array-index-key
                   key={index}
                   className={style.board__right_selected_internal_item}
                 >
-                  DS Внутренние проекты
+                  <CardInternal />
                 </div>
               ))}
             </div>
