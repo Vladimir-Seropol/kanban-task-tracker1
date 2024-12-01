@@ -28,10 +28,10 @@ const schema = yup
   .required();
 export default function Login() {
   const dispatch = useAppDispatch();
-  console.log(dispatch);
+  // console.log(dispatch);
   const [tokenApi, { data: tokenData, isSuccess: tokenSuccess }] =
     useTokenApiMutation();
-  console.log(tokenApi);
+  // console.log(tokenApi);
   const {
     register,
     handleSubmit,
@@ -42,17 +42,24 @@ export default function Login() {
   // Пока оставим просто преход к странице проектов при нажатии на кнопку
   const router = useRouter(); // Инициализация хука
 
-  const onSubmit = (loginData: LoginType) => {
-    // eslint-disable-next-line no-console
-    console.log('Данные для входа:', loginData);
+  const onSubmit = async (loginData: LoginType) => {
+    try {
+      // Вызов API для получения токена
+      const response = await tokenApi(loginData).unwrap();
 
-    console.log(tokenApi(loginData));
-    reset();
-    // Переход на страницу /login при клике на кнопку
-    router.push('/projects');
+      if (response.token) {
+        dispatch(setUser({ token: response.token }));
+        reset(); // Сбрасываем форму
+        await router.push('/projects'); // Редирект на страницу проектов
+      } else {
+        console.error('Токен отсутствует в ответе API');
+      }
+    } catch (err) {
+      console.error('Ошибка при входе:', err);
+    }
   };
   useEffect(() => {
-    if (tokenSuccess) {
+    if (tokenSuccess && tokenData?.token) {
       dispatch(setUser({ token: tokenData.token }));
     }
   }, [tokenSuccess, tokenData, dispatch]);

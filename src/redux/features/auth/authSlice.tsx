@@ -5,6 +5,7 @@ import { RootState } from '@/redux/store';
 export interface AuthState {
   token: string | null;
 }
+
 const initialState: AuthState = {
   token: null,
 };
@@ -19,6 +20,9 @@ const auth = createSlice({
           token: action.payload.token,
         }),
       );
+
+      // Сохраняем токен в cookies
+      document.cookie = `auth_token=${encodeURIComponent(action.payload.token)}; path=/; samesite=strict`;
 
       state.token = action.payload.token;
     },
