@@ -1,30 +1,40 @@
+/* eslint-disable no-console */
+/* eslint-disable react/jsx-curly-brace-presence */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
+/* eslint-disable prettier/prettier */
+/* eslint-disable import/order */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable @next/next/no-img-element */
 import { useState } from 'react';
 import Link from 'next/link';
-// eslint-disable-next-line import/order
 import Button from '../../components/Button';
-// eslint-disable-next-line import/order
 import style from './style.module.css';
-// eslint-disable-next-line import/order
 import TextInput from '@/components/Inputs/TextInput/TextInput';
 import CardInternal from '@/components/ProjectsCard/CardInternal';
 import CardDemo from '@/components/ProjectsCard/CardDemo';
 
 export default function Board() {
   const [isClicked, setIsClicked] = useState(false); // Состояние для отслеживания клика
+  const [showArchived, setShowArchived] = useState(false); // Состояние для отображения архивных проектов
+  const [archivedVisible, setArchivedVisible] = useState(false); // Для плавного отображения архивных проектов
+  const [projectsVisible, setProjectsVisible] = useState(true); // Для плавного отображения всех проектов
 
   const handleClick = () => {
     setIsClicked(!isClicked); // Меняем состояние при клике
   };
 
+  const handleCheckboxChange = () => {
+    setShowArchived((prev) => !prev); // Переключаем состояние чекбокса
+    setArchivedVisible((prev) => !prev); // Плавное скрытие/показ архивных проектов
+    setTimeout(() => setProjectsVisible(!projectsVisible), 300); // Плавный переход всех проектов после архивных
+  };
+
   return (
     <main className="main">
       <div className={style.board}>
-        <div
-          className={`${style.board__left} ${isClicked ? style.is_clicked : ''}`}
-        >
+        <div className={`${style.board__left} ${isClicked ? style.is_clicked : ''}`}>
           <div className={style.board__left_header}>
             <img
               className={style.board__left_header_logo}
@@ -41,7 +51,6 @@ export default function Board() {
                   handleClick();
                 }
               }}
-              // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
               role="button"
               tabIndex={0}
               style={{ cursor: 'pointer' }}
@@ -61,7 +70,6 @@ export default function Board() {
                 color: '#787878',
               }}
               type="button"
-              // eslint-disable-next-line no-console
               onClick={() => console.log('click')}
             />
           </div>
@@ -70,6 +78,7 @@ export default function Board() {
             <h4 style={{ color: '#fff' }}>Проекты</h4>
           </div>
         </div>
+
         <div className={style.board__right}>
           <div className={style.board__right_header}>
             <nav>
@@ -80,61 +89,68 @@ export default function Board() {
             </nav>
           </div>
           <div className={style.board__right_title}>
-            <div className={style.board__right_title_checkbox}>
-              <h2>Проекты</h2>
-            </div>
+            <h2>Проекты</h2>
           </div>
           <div className={style.board__right_selection}>
             <div className={style.board__right_selection_item}>
-              <TextInput
-                // eslint-disable-next-line react/jsx-curly-brace-presence
-                label={'Название проекта'}
-                placeholder="Введите название проекта"
-                // eslint-disable-next-line react/jsx-curly-brace-presence
-                value={''}
-                // eslint-disable-next-line react/jsx-no-bind, func-names, @typescript-eslint/no-unused-vars
-                onChange={function (_value: string): void {
-                  throw new Error('Function not implemented.');
-                }}
-              />
+              <TextInput label="Название проекта" placeholder="Введите название проекта" value={''} onChange={() => {}} />
             </div>
             <div className={style.board__right_selection_item}>
-              <TextInput
-                // eslint-disable-next-line react/jsx-curly-brace-presence
-                label={'Номер задачи'}
-                placeholder="Введите номер задачи"
-                // eslint-disable-next-line react/jsx-curly-brace-presence
-                value={''}
-                // eslint-disable-next-line react/jsx-no-bind, func-names, @typescript-eslint/no-unused-vars
-                onChange={function (_value: string): void {
-                  throw new Error('Function not implemented.');
-                }}
-              />
+              <TextInput label="Номер задачи" placeholder="Введите номер задачи" value={''} onChange={() => {}} />
             </div>
           </div>
+
           <div className={style.board__right_selection_checkbox}>
-            <input type="checkbox" id="checkbox" />
+            <input
+              type="checkbox"
+              id="checkbox"
+              checked={showArchived}
+              onChange={handleCheckboxChange}
+            />
             <label htmlFor="checkbox">Показать архивные проекты</label>
           </div>
 
-          <div className={style.board__right_projects}>
-            <h5 style={{ marginBottom: '16px' }}>Избранные проекты</h5>
-            <div className={style.board__right_selected_projects}>
-              <CardInternal />
-              <CardDemo />
+          {/* Плавная анимация для всех проектов */}
+          <div
+            className={style.board__right_projects}
+          >
+            <div
+              className={`${style.board__right_archived_projects} ${archivedVisible ? style.show : ''}`}
+            >
+              {showArchived && (
+                <>
+                  <h5 style={{ marginBottom: '16px' }}>Архивные проекты</h5>
+                  <div className={style.board__right_selected_projects}>
+                    {/* Отображаем архивные проекты */}
+                    {Array.from({ length: 4 }).map((_, index) => (
+                      <div key={index} className={style.board__right_selected_internal_item}>
+                        <CardInternal />
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
 
-            <div className={style.board__right_internal_projects}>
-              {Array.from({ length: 16 }).map((_, index) => (
-                <div
-                  // eslint-disable-next-line react/no-array-index-key
-                  key={index}
-                  className={style.board__right_selected_internal_item}
-                >
+            {/* Избранные проекты */}
+            {!showArchived && (
+              <div className={`${style.board__right_featured} ${projectsVisible ? style.show : ''}`}>
+                <h5 style={{ marginBottom: '16px' }}>Избранные проекты</h5>
+                <div className={style.board__right_selected_projects}>
+                  {/* Отображаем избранные проекты */}
                   <CardInternal />
+                  <CardDemo />
                 </div>
-              ))}
-            </div>
+                <div className={style.board__right_internal_projects}>
+                  {/* Отображаем все проекты, включая избранные */}
+                  {Array.from({ length: 16 }).map((_, index) => (
+                    <div key={index} className={style.board__right_selected_internal_item}>
+                      <CardInternal />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

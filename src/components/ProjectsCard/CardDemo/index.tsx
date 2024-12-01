@@ -1,13 +1,28 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
 /* eslint-disable @next/next/no-img-element */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import style from './style.module.css';
 
 export default function CardDemo() {
   const [isFavorite, setIsFavorite] = useState(false);
 
+  // Используем useEffect, чтобы работать с localStorage только на клиенте
+  // eslint-disable-next-line prettier/prettier
+  useEffect(() => {
+    // Проверка на клиенте
+    const storedFavorite = localStorage.getItem('isFavoriteDemo');
+    if (storedFavorite) {
+      setIsFavorite(JSON.parse(storedFavorite)); // Загружаем сохраненное состояние
+    }
+  }, []); // Этот эффект сработает только один раз при монтировании компонента
+
+  // Обработчик клика по звездочке
   const handleStarClick = () => {
-    setIsFavorite(!isFavorite); // Переключаем состояние избранного
+    const newFavoriteState = !isFavorite;
+    setIsFavorite(newFavoriteState); // Переключаем состояние
+
+    // Сохраняем состояние в localStorage
+    localStorage.setItem('isFavoriteDemo', JSON.stringify(newFavoriteState));
   };
 
   return (

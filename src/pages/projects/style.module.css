@@ -104,13 +104,15 @@ margin-left: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-family: Inter;
-  font-size: 32px;
-  font-weight: 600;
-  line-height: 44px;
-  text-align: left;
-  color: #1b1a1d;
   margin-bottom: 24px;
+}
+
+.board__right_title h2{
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 44px;
+    text-align: left;
+    color: #1b1a1d;
 }
 
 .board__right_title_checkbox {
@@ -129,9 +131,6 @@ margin-left: 10px;
     font-size: 14px;
     font-weight: 400;
     line-height: 24px;
-    text-align: left;
-    text-underline-position: from-font;
-    text-decoration-skip-ink: none;
     color: #2D2D2D;
   }
 
@@ -146,7 +145,33 @@ flex-wrap: wrap;
 
 .board__right_projects{
     height: 100%;
+    /* overflow-x: auto; */
+    /* overflow: hidden; */
 }
+
+.board__right_projects h5{
+font-size: 16px;
+font-weight: 600;
+line-height: 19.36px;
+color: #1B1A1D;
+}
+
+/* Плавное исчезновение и появление всех проектов */
+
+.board__right_featured.show {
+    opacity: 1;
+    max-height: 1500px; /* Достаточная высота для показа всех проектов */
+  }
+
+
+  
+  .board__right_featured{
+     opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition:  all 0.5s ease;
+  }
+  
 
 .board__right_selected_projects{
 display: flex;
@@ -156,11 +181,25 @@ flex-wrap: wrap;
 margin-bottom: 40px;
 }
 
+/* Плавное исчезновение и появление архивных проектов */
+.board__right_archived_projects {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.5s ease, max-height 2s ease;
+  }
+  
+  .board__right_archived_projects.show {
+    opacity: 1;
+    max-height: 100vh; /* Достаточная высота для показа контента */
+  }
+  
+
 .board__right_internal_projects {
     display: flex;
     flex-wrap: wrap;
     /* overflow: hidden; */
-    height: 340px;
+    /* height: 340px; */
    
     gap: 16px;
     border-top: 1px solid #EEEEEE;
