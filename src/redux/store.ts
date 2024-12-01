@@ -1,3 +1,5 @@
+/* eslint-disable import/no-cycle */
+/* eslint-disable import/newline-after-import */
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { authApi } from './services/AuthApi';
@@ -7,7 +9,7 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     auth: authReducer,
   },
-  middleware: (getDefaultMiddleware) =>
+  middleware: (getDefaultMiddleware: () => string | any[]) =>
     getDefaultMiddleware().concat(authApi.middleware),
 });
 
