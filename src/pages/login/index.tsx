@@ -1,19 +1,16 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable import/order */
 import Button from '@/components/Button';
 import { inter } from '@/assets/fonts/fonts';
-import style from './login.module.css';
 import { useForm } from 'react-hook-form';
-import { LoginType } from '../../types/Login/Login';
+import { LoginType } from '@/types/Login/Login';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useRouter } from 'next/router'; // Импортируем useRouter
+import { useRouter } from 'next/router';
 import * as yup from 'yup';
 
-import { useTokenApiMutation } from '../../redux/services/AuthApi';
+import { useTokenApiMutation } from '@/redux/services/AuthApi';
 import { useAppDispatch } from '@/redux/hooks/hooks';
-import { useIsomorphicLayoutEffect } from 'swr/_internal';
 import { useEffect } from 'react';
 import { setUser } from '@/redux/features/auth/authSlice';
+import style from './login.module.css';
 
 const schema = yup
   .object()
@@ -58,7 +55,7 @@ export default function Login() {
     if (tokenSuccess) {
       dispatch(setUser({ token: tokenData.token }));
     }
-  }, [tokenSuccess]);
+  }, [tokenSuccess, tokenData, dispatch]);
 
   return (
     <main className={`${style.login} ${inter.className}`}>
@@ -87,12 +84,7 @@ export default function Login() {
               <p className={style.errorText}>{errors.password.message}</p>
             )}
           </label>
-          <Button
-            inlineStyle={{ width: '300px' }}
-            text="Войти"
-            // onClick={onSubmit} // Вешаем обработчик клика
-            type="submit"
-          />
+          <Button inlineStyle={{ width: '300px' }} text="Войти" type="submit" />
         </form>
       </div>
     </main>
