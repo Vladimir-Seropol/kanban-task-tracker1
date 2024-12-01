@@ -4,23 +4,14 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import TextInput from '@/components/Inputs/TextInput/TextInput';
 import SelectInput from '@/components/Inputs/SelectInput/SelectInput';
+import { UserType } from '@/types/UserType';
+import { users } from '@/components/Inputs/SelectInput/testSelectUsersData'; // Импорт тестового массива пользователей
 import styles from '../styles/Home.module.css';
 
-// Интерфейс для пользователей выпадающего списка
-interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-}
-// Массив пользователей для примера выпадающего списка
-const users = [
-  { id: 1, firstName: 'Иван', lastName: 'Иванов' },
-  { id: 2, firstName: 'Петр', lastName: 'Петров' },
-  { id: 3, firstName: 'Сергей', lastName: 'Сергеев' },
-];
+const usersData: UserType[] = users; // Импорт тестового массива пользователей
 
 export default function Home() {
-  const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<UserType[]>([]); // Состояние для хранения выбранных пользователей
   return (
     <>
       <Head>
@@ -44,7 +35,7 @@ export default function Home() {
               />
               <SelectInput
                 label="Выбрать пользователей"
-                options={users}
+                data={usersData}
                 value={selectedUsers}
                 onChange={setSelectedUsers}
               />
