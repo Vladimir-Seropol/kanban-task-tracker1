@@ -1,19 +1,19 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable import/order */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-console */
+
 import Button from '@/components/Button';
 import { inter } from '@/assets/fonts/fonts';
-import style from './login.module.css';
 import { useForm } from 'react-hook-form';
-import { LoginType } from '../../types/Login/Login';
+import { LoginType } from '@/types/Login/Login';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router'; // Импортируем useRouter
 import * as yup from 'yup';
-
-import { useTokenApiMutation } from '../../redux/services/AuthApi';
+import { useTokenApiMutation } from '@/redux/services/AuthApi';
 import { useAppDispatch } from '@/redux/hooks/hooks';
 import { useIsomorphicLayoutEffect } from 'swr/_internal';
 import { useEffect } from 'react';
 import { setUser } from '@/redux/features/auth/authSlice';
+import style from './login.module.css';
 
 const schema = yup
   .object()
@@ -43,7 +43,6 @@ export default function Login() {
   const router = useRouter(); // Инициализация хука
 
   const onSubmit = (loginData: LoginType) => {
-    // eslint-disable-next-line no-console
     console.log('Данные для входа:', loginData);
 
     console.log(tokenApi(loginData));
@@ -51,11 +50,12 @@ export default function Login() {
     // Переход на страницу /login при клике на кнопку
     router.push('/projects');
   };
+
   useEffect(() => {
-    if (tokenSuccess) {
+    if (tokenSuccess && tokenData?.token) {
       dispatch(setUser({ token: tokenData.token }));
     }
-  }, [tokenSuccess]);
+  }, [tokenSuccess, dispatch, tokenData?.token]);
 
   return (
     <main className={`${style.login} ${inter.className}`}>
@@ -82,12 +82,7 @@ export default function Login() {
             />
             {errors.password && <span>{errors.password.message}</span>}
           </label>
-          <Button
-            inlineStyle={{ width: '300px' }}
-            text="Войти"
-            // onClick={onSubmit} // Вешаем обработчик клика
-            type="submit"
-          />
+          <Button inlineStyle={{ width: '300px' }} text="Войти" type="submit" />
         </form>
       </div>
     </main>
