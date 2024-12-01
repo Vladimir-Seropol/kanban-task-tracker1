@@ -1,27 +1,21 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect, useRef } from 'react';
+import { UserType } from '@/types/UserType';
+import { inter } from '@/assets/fonts/fonts';
 import styles from '../InputBase.module.css';
 import stylesSelect from './SelectInput.module.css';
 
-interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-}
-
 interface MultiSelectProps {
   label: string;
-  options: User[];
-  value: User[];
-  onChange: (value: User[]) => void;
+  data: UserType[];
+  value: UserType[];
+  onChange: (value: UserType[]) => void;
   // eslint-disable-next-line react/require-default-props
   disabled?: boolean;
 }
 
 export default function MultiSelectInput({
   label,
-  options,
+  data = [],
   value,
   onChange,
   disabled = false,
@@ -33,7 +27,7 @@ export default function MultiSelectInput({
     if (!disabled) setIsOpen(!isOpen);
   };
 
-  const handleCheckboxChange = (user: User) => {
+  const handleCheckboxChange = (user: UserType) => {
     const isSelected = value.some(
       (selectedUser) => selectedUser.id === user.id,
     );
@@ -43,7 +37,7 @@ export default function MultiSelectInput({
     onChange(updatedValue);
   };
 
-  const isChecked = (user: User) =>
+  const isChecked = (user: UserType) =>
     value.some((selectedUser) => selectedUser.id === user.id);
 
   // Закрытие выпадающего списка при клике вне компонента
@@ -64,7 +58,7 @@ export default function MultiSelectInput({
   }, []);
 
   return (
-    <div className={styles.wrapper} ref={dropdownRef}>
+    <div className={`${styles.wrapper} ${inter.className}`} ref={dropdownRef}>
       <label className={styles.label}>{label}</label>
       <div
         className={`${styles.input} ${disabled ? styles.disabled : ''} ${stylesSelect.input}`}
@@ -72,13 +66,21 @@ export default function MultiSelectInput({
         tabIndex={0}
         onClick={toggleDropdown}
       >
-        {value.length > 0
-          ? value.map((user) => `${user.firstName} ${user.lastName}`).join(', ')
-          : 'Пользователи'}
+        <div className={stylesSelect.selectedUsersContainer}>
+          {value.length > 0 ? (
+            value.map((user) => (
+              <span key={user.id} className={stylesSelect.selectedUser}>
+                {`${user.name} ${user.surname}`}
+              </span>
+            ))
+          ) : (
+            <span style={{ color: '#a6a6a6' }}>Пользователи</span>
+          )}
+        </div>
       </div>
       {isOpen && (
         <ul className={stylesSelect.dropdown}>
-          {options.map((option) => (
+          {data.map((option) => (
             <li key={option.id} className={stylesSelect.dropdownItem}>
               <label className={stylesSelect.checkboxLabel}>
                 <input
@@ -87,7 +89,7 @@ export default function MultiSelectInput({
                   onChange={() => handleCheckboxChange(option)}
                   disabled={disabled}
                 />
-                {`${option.firstName} ${option.lastName}`}
+                {`${option.name} ${option.surname}`}
               </label>
             </li>
           ))}
