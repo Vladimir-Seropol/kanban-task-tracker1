@@ -1,19 +1,57 @@
 .board {
   display: flex;
   margin: 0 auto;
+  height: 100%;
   width: 100%;
 }
 
 .board__left {
-  width: 272px;
-  height: 874px;
-  background: #1b1a1d;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  padding: 16px;
-  flex-shrink: 0;
-}
+    width: 272px;
+    /* height: auto; */
+    background: #1b1a1d;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 16px;
+    flex-shrink: 0;
+    position: relative;
+    transition: all ease 0.3s;
+  }
+  
+    .board__left_header_icon{
+    transition: all ease 0.5s ;
+  }
+  
+  .is_clicked{
+  width: 40px;
+  padding: 10px;
+  }
+  
+  .board__left_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .is_clicked .board__left_header_logo{
+      opacity: 0;
+  }
+
+
+
+  .is_clicked .board__left_header_icon{
+      position: absolute;
+      top: 16px;
+     z-index: 2;
+      left: 10px;
+      transition: all ease 0.3s ;
+      transform: rotate(180deg); 
+  }
+  
+  .is_clicked .board__left_project h4,
+  .is_clicked .board__left_user{
+      display: none !important;
+  }
 
 .board__left_header {
   display: flex;
@@ -33,8 +71,9 @@
 .board__right {
   display: flex;
   flex-direction: column;
-  padding: 32px;
+  padding: 32px 32px 0;
   width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -43,6 +82,20 @@
   height: 41px;
   background-color: #f4f6f8;
   margin-bottom: 40px;
+  padding: 12px 20px;
+}
+
+.board__right_header span {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.94px;
+  text-align: left;
+  color: #a6a6a6;
+}
+
+.board__right_header span:nth-child(3) {
+  color: #3787eb;
 }
 
 .board__right_title {
@@ -85,12 +138,12 @@
 }
 
 .board__right_selection_item input {
-  width: 264px;
-  height: 40px;
+  /* width: 264px; */
+  /* height: 40px;
   border: none;
   background: #f4f6f8;
   padding: 11.5px 20px;
-  border-radius: 8px;
+  border-radius: 8px;  */
 }
 
 .board__right_selection_item input ::placeholder {
@@ -111,6 +164,10 @@
   margin-bottom: 40px;
 }
 
+.my_custom_class{
+    width: 100%;
+}
+
 .doard__right_date_input {
   width: 264px;
 }
@@ -119,13 +176,23 @@
   display: flex;
   gap: 16px;
   overflow-x: auto;
+  height: 100%;
 }
+
+.board__right_tasks::-webkit-scrollbar {
+    width: 81px; 
+  }
+
+
+
 
 .board__right_tasks_item {
   display: flex;
   flex-direction: column;
-  min-height: 550px;
+  height: 100%;
   width: 264px;
   flex-shrink: 0;
   overflow: hidden;
+  background: #F4F6F8;
+padding: 12px;
 }

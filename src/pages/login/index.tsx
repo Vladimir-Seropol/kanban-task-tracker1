@@ -1,10 +1,14 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable import/order */
 import Button from '@/components/Button';
 import { inter } from '@/assets/fonts/fonts';
 import style from './login.module.css';
 import { useForm } from 'react-hook-form';
 import { LoginType } from '../../types/Login/Login';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useRouter } from 'next/router'; // Импортируем useRouter
 import * as yup from 'yup';
+
 import { useTokenApiMutation } from '../../redux/services/AuthApi';
 import { useAppDispatch } from '@/redux/hooks/hooks';
 import { useIsomorphicLayoutEffect } from 'swr/_internal';
@@ -18,7 +22,7 @@ const schema = yup
       .string()
       .email('Нужно заполнить')
       .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 'Нужно заполнить')
-      .required(),
+      .required('Электронная почта обязательна'),
     password: yup.string().min(8, '').required('Нужно заполнить'),
   })
   .required();
@@ -34,11 +38,18 @@ export default function Login() {
     formState: { errors },
     reset,
   } = useForm<LoginType>({ resolver: yupResolver(schema) });
+
+  // Пока оставим просто преход к странице проектов при нажатии на кнопку
+  const router = useRouter(); // Инициализация хука
+
   const onSubmit = (loginData: LoginType) => {
-    console.log(`loginData`, loginData);
+    // eslint-disable-next-line no-console
+    console.log('Данные для входа:', loginData);
 
     console.log(tokenApi(loginData));
     reset();
+    // Переход на страницу /login при клике на кнопку
+    router.push('/projects');
   };
   useEffect(() => {
     if (tokenSuccess) {
@@ -74,7 +85,7 @@ export default function Login() {
           <Button
             inlineStyle={{ width: '300px' }}
             text="Войти"
-            onClick={() => console.log('click')}
+            // onClick={onSubmit} // Вешаем обработчик клика
             type="submit"
           />
         </form>

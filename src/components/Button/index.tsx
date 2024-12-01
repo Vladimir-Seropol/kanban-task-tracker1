@@ -6,7 +6,9 @@ interface ButtonProps {
   text: string;
   type: 'button' | 'submit' | 'reset';
   // eslint-disable-next-line react/require-default-props, prettier/prettier
-  onClick?: React.MouseEventHandler<HTMLButtonElement> | React.FormEventHandler<HTMLButtonElement>;
+  onClick?:
+    | React.MouseEventHandler<HTMLButtonElement>
+    | React.FormEventHandler<HTMLButtonElement>;
   // eslint-disable-next-line react/no-unused-prop-types, react/require-default-props
   children?: React.ReactNode;
   // eslint-disable-next-line react/require-default-props
