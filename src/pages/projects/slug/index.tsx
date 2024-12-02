@@ -6,7 +6,16 @@ import CustomDatePicker from '@/components/Inputs/DatePicker/CustomDatePicker';
 import SelectInput from '@/components/Inputs/SelectInput/SelectInput';
 import TextInput from '@/components/Inputs/TextInput/TextInput';
 import style from './style.module.css';
+<<<<<<< HEAD
 import { UserType } from '../../../types/UserType';
+=======
+
+interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+}
+>>>>>>> f18668122d206c0987a8d1ee372220131422390a
 
 export default function Slug() {
   // Состояние для хранения данных о пользователе

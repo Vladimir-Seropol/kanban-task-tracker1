@@ -42,4 +42,8 @@ export const users = [
     can_grade: false,
     nota_email: null,
   },
+<<<<<<< HEAD
 ];
+=======
+];
+>>>>>>> f18668122d206c0987a8d1ee372220131422390a

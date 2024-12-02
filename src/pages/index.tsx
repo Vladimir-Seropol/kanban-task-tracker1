@@ -6,11 +6,20 @@ import TextInput from '@/components/Inputs/TextInput/TextInput';
 import SelectInput from '@/components/Inputs/SelectInput/SelectInput';
 import { UserType } from '@/types/UserType';
 import { users } from '@/components/Inputs/SelectInput/testSelectUsersData'; // Импорт тестового массива пользователей
+
+import { getServerSideToken } from '@/utils/getServerSideToken';
+
 import styles from '../styles/Home.module.css';
 
 const usersData: UserType[] = users; // Импорт тестового массива пользователей
 
-export default function Home() {
+
+
+
+export const getServerSideProps = getServerSideToken;
+
+export default function Home({ token }: { token: string }) {
+
   const [selectedUsers, setSelectedUsers] = useState<UserType[]>([]); // Состояние для хранения выбранных пользователей
   return (
     <>
@@ -26,6 +35,7 @@ export default function Home() {
           <div className={styles.mainTitle}>
             <h1>Полет фантазии</h1>
             <p>Тестовые инпуты</p>
+            {token ? <p>Токен найден: {token}</p> : <p>Токен отсутствует.</p>}
             <div style={{ display: 'flex', flexDirection: 'row', gap: '16px' }}>
               <TextInput
                 placeholder="Название проекта"
@@ -47,3 +57,4 @@ export default function Home() {
     </>
   );
 }
+

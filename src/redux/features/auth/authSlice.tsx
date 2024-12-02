@@ -27,6 +27,9 @@ const auth = createSlice({
       );
 
       // Обновляем состояние токена
+      // Сохраняем токен в cookies
+      document.cookie = `auth_token=${encodeURIComponent(action.payload.token)}; path=/; samesite=strict`;
+
       state.token = action.payload.token;
     },
   },

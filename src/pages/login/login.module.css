@@ -25,16 +25,12 @@
   row-gap: 6px;
 }
 
-.form label:nth-child(1) span:nth-child(1) {
+.form label span {
   color: #a6a6a6;
   font-size: 14px;
   font-weight: 400;
 }
-.form label:nth-child(2) span {
-  color: #a6a6a6;
-  font-size: 14px;
-  font-weight: 400;
-}
+
 .form label input {
   height: 40px;
   display: flex;

@@ -78,7 +78,7 @@ export default function Board() {
             <Image
               src="icon_board3.svg"
               alt="icon_board"
-              width={18}
+              width={18} // Укажите ширину изображения
               height={18}
             />
             <h4 style={{ color: '#fff' }}>Проекты</h4>

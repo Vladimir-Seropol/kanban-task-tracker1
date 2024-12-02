@@ -1,5 +1,7 @@
+
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable prettier/prettier */
+
 import React, { useState, useEffect, useRef } from 'react';
 import { UserType } from '@/types/UserType';
 import { inter } from '@/assets/fonts/fonts';
