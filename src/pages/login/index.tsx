@@ -1,7 +1,5 @@
-
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
-
 
 import Button from '@/components/Button';
 import { inter } from '@/assets/fonts/fonts';
@@ -10,8 +8,6 @@ import { LoginType } from '@/types/Login/Login';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import * as yup from 'yup';
-
-
 
 import { useTokenApiMutation } from '@/redux/services/AuthApi';
 import { useAppDispatch } from '@/redux/hooks/hooks';
@@ -49,65 +45,67 @@ export default function Login() {
   // Пока оставим просто преход к странице проектов при нажатии на кнопку
   const router = useRouter(); // Инициализация хука
 
-
   const onSubmit = (loginData: LoginType) => {
     console.log('Данные для входа:', loginData);
 
-  const onSubmit = async (loginData: LoginType) => {
-    try {
-      // Вызов API для получения токена
-      const response = await tokenApi(loginData).unwrap();
+    const onSubmit = async (loginData: LoginType) => {
+      try {
+        // Вызов API для получения токена
+        const response = await tokenApi(loginData).unwrap();
 
-
-      if (response.token) {
-        dispatch(setUser({ token: response.token }));
-        reset(); // Сбрасываем форму
-        await router.push('/projects'); // Редирект на страницу проектов
-      } else {
-        console.error('Токен отсутствует в ответе API');
+        if (response.token) {
+          dispatch(setUser({ token: response.token }));
+          reset(); // Сбрасываем форму
+          await router.push('/projects'); // Редирект на страницу проектов
+        } else {
+          console.error('Токен отсутствует в ответе API');
+        }
+      } catch (err) {
+        console.error('Ошибка при входе:', err);
       }
-    } catch (err) {
-      console.error('Ошибка при входе:', err);
-    }
+    };
+
+    useEffect(() => {
+      if (tokenSuccess && tokenData?.token) {
+        dispatch(setUser({ token: tokenData.token }));
+      }
+    }, [tokenSuccess, dispatch, tokenData?.token]);
+
+    return (
+      <main className={`${style.login} ${inter.className}`}>
+        <div className="container">
+          <h2 className={style.title}>Вход</h2>
+          <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
+            <label htmlFor="email">
+              <span>Электронная почта</span>
+              <input
+                type="email"
+                placeholder="Электронная почта"
+                {...register('email')}
+              />
+              {errors.email && (
+                <p className={style.errorText}>{errors.email.message}</p>
+              )}
+            </label>
+            <label htmlFor="password">
+              <span>Пароль</span>
+              <input
+                type="password"
+                placeholder="Пароль"
+                {...register('password')}
+              />
+              {errors.password && (
+                <p className={style.errorText}>{errors.password.message}</p>
+              )}
+            </label>
+            <Button
+              inlineStyle={{ width: '300px' }}
+              text="Войти"
+              type="submit"
+            />
+          </form>
+        </div>
+      </main>
+    );
   };
-
-  useEffect(() => {
-    if (tokenSuccess && tokenData?.token) {
-      dispatch(setUser({ token: tokenData.token }));
-    }
-  }, [tokenSuccess, dispatch, tokenData?.token]);
-
-
-  return (
-    <main className={`${style.login} ${inter.className}`}>
-      <div className="container">
-        <h2 className={style.title}>Вход</h2>
-        <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
-          <label htmlFor="email">
-            <span>Электронная почта</span>
-            <input
-              type="email"
-              placeholder="Электронная почта"
-              {...register('email')}
-            />
-            {errors.email && (
-              <p className={style.errorText}>{errors.email.message}</p>
-            )}
-          </label>
-          <label htmlFor="password">
-            <span>Пароль</span>
-            <input
-              type="password"
-              placeholder="Пароль"
-              {...register('password')}
-            />
-            {errors.password && (
-              <p className={style.errorText}>{errors.password.message}</p>
-            )}
-          </label>
-          <Button inlineStyle={{ width: '300px' }} text="Войти" type="submit" />
-        </form>
-      </div>
-    </main>
-  );
 }
