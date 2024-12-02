@@ -1,4 +1,3 @@
-
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable prettier/prettier */
 
@@ -95,10 +94,10 @@ export default function MultiSelectInput({
         <ul className={stylesSelect.dropdown}>
           {data.map((option) => (
             <li key={option.id} className={stylesSelect.dropdownItem}>
-              <label className={stylesSelect.checkboxLabel} htmlFor='checkbox'>
+              <label className={stylesSelect.checkboxLabel} htmlFor="checkbox">
                 <input
                   type="checkbox"
-                  id='checkbox'
+                  id="checkbox"
                   checked={isChecked(option)}
                   onChange={() => handleCheckboxChange(option)}
                   disabled={disabled}

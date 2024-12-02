@@ -1,7 +1,5 @@
-
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
-
 
 import Button from '@/components/Button';
 import { inter } from '@/assets/fonts/fonts';
@@ -10,8 +8,6 @@ import { LoginType } from '@/types/Login/Login';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import * as yup from 'yup';
-
-
 
 import { useTokenApiMutation } from '@/redux/services/AuthApi';
 import { useAppDispatch } from '@/redux/hooks/hooks';
@@ -49,15 +45,10 @@ export default function Login() {
   // Пока оставим просто преход к странице проектов при нажатии на кнопку
   const router = useRouter(); // Инициализация хука
 
-
-  const onSubmit = (loginData: LoginType) => {
-    console.log('Данные для входа:', loginData);
-
   const onSubmit = async (loginData: LoginType) => {
     try {
       // Вызов API для получения токена
       const response = await tokenApi(loginData).unwrap();
-
 
       if (response.token) {
         dispatch(setUser({ token: response.token }));
@@ -76,7 +67,6 @@ export default function Login() {
       dispatch(setUser({ token: tokenData.token }));
     }
   }, [tokenSuccess, dispatch, tokenData?.token]);
-
 
   return (
     <main className={`${style.login} ${inter.className}`}>
