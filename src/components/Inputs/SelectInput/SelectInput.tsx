@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable prettier/prettier */
 import React, { useState, useEffect, useRef } from 'react';
 import { UserType } from '@/types/UserType';
 import { inter } from '@/assets/fonts/fonts';
@@ -25,6 +27,14 @@ export default function MultiSelectInput({
 
   const toggleDropdown = () => {
     if (!disabled) setIsOpen(!isOpen);
+  };
+
+  const handleKeyboardEvent = (event: React.KeyboardEvent) => {
+    // Проверяем, нажата ли клавиша Enter или Space
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault(); // Предотвращаем стандартное поведение (например, прокрутку при нажатии Space)
+      toggleDropdown();
+    }
   };
 
   const handleCheckboxChange = (user: UserType) => {
@@ -65,6 +75,7 @@ export default function MultiSelectInput({
         role="button"
         tabIndex={0}
         onClick={toggleDropdown}
+        onKeyDown={handleKeyboardEvent}
       >
         <div className={stylesSelect.selectedUsersContainer}>
           {value.length > 0 ? (
@@ -82,9 +93,10 @@ export default function MultiSelectInput({
         <ul className={stylesSelect.dropdown}>
           {data.map((option) => (
             <li key={option.id} className={stylesSelect.dropdownItem}>
-              <label className={stylesSelect.checkboxLabel}>
+              <label className={stylesSelect.checkboxLabel} htmlFor='checkbox'>
                 <input
                   type="checkbox"
+                  id='checkbox'
                   checked={isChecked(option)}
                   onChange={() => handleCheckboxChange(option)}
                   disabled={disabled}

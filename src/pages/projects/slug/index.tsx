@@ -6,18 +6,13 @@ import CustomDatePicker from '@/components/Inputs/DatePicker/CustomDatePicker';
 import SelectInput from '@/components/Inputs/SelectInput/SelectInput';
 import TextInput from '@/components/Inputs/TextInput/TextInput';
 import style from './style.module.css';
-
-interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-}
+import { UserType } from '../../../types/UserType';
 
 export default function Slug() {
   // Состояние для хранения данных о пользователе
   const [user, setUser] = useState(null);
   const [isClicked, setIsClicked] = useState(false); // Состояние для отслеживания клика
-  const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<UserType[]>([]);
 
   // Добавляем состояние для выбранной даты
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -39,11 +34,11 @@ export default function Slug() {
   }, []); // Запрашиваем данные только один раз при монтировании компонента
 
   // Интерфейс для пользователей выпадающего списка
-  const users = [
-    { id: 1, firstName: 'Иван', lastName: 'Иванов' },
-    { id: 2, firstName: 'Петр', lastName: 'Петров' },
-    { id: 3, firstName: 'Сергей', lastName: 'Сергеев' },
-  ];
+  //   const users = [
+  //     { id: 1, firstName: 'Иван', lastName: 'Иванов' },
+  //     { id: 2, firstName: 'Петр', lastName: 'Петров' },
+  //     { id: 3, firstName: 'Сергей', lastName: 'Сергеев' },
+  //   ];
 
   const handleClick = () => {
     setIsClicked(!isClicked); // Меняем состояние при клике
@@ -60,11 +55,15 @@ export default function Slug() {
               className={style.board__left_header_logo}
               src="/logo_board.png"
               alt="logo_board"
+              width={103}
+              height={21}
             />
             <Image
               className={style.board__left_header_icon}
               src="/icon_board1.svg"
               alt="icon_board"
+              width={24}
+              height={24}
               onClick={handleClick}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
@@ -99,6 +98,8 @@ export default function Slug() {
               <Image
                 src="/icon_board3.svg"
                 alt="icon_board"
+                width={18} // Укажите ширину изображения
+                height={18}
                 style={{ verticalAlign: 'top', marginRight: '8px' }}
               />
               <h4 style={{ color: '#fff', display: 'inline-block' }}>
@@ -133,6 +134,8 @@ export default function Slug() {
                   <Image
                     src="/icon_create.svg"
                     alt="icon_create"
+                    width={16} // Укажите ширину изображения
+                    height={16}
                     style={{ verticalAlign: 'middle', marginRight: '8px' }}
                   />
                 }
@@ -154,15 +157,15 @@ export default function Slug() {
             <div className={style.board__right_selection_item}>
               <SelectInput
                 label="Выбрать пользователей"
-                options={users}
                 value={selectedUsers}
                 onChange={setSelectedUsers}
+                data={[]}
               />
             </div>
             <div className={style.board__right_selection_item}>
               <SelectInput
                 label="Выбрать тип"
-                options={users}
+                data={[]}
                 value={selectedUsers}
                 onChange={setSelectedUsers}
               />
@@ -170,7 +173,7 @@ export default function Slug() {
             <div className={style.board__right_selection_item}>
               <SelectInput
                 label="Выбрать компонент"
-                options={users}
+                data={[]}
                 value={selectedUsers}
                 onChange={setSelectedUsers}
               />
