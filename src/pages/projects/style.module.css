@@ -1,99 +1,31 @@
-.board {
-  display: flex;
-  margin: 0 auto;
-  height: 100%;
-  width: 100%;
-  
-}
-
-.board__left {
-  width: 272px;
-  /* height: 874px; */
-  background: #1b1a1d;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  padding: 16px;
-  flex-shrink: 0;
-  position: relative;
-  transition: all ease 0.3s;
-}
-
-.board__left_header_icon{
-    transition: all ease 0.30s ;
-}
-
-.is_clicked{
-width: 40px;
-padding: 10px;
-}
-
-.board__left_header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.is_clicked .board__left_header_logo{
-    opacity: 0;
-}
-.is_clicked .board__left_header_icon{
-    position: absolute;
-    top: 16px;
-   z-index: 2;
-    left: 10px;
-    transition: all ease 0.30s ;
-    transform: rotate(180deg); 
-}
-
-.is_clicked .board__left_user{
-    display: none;
-}
-
-.is_clicked h4{
-margin-left: 10px;
-}
-
-.board__left_project {
-  display: flex;
-  gap: 8px;
-  justify-content: flex-start;
-  align-items: center;
-  height: 66px;
-  border-top: 1px solid #2d2d2d;
-}
-
-
-
 .board__right {
-  display: flex;
-  flex-direction: column;
-  padding: 32px 32px 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 32px 0;
+    width: 100%;
+    max-height: 100vh;
+    overflow-y: auto;
 }
 
 .board__right::-webkit-scrollbar {
-    width: 0; 
-  }
+    width: 0;
+}
 
 .board__right_header {
-  width: 100%;
-  height: 41px;
-  background-color: #f4f6f8;
-  margin-bottom: 40px;
-  padding: 12px 20px;
+    width: 100%;
+    height: 41px;
+    background-color: #f4f6f8;
+    margin-bottom: 40px;
+    padding: 12px 20px;
 }
 
 .board__right_header span {
-  font-family: Inter;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 16.94px;
-  text-align: left;
-  color: #a6a6a6;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16.94px;
+    text-align: left;
+    color: #a6a6a6;
 }
 
 .board__right_header span:nth-child(2) {
@@ -101,13 +33,13 @@ margin-left: 10px;
 }
 
 .board__right_title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
 }
 
-.board__right_title h2{
+.board__right_title h2 {
     font-size: 32px;
     font-weight: 600;
     line-height: 44px;
@@ -116,44 +48,44 @@ margin-left: 10px;
 }
 
 .board__right_title_checkbox {
-  display: flex;
-  gap: 8px;
-  align-items: center;
+    display: flex;
+    gap: 8px;
+    align-items: center;
 }
 
 .board__right_selection_checkbox input {
-    width: 16px;    
-    height: 16px;   
-  }
-  
-  .board__right_selection_checkbox label {
+    width: 16px;
+    height: 16px;
+}
+
+.board__right_selection_checkbox label {
     font-family: Inter;
     font-size: 14px;
     font-weight: 400;
     line-height: 24px;
     color: #2D2D2D;
-  }
+}
 
 .board__right_selection {
     display: flex;
-    justify-content:flex-start;
-flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 16px;
- 
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 16px;
+
 }
 
-.board__right_projects{
+.board__right_projects {
     height: 100%;
     /* overflow-x: auto; */
     /* overflow: hidden; */
 }
 
-.board__right_projects h5{
-font-size: 16px;
-font-weight: 600;
-line-height: 19.36px;
-color: #1B1A1D;
+.board__right_projects h5 {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19.36px;
+    color: #1B1A1D;
 }
 
 /* Плавное исчезновение и появление всех проектов */
@@ -161,24 +93,23 @@ color: #1B1A1D;
 .board__right_featured.show {
     opacity: 1;
     max-height: 1500px; /* Достаточная высота для показа всех проектов */
-  }
+}
 
 
-  
-  .board__right_featured{
-     opacity: 0;
+.board__right_featured {
+    opacity: 0;
     max-height: 0;
     overflow: hidden;
-    transition:  all 0.5s ease;
-  }
-  
+    transition: all 0.5s ease;
+}
 
-.board__right_selected_projects{
-display: flex;
-gap: 16px;
-flex-wrap: wrap;
-/* height: 151px; */
-margin-bottom: 40px;
+
+.board__right_selected_projects {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    /* height: 151px; */
+    margin-bottom: 40px;
 }
 
 /* Плавное исчезновение и появление архивных проектов */
@@ -187,27 +118,27 @@ margin-bottom: 40px;
     max-height: 0;
     overflow: hidden;
     transition: all 0.5s ease, max-height 2s ease;
-  }
-  
-  .board__right_archived_projects.show {
+}
+
+.board__right_archived_projects.show {
     opacity: 1;
     max-height: 100vh; /* Достаточная высота для показа контента */
-  }
-  
+}
+
 
 .board__right_internal_projects {
     display: flex;
     flex-wrap: wrap;
     /* overflow: hidden; */
     /* height: 340px; */
-   
+
     gap: 16px;
     border-top: 1px solid #EEEEEE;
     padding-top: 40px;
-} 
+}
 
 
-.board__right_selection_checkbox{
+.board__right_selection_checkbox {
     margin-bottom: 40px;
     display: flex;
     gap: 8px;
