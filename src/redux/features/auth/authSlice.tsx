@@ -13,13 +13,7 @@ const auth = createSlice({
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<{ token: string }>) => {
-      localStorage.setItem(
-        'token',
-        JSON.stringify({
-          token: action.payload.token,
-        }),
-      );
-
+      document.cookie = `token=${JSON.stringify(action.payload.token)}`;
       state.token = action.payload.token;
     },
   },

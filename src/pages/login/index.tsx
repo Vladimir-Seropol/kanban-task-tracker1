@@ -10,10 +10,11 @@ import { useRouter } from 'next/router'; // Импортируем useRouter
 import * as yup from 'yup';
 
 import { useTokenApiMutation } from '../../redux/services/AuthApi';
-import { useAppDispatch } from '@/redux/hooks/hooks';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks/hooks';
 import { useIsomorphicLayoutEffect } from 'swr/_internal';
 import { useEffect } from 'react';
 import { setUser } from '@/redux/features/auth/authSlice';
+import { selectCurrentUser } from '../../redux/features/auth/authSlice';
 
 const schema = yup
   .object()
@@ -31,7 +32,7 @@ export default function Login() {
   console.log(dispatch);
   const [tokenApi, { data: tokenData, isSuccess: tokenSuccess }] =
     useTokenApiMutation();
-  console.log(tokenApi);
+
   const {
     register,
     handleSubmit,
@@ -42,20 +43,32 @@ export default function Login() {
   // Пока оставим просто преход к странице проектов при нажатии на кнопку
   const router = useRouter(); // Инициализация хука
 
-  const onSubmit = (loginData: LoginType) => {
+  const onSubmit = async (loginData: LoginType) => {
     // eslint-disable-next-line no-console
     console.log('Данные для входа:', loginData);
 
     console.log(tokenApi(loginData));
-    reset();
-    // Переход на страницу /login при клике на кнопку
-    router.push('/projects');
+    try {
+      const result = await tokenApi(loginData);
+      if (result.data) {
+        console.log(result.data);
+        dispatch(setUser(result.data));
+      }
+    } catch (err) {
+      console.log(`err`, err);
+    } finally {
+      reset();
+      // Переход на страницу /login при клике на кнопку
+      router.push('/projects');
+    }
   };
   useEffect(() => {
     if (tokenSuccess) {
       dispatch(setUser({ token: tokenData.token }));
     }
   }, [tokenSuccess]);
+  const token = useAppSelector(selectCurrentUser);
+  console.log(`token`, token);
 
   return (
     <main className={`${style.login} ${inter.className}`}>
@@ -90,6 +103,7 @@ export default function Login() {
           />
         </form>
       </div>
+      {}
     </main>
   );
 }
