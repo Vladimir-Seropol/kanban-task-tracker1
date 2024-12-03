@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-console */
+
 import Button from '@/components/Button';
 import { inter } from '@/assets/fonts/fonts';
 import { useForm } from 'react-hook-form';
@@ -5,7 +8,7 @@ import { LoginType } from '@/types/Login/Login';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import * as yup from 'yup';
-import { useGetAuthUserQuery } from '../../redux/services/AuthUser';
+
 import { useTokenApiMutation } from '@/redux/services/AuthApi';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks/hooks';
 import { useEffect } from 'react';

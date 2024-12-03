@@ -115,11 +115,25 @@
 
 
 .board__right_tasks_item {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+  height: 100%;
     width: 264px;
     flex-shrink: 0;
+}
+
+.board__right_tasks_item h5{
+font-size: 14px;
+font-weight: 500;
+line-height: 16.94px;
+color: #1B1A1D;
+margin-bottom: 8px;
+}
+
+.board__right_tasks_item_tasks{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+   border-radius: 16px;
+   height: 100%;
     overflow: hidden;
     background: #F4F6F8;
     padding: 12px;
