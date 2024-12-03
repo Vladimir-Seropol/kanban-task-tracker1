@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/require-default-props */
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { inter } from '@/assets/fonts/fonts';

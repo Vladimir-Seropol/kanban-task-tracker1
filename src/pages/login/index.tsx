@@ -1,20 +1,16 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable import/order */
 import Button from '@/components/Button';
 import { inter } from '@/assets/fonts/fonts';
-import style from './login.module.css';
 import { useForm } from 'react-hook-form';
-import { LoginType } from '../../types/Login/Login';
+import { LoginType } from '@/types/Login/Login';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useRouter } from 'next/router'; // Импортируем useRouter
+import { useRouter } from 'next/router';
 import * as yup from 'yup';
-
-import { useTokenApiMutation } from '../../redux/services/AuthApi';
+import { useGetAuthUserQuery } from '../../redux/services/AuthUser';
+import { useTokenApiMutation } from '@/redux/services/AuthApi';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks/hooks';
-import { useIsomorphicLayoutEffect } from 'swr/_internal';
 import { useEffect } from 'react';
-import { setUser } from '@/redux/features/auth/authSlice';
-import { selectCurrentUser } from '../../redux/features/auth/authSlice';
+import { setToken, getUser } from '@/redux/features/auth/authSlice';
+import style from './login.module.css';
 
 const schema = yup
   .object()
@@ -24,12 +20,15 @@ const schema = yup
       .email('Нужно заполнить')
       .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 'Нужно заполнить')
       .required('Электронная почта обязательна'),
-    password: yup.string().min(8, '').required('Нужно заполнить'),
+    password: yup
+      .string()
+      .min(8, 'Минимум 8 символов')
+      .required('Нужно заполнить'),
   })
   .required();
 export default function Login() {
   const dispatch = useAppDispatch();
-  console.log(dispatch);
+
   const [tokenApi, { data: tokenData, isSuccess: tokenSuccess }] =
     useTokenApiMutation();
 
@@ -44,31 +43,28 @@ export default function Login() {
   const router = useRouter(); // Инициализация хука
 
   const onSubmit = async (loginData: LoginType) => {
-    // eslint-disable-next-line no-console
-    console.log('Данные для входа:', loginData);
-
-    console.log(tokenApi(loginData));
     try {
-      const result = await tokenApi(loginData);
-      if (result.data) {
-        console.log(result.data);
-        dispatch(setUser(result.data));
+      // Вызов API для получения токена
+      const response = await tokenApi(loginData).unwrap();
+
+      if (response.token) {
+        dispatch(setToken({ token: response.token }));
+
+        reset(); // Сбрасываем форму
+        await router.push('/projects'); // Редирект на страницу проектов
+      } else {
+        console.error('Токен отсутствует в ответе API');
       }
     } catch (err) {
-      console.log(`err`, err);
-    } finally {
-      reset();
-      // Переход на страницу /login при клике на кнопку
-      router.push('/projects');
+      console.error('Ошибка при входе:', err);
     }
   };
+
   useEffect(() => {
-    if (tokenSuccess) {
-      dispatch(setUser({ token: tokenData.token }));
+    if (tokenSuccess && tokenData?.token) {
+      dispatch(setToken({ token: tokenData.token }));
     }
-  }, [tokenSuccess]);
-  const token = useAppSelector(selectCurrentUser);
-  console.log(`token`, token);
+  }, [tokenSuccess, dispatch, tokenData?.token]);
 
   return (
     <main className={`${style.login} ${inter.className}`}>
@@ -83,7 +79,7 @@ export default function Login() {
               {...register('email')}
             />
             {errors.email && (
-              <span className={style.errorText}>{errors.email.message}</span>
+              <p className={style.errorText}>{errors.email.message}</p>
             )}
           </label>
           <label htmlFor="password">
@@ -93,17 +89,13 @@ export default function Login() {
               placeholder="Пароль"
               {...register('password')}
             />
-            {errors.password && <span>{errors.password.message}</span>}
+            {errors.password && (
+              <p className={style.errorText}>{errors.password.message}</p>
+            )}
           </label>
-          <Button
-            inlineStyle={{ width: '300px' }}
-            text="Войти"
-            // onClick={onSubmit} // Вешаем обработчик клика
-            type="submit"
-          />
+          <Button inlineStyle={{ width: '300px' }} text="Войти" type="submit" />
         </form>
       </div>
-      {}
     </main>
   );
 }
