@@ -1,15 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable import/order */
 import Link from 'next/link';
 import Button from '@/components/Button';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, DragEvent } from 'react';
 import CustomDatePicker from '@/components/Inputs/DatePicker/CustomDatePicker';
 import SelectInput from '@/components/Inputs/SelectInput/SelectInput';
 import TextInput from '@/components/Inputs/TextInput/TextInput';
 import Layout from '@/pages/projects/layout';
 import style from './style.module.css';
 import { UserType } from '@/types/UserType';
+import CardTask from '@/components/CardTask';
 
 interface User {
   id: number;
@@ -17,36 +16,87 @@ interface User {
   lastName: string;
 }
 
+interface Task {
+  id: number;
+  title: string;
+  executor: string;
+  priority?: string;
+  status: string;
+}
+
 export default function Slug() {
-  // Состояние для хранения данных о пользователе
   const [user, setUser] = useState(null);
   const [selectedUsers, setSelectedUsers] = useState<UserType[]>([]);
-
-  // Добавляем состояние для выбранной даты
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+  const [tasks, setTasks] = useState<Task[]>([]);
 
   // Эмуляция запроса данных о пользователе (например, через fetch)
   useEffect(() => {
-    // Тут можно заменить на реальный API-запрос для получения данных
     const fetchUserData = async () => {
-      // Это пример, в реальном приложении запросите данные пользователя
       const userData = {
         name: 'User',
-        is_admin: true, // Установите флаг is_admin в true или false в зависимости от ответа
+        is_admin: true,
       };
       setUser(userData);
     };
 
     fetchUserData();
-  }, []); // Запрашиваем данные только один раз при монтировании компонента
+  }, []);
 
-  // Интерфейс для пользователей выпадающего списка
-  //   const users = [
-  //     { id: 1, firstName: 'Иван', lastName: 'Иванов' },
-  //     { id: 2, firstName: 'Петр', lastName: 'Петров' },
-  //     { id: 3, firstName: 'Сергей', lastName: 'Сергеев' },
-  //   ];
+  // Эмуляция данных о задачах
+  useEffect(() => {
+    const fetchTasks = () => {
+      const tasksData = [
+        {
+          id: 192494,
+          title: 'Задача 1',
+          executor: 'Иван Иванов',
+          priority: 'Высокий',
+          status: 'Новые',
+        },
+        {
+          id: 192495,
+          title: 'Задача 2',
+          executor: 'Петр Петров',
+          priority: 'Низкий',
+          status: 'В работе',
+        },
+      ];
+      setTasks(tasksData);
+    };
+
+    fetchTasks();
+  }, []);
+
+  // Обработчик окончания перетаскивания
+  const handleDragEnd = (draggedTaskId: number, targetStatus: string) => {
+
+    // Обновляем статус задачи
+    const updatedTasks = tasks.map((task) => {
+      if (task.id === draggedTaskId) {
+        return { ...task, status: targetStatus }; // Обновляем статус
+      }
+      return task;
+    });
+    setTasks(updatedTasks);
+  };
+
+  // Обработчик события drop
+  const handleDrop = (e: DragEvent<HTMLDivElement>, targetStatus: string) => {
+    const draggedTaskId = Number(e.dataTransfer.getData('taskId')); // Преобразуем ID в число
+    handleDragEnd(draggedTaskId, targetStatus);
+    e.preventDefault();
+  };
+
+  const handleDragOver = (e: DragEvent) => {
+    e.preventDefault(); // Разрешаем перетаскивание
+  };
+
+  // Фильтруем задачи по статусу
+  const getTasksByStatus = (status: string) => {
+    return tasks.filter((task) => task.status === status);
+  };
 
   return (
     <Layout>
@@ -68,14 +118,13 @@ export default function Slug() {
             <input type="checkbox" />
           </div>
 
-          {/* Условное отображение кнопки "Добавить задачу" */}
           {user?.is_admin && (
             <Button
               svg={
                 <Image
                   src="/icon_create.svg"
                   alt="icon_create"
-                  width={16} // Укажите ширину изображения
+                  width={16}
                   height={16}
                   style={{ verticalAlign: 'middle', marginRight: '8px' }}
                 />
@@ -86,6 +135,7 @@ export default function Slug() {
             />
           )}
         </div>
+
         <div className={style.board__right_selection}>
           <div className={style.board__right_selection_item}>
             <TextInput
@@ -120,6 +170,7 @@ export default function Slug() {
             />
           </div>
         </div>
+
         <div className={style.board__right_date}>
           <CustomDatePicker
             placeholder="Дата начала"
@@ -128,7 +179,6 @@ export default function Slug() {
             className={style.my_custom_class}
             inputClassName={style.my_input_class}
           />
-
           <CustomDatePicker
             placeholder="Дата завершения"
             value={endDate}
@@ -137,16 +187,46 @@ export default function Slug() {
             inputClassName={style.my_input_class}
           />
         </div>
+
         <div className={style.board__right_tasks}>
-          <div className={style.board__right_tasks_item}>Новые</div>
-          <div className={style.board__right_tasks_item}>В работе</div>
-          <div className={style.board__right_tasks_item}>Выполнено</div>
-          <div className={style.board__right_tasks_item}>В ревью</div>
           <div className={style.board__right_tasks_item}>
-            Готовы к тестированию
+            <h5>Новые</h5>
+            <div
+              className={style.board__right_tasks_item_tasks}
+              onDrop={(e) => handleDrop(e, 'Новые')}
+              onDragOver={handleDragOver}
+            >
+              {getTasksByStatus('Новые').map((task) => (
+                <CardTask key={task.id} task={task} onDragEnd={handleDragEnd} />
+              ))}
+            </div>
           </div>
-          <div className={style.board__right_tasks_item}>В тестировании</div>
-          <div className={style.board__right_tasks_item}>Решены</div>
+
+          <div className={style.board__right_tasks_item}>
+            <h5>В работе</h5>
+            <div
+              className={style.board__right_tasks_item_tasks}
+              onDrop={(e) => handleDrop(e, 'В работе')}
+              onDragOver={handleDragOver}
+            >
+              {getTasksByStatus('В работе').map((task) => (
+                <CardTask key={task.id} task={task} onDragEnd={handleDragEnd} />
+              ))}
+            </div>
+          </div>
+
+          <div className={style.board__right_tasks_item}>
+            <h5>Выполнено</h5>
+            <div
+              className={style.board__right_tasks_item_tasks}
+              onDrop={(e) => handleDrop(e, 'Выполнено')}
+              onDragOver={handleDragOver}
+            >
+              {getTasksByStatus('Выполнено').map((task) => (
+                <CardTask key={task.id} task={task} onDragEnd={handleDragEnd} />
+              ))}
+            </div>
+          </div>
         </div>
       </main>
     </Layout>
