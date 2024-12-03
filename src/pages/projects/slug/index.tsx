@@ -21,8 +21,10 @@ interface Task {
   id: number;
   title: string;
   executor: string;
-  priority?: string;
-  status: string;
+  priority?: number;
+  type?: number;
+  component?: number;
+  stage: string;
 }
 
 export default function Slug() {
@@ -53,15 +55,19 @@ export default function Slug() {
           id: 192494,
           title: 'Задача 1',
           executor: 'Иван Иванов',
-          priority: 'Высокий',
-          status: 'Новые',
+          priority: 1,
+          task_type: 1,
+          component: 3,
+          stage: 'Новые',
         },
         {
           id: 192495,
           title: 'Задача 2',
           executor: 'Петр Петров',
-          priority: 'Низкий',
-          status: 'В работе',
+          priority: 3,
+          task_type: 2,
+          component: 2,
+          stage: 'В работе',
         },
       ];
       setTasks(tasksData);
@@ -95,7 +101,7 @@ export default function Slug() {
     // Обновляем статус задачи
     const updatedTasks = tasks.map((task) => {
       if (task.id === draggedTaskId) {
-        return { ...task, status: targetStatus }; // Обновляем статус
+        return { ...task, stage: targetStatus }; // Обновляем статус
       }
       return task;
     });
@@ -114,8 +120,8 @@ export default function Slug() {
   };
 
   // Фильтруем задачи по статусу
-  const getTasksByStatus = (status: string) => {
-    return tasks.filter((task) => task.status === status);
+  const getTasksByStatus = (stage: string) => {
+    return tasks.filter((task) => task.stage === stage);
   };
 
   return (

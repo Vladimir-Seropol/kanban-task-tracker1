@@ -2,12 +2,18 @@
 /* eslint-disable react/function-component-definition */
 import React, { useRef } from 'react';
 import style from './style.module.css';
+import Priority from '@/components/Priority/Priority';
+import TaskType from '@/components/TaskType/TaskType';
+import TaskComponent from '@/components/TaskComponent/TaskComponent';
 
 interface Task {
   id: number;
   title: string;
   executor: string;
-  priority?: string;
+  priority?: number;
+  task_type?: number;
+  component?: number;
+  stage: string; // потом это тоже будет number
 }
 
 interface CardTaskProps {
@@ -43,13 +49,15 @@ const CardTask: React.FC<CardTaskProps> = ({ task, onDragEnd }) => {
     >
       <div className={style.cardTaskHeader}>
         <div className={style.id}>id: {task?.id}</div>
-        <div className={style.priority}>{task?.priority || 'Низкий'}</div>
+        {task?.priority && <Priority id={task.priority} />}
       </div>
       <div className={style.title}>{task?.title || 'Наименование задачи'}</div>
       <div className={style.executor}>{task?.executor || 'Исполнитель'}</div>
       <div className={style.cardTaskFooter}>
-        <div className={style.status}>Статус</div>
-        <div className={style.date}>Задача</div>
+        <div className={style.tagsBlock}>
+          {task?.component && <TaskComponent id={task?.component} />}
+          {task?.task_type && <TaskType id={task?.task_type} />}
+        </div>
         <div className={style.comment}>
           <img src="/icon_comment.svg" alt="Комментарий" />
         </div>
