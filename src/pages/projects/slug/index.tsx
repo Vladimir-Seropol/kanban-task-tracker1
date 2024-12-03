@@ -9,6 +9,7 @@ import Layout from '@/pages/projects/layout';
 import style from './style.module.css';
 import { UserType } from '@/types/UserType';
 import CardTask from '@/components/CardTask';
+import AddTaskModal from '@/components/AddTaskModal';
 
 interface User {
   id: number;
@@ -30,7 +31,7 @@ export default function Slug() {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [tasks, setTasks] = useState<Task[]>([]);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   // Эмуляция запроса данных о пользователе (например, через fetch)
   useEffect(() => {
     const fetchUserData = async () => {
@@ -69,9 +70,28 @@ export default function Slug() {
     fetchTasks();
   }, []);
 
+  // Функция для открытия модального окна
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  // Функция для закрытия модального окна
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  // Функция для сохранения новой задачи
+  const handleSaveTask = (task: { title: string; executor: string }) => {
+    const newTask = {
+      ...task,
+      id: tasks.length + 1,
+      status: 'Новые',
+    };
+    setTasks([...tasks, newTask]); // Добавляем задачу в список
+  };
+
   // Обработчик окончания перетаскивания
   const handleDragEnd = (draggedTaskId: number, targetStatus: string) => {
-
     // Обновляем статус задачи
     const updatedTasks = tasks.map((task) => {
       if (task.id === draggedTaskId) {
@@ -131,10 +151,16 @@ export default function Slug() {
               }
               text="Добавить задачу"
               type="button"
-              onClick={() => {}}
+              onClick={openModal}
             />
           )}
         </div>
+        {/* Модальное окно */}
+        <AddTaskModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          onSave={handleSaveTask}
+        />
 
         <div className={style.board__right_selection}>
           <div className={style.board__right_selection_item}>
