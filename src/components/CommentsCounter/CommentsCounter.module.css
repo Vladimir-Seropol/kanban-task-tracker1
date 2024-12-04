@@ -1,0 +1,31 @@
+.commentsCounter {
+    cursor: pointer;
+    display: flex;
+    column-gap: 2px;
+    align-items: center;
+}
+
+.newMessage {
+    position: relative;
+}
+
+.newMessage::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #3787eb;
+    right: 0;
+    top: 0;
+}
+
+.newMessage svg path {
+    fill: #3787eb;
+}
+
+.commentsCounter {
+    font-weight: 600;
+    font-size: 11px;
+    color: #d2d2d2;
+}
