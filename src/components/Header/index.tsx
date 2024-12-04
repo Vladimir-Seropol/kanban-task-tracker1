@@ -6,7 +6,7 @@ import style from './style.module.css';
 
 export default function Header() {
   const router = useRouter(); // Инициализация хука
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // Состояние для авторизации
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Состояние для авторизации
 
   const handleLoginLogout = () => {
     if (isLoggedIn) {
