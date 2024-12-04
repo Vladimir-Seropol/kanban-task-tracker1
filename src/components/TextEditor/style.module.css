@@ -1,0 +1,46 @@
+.ql-toolbar.ql-snow{
+    border: none;
+}
+.ql-container.ql-snow{
+    min-height: 116px;
+    border: none;
+    border-top: white;
+}
+
+/* В styles.module.css */
+
+/* Стиль для кнопок undo и redo */
+.ql-undo::before, .ql-redo::before {
+    content: ''; /* Очищаем стандартное содержимое кнопок */
+    display: block;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+  }
+  
+  /* Стрелка влево для undo */
+  .ql-undo::before {
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-right: 10px solid #000; /* Стрелка влево */
+    margin-right: 2px; /* Немного отступа справа */
+  }
+  
+  /* Стрелка вправо для redo */
+  .ql-redo::before {
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-left: 10px solid #000; /* Стрелка вправо */
+    margin-left: 2px; /* Немного отступа слева */
+  }
+  
+  /* Убираем фон и рамки */
+  .ql-undo, .ql-redo {
+    background: none;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+  }
+
+  

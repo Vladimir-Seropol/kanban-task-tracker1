@@ -47,6 +47,13 @@
     align-items: center;
 }
 
+.checkboxName {
+    font-weight: 400;
+    font-size: 14px;
+    color: #a6a6a6;
+    white-space: nowrap;
+}
+
 .board__right_selection {
     display: flex;
     gap: 16px;
@@ -137,4 +144,9 @@ margin-bottom: 8px;
     overflow: hidden;
     background: #F4F6F8;
     padding: 12px;
+   overflow-y: auto ;
+}
+
+.board__right_tasks_item_tasks::-webkit-scrollbar {
+    width: 0;
 }

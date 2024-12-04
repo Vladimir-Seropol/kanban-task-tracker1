@@ -10,6 +10,7 @@ import style from './style.module.css';
 import { UserType } from '@/types/UserType';
 import CardTask from '@/components/CardTask';
 import AddTaskModal from '@/components/AddTaskModal';
+import Toggle from '@/components/Toggle/Toggle';
 
 interface User {
   id: number;
@@ -68,6 +69,24 @@ export default function Slug() {
           task_type: 2,
           component: 2,
           stage: 'В работе',
+        },
+        {
+          id: 192496,
+          title: 'Задача 3',
+          executor: 'Miyagi & Эндшпил',
+          priority: 2,
+          task_type: 3,
+          component: 5,
+          stage: 'Новые',
+        },
+        {
+          id: 192497,
+          title: 'Задача 4',
+          executor: 'Macan',
+          priority: 2,
+          task_type: 6,
+          component: 1,
+          stage: 'Новые',
         },
       ];
       setTasks(tasksData);
@@ -140,79 +159,24 @@ export default function Slug() {
         </div>
         <div className={style.board__right_title}>
           <div className={style.board__right_title_checkbox}>
-            <h2>Demo Project</h2>
-            <input type="checkbox" />
+            <h2 style={{ marginRight: '24px' }}>Demo Project</h2>
+            <Toggle />
+            <span className={style.checkboxName}>Только мои</span>
           </div>
 
-<<<<<<< HEAD
-          {/* Условное отображение кнопки "Добавить задачу" */}
-=======
->>>>>>> 2fb2fb65024b4c16a49a5f1ce41ec31c62ada282
           {user?.is_admin && (
             <Button
               svg={
                 <Image
                   src="/icon_create.svg"
                   alt="icon_create"
-<<<<<<< HEAD
-                  width={16} // Укажите ширину изображения
-=======
                   width={16}
->>>>>>> 2fb2fb65024b4c16a49a5f1ce41ec31c62ada282
                   height={16}
                   style={{ verticalAlign: 'middle', marginRight: '8px' }}
                 />
               }
               text="Добавить задачу"
               type="button"
-<<<<<<< HEAD
-              onClick={() => {}}
-            />
-          )}
-        </div>
-        <div className={style.board__right_selection}>
-          <div className={style.board__right_selection_item}>
-            <TextInput
-              placeholder="Название проекта"
-              value=""
-              onChange={() => {}}
-              label="Название проекта"
-            />
-          </div>
-          <div className={style.board__right_selection_item}>
-            <SelectInput
-              label="Выбрать пользователей"
-              value={selectedUsers}
-              onChange={setSelectedUsers}
-              data={[]}
-            />
-          </div>
-          <div className={style.board__right_selection_item}>
-            <SelectInput
-              label="Выбрать тип"
-              data={[]}
-              value={selectedUsers}
-              onChange={setSelectedUsers}
-            />
-          </div>
-          <div className={style.board__right_selection_item}>
-            <SelectInput
-              label="Выбрать компонент"
-              data={[]}
-              value={selectedUsers}
-              onChange={setSelectedUsers}
-            />
-          </div>
-        </div>
-        <div className={style.board__right_date}>
-          <CustomDatePicker
-            placeholder="Дата начала"
-            value={startDate}
-            onChange={setStartDate}
-            className={style.my_custom_class}
-            inputClassName={style.my_input_class}
-          />
-=======
               onClick={openModal}
             />
           )}
@@ -223,7 +187,6 @@ export default function Slug() {
           onClose={closeModal}
           onSave={handleSaveTask}
         />
->>>>>>> 2fb2fb65024b4c16a49a5f1ce41ec31c62ada282
 
         <div className={style.board__right_selection}>
           <div className={style.board__right_selection_item}>
@@ -312,6 +275,30 @@ export default function Slug() {
               onDragOver={handleDragOver}
             >
               {getTasksByStatus('Выполнено').map((task) => (
+                <CardTask key={task.id} task={task} onDragEnd={handleDragEnd} />
+              ))}
+            </div>
+          </div>
+          <div className={style.board__right_tasks_item}>
+            <h5>В ревью</h5>
+            <div
+              className={style.board__right_tasks_item_tasks}
+              onDrop={(e) => handleDrop(e, 'В ревью')}
+              onDragOver={handleDragOver}
+            >
+              {getTasksByStatus('В ревью').map((task) => (
+                <CardTask key={task.id} task={task} onDragEnd={handleDragEnd} />
+              ))}
+            </div>
+          </div>
+          <div className={style.board__right_tasks_item}>
+            <h5>В тестировании</h5>
+            <div
+              className={style.board__right_tasks_item_tasks}
+              onDrop={(e) => handleDrop(e, 'В тестировании')}
+              onDragOver={handleDragOver}
+            >
+              {getTasksByStatus('В тестировании').map((task) => (
                 <CardTask key={task.id} task={task} onDragEnd={handleDragEnd} />
               ))}
             </div>
