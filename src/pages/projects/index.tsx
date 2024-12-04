@@ -8,10 +8,12 @@ import CardInternal from '@/components/ProjectsCard/CardInternal';
 import CardDemo from '@/components/ProjectsCard/CardDemo';
 import Layout from '@/pages/projects/layout';
 import style from './style.module.css';
-import { useGetProjectApiQuery } from '../../redux/services/ProjectUser';
+import {
+  useGetProjectApiQuery,
+  useGetprojectSlugQuery,
+} from '../../redux/services/ProjectUser';
 import { useGetAuthUserQuery } from '../../redux/services/AuthUser';
-import { arrProjectType } from '../../types/arrProjectType/arrProjectType';
-import { useGetTaskOneQuery } from '../../redux/services/TaskOne';
+
 export default function Board() {
   const [showArchived, setShowArchived] = useState(false); // Состояние для отображения архивных проектов
   const [archivedVisible, setArchivedVisible] = useState(false); // Для плавного отображения архивных проектов
@@ -23,33 +25,16 @@ export default function Board() {
     setTimeout(() => setProjectsVisible(!projectsVisible), 300); // Плавный переход всех проектов после архивных
   };
   //Получение данных по юзеру
-  // Вставляете там где необбходимо,
-  // isSuccess, isFetching, -необязательные параметры
-
-  const {
-    data: User,
-    isLoading,
-    isError,
-    isSuccess,
-    isFetching,
-  } = useGetAuthUserQuery('user');
+  const { data: User } = useGetAuthUserQuery('user');
   console.log(`user`, User);
   //Получение данных по всем проектам
-  const { data } = useGetProjectApiQuery('project');
-  console.log(`Проекты`, data);
-  const arrProject: arrProjectType[] = [];
-  arrProject.push(data);
-  const [search, setSearch] = useState<string>('');
-  const handleChencgeInputProject = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const searchTerm = e.target.value;
-    setSearch(searchTerm);
-  };
-  //Получение информации о задаче
+  const { data: projectAll } = useGetProjectApiQuery('project');
+  console.log(`Проекты`, projectAll);
 
-  const { data: taskOneData } = useGetTaskOneQuery(`${Number('0')}`);
-  console.log(`taskOneData`, taskOneData);
+  //Получение данных по определенному  проекту
+
+  const { data: projectSlug } = useGetprojectSlugQuery('project4');
+  console.log(`Получение данных о проекте`, projectSlug);
 
   return (
     <Layout>

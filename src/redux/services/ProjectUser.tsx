@@ -21,7 +21,13 @@ export const projectUser = createApi({
         method: 'GET',
       }),
     }),
+    getprojectSlug: builder.query({
+      query: (slug) => ({
+        url: `/project/${slug}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
-export const { useGetProjectApiQuery } = projectUser;
+export const { useGetProjectApiQuery, useGetprojectSlugQuery } = projectUser;
