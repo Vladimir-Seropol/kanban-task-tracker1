@@ -69,6 +69,24 @@ export default function Slug() {
           component: 2,
           stage: 'В работе',
         },
+        {
+          id: 192496,
+          title: 'Задача 3',
+          executor: 'Miyagi & Эндшпил',
+          priority: 2,
+          task_type: 3,
+          component: 5,
+          stage: 'Новые',
+        },
+        {
+          id: 192497,
+          title: 'Задача 4',
+          executor: 'Macan',
+          priority: 2,
+          task_type: 6,
+          component: 1,
+          stage: 'Новые',
+        },
       ];
       setTasks(tasksData);
     };
@@ -255,6 +273,30 @@ export default function Slug() {
               onDragOver={handleDragOver}
             >
               {getTasksByStatus('Выполнено').map((task) => (
+                <CardTask key={task.id} task={task} onDragEnd={handleDragEnd} />
+              ))}
+            </div>
+          </div>
+          <div className={style.board__right_tasks_item}>
+            <h5>В ревью</h5>
+            <div
+              className={style.board__right_tasks_item_tasks}
+              onDrop={(e) => handleDrop(e, 'В ревью')}
+              onDragOver={handleDragOver}
+            >
+              {getTasksByStatus('В ревью').map((task) => (
+                <CardTask key={task.id} task={task} onDragEnd={handleDragEnd} />
+              ))}
+            </div>
+          </div>
+          <div className={style.board__right_tasks_item}>
+            <h5>В тестировании</h5>
+            <div
+              className={style.board__right_tasks_item_tasks}
+              onDrop={(e) => handleDrop(e, 'В тестировании')}
+              onDragOver={handleDragOver}
+            >
+              {getTasksByStatus('В тестировании').map((task) => (
                 <CardTask key={task.id} task={task} onDragEnd={handleDragEnd} />
               ))}
             </div>

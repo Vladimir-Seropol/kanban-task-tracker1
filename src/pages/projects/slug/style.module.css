@@ -137,4 +137,9 @@ margin-bottom: 8px;
     overflow: hidden;
     background: #F4F6F8;
     padding: 12px;
+   overflow-y: auto ;
+}
+
+.board__right_tasks_item_tasks::-webkit-scrollbar {
+    width: 0;
 }

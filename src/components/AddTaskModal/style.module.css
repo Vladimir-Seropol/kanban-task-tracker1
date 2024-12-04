@@ -8,13 +8,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
+   z-index: 5;
   }
   
-  .modalContent {
+  .modal_content {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
     background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 300px;
+    width: 936px;
+    height: 100%;
+    padding: 16px 24px;
+    border-radius: 16px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
@@ -28,4 +33,20 @@
     padding: 8px 12px;
     cursor: pointer;
   }
+
+  .modal_priority,
+  .modal_date,
+  .modal_select{
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .modal_text_editor{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+
   
