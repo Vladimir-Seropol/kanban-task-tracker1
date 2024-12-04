@@ -1,61 +1,63 @@
 .board__left {
-    width: 272px;
-    /* height: 874px; */
-    background: #1b1a1d;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    padding: 16px;
-    flex-shrink: 0;
-    position: relative;
-    transition: all ease 0.3s;
-    height: 100vh;
+  width: 272px;
+  /* height: 874px; */
+  background: #1b1a1d;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 16px;
+  flex-shrink: 0;
+  position: relative;
+  transition: all ease 0.3s;
+  height: 100vh;
 }
 
-.board__left_header_icon{
-    transition: all ease 0.30s ;
+.board__left_header_icon {
+  transition: all ease 0.3s;
 }
 
-.is_clicked{
-    width: 40px;
-    padding: 10px;
+.is_clicked {
+  width: 40px;
+  padding: 10px;
 }
 
 .board__left_header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.is_clicked .board__left_header_logo{
-    opacity: 0;
+.is_clicked .board__left_header_logo {
+  opacity: 0;
 }
-.is_clicked .board__left_header_icon{
-    position: absolute;
-    top: 16px;
-    z-index: 2;
-    left: 10px;
-    transition: all ease 0.30s ;
-    transform: rotate(180deg);
-}
-
-.is_clicked .board__left_user{
-    display: none;
+.is_clicked .board__left_header_icon {
+  position: absolute;
+  top: 16px;
+  z-index: 2;
+  left: 10px;
+  transition: all ease 0.3s;
+  transform: rotate(180deg);
 }
 
-.is_clicked h4{
-    margin-left: 10px;
+.is_clicked .board__left_user {
+  display: none;
+}
+
+.is_clicked h4 {
+  margin-left: 10px;
 }
 
 .sidebarLink {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .board__left_project {
-    display: flex;
-    gap: 8px;
-    justify-content: flex-start;
-    align-items: center;
-    height: 66px;
-    border-top: 1px solid #2d2d2d;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-start;
+  align-items: center;
+  /* height: 66px; */
+  height: 90px; /*подправил высоту*/
+  margin-left: 13px; /*добавил отступы*/
+  border-top: 1px solid #2d2d2d;
 }
