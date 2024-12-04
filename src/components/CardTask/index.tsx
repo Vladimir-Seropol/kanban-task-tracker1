@@ -5,6 +5,7 @@ import style from './style.module.css';
 import Priority from '@/components/Priority/Priority';
 import TaskType from '@/components/TaskType/TaskType';
 import TaskComponent from '@/components/TaskComponent/TaskComponent';
+import CommentsCounter from '@/components/CommentsCounter/CommentsCounter';
 
 interface Task {
   id: number;
@@ -59,7 +60,7 @@ const CardTask: React.FC<CardTaskProps> = ({ task, onDragEnd }) => {
           {task?.task_type && <TaskType id={task?.task_type} />}
         </div>
         <div className={style.comment}>
-          <img src="/icon_comment.svg" alt="Комментарий" />
+          <CommentsCounter count={5} />
         </div>
       </div>
     </div>
