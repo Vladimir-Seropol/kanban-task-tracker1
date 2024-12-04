@@ -10,6 +10,7 @@ import style from './style.module.css';
 import { UserType } from '@/types/UserType';
 import CardTask from '@/components/CardTask';
 import AddTaskModal from '@/components/AddTaskModal';
+import Toggle from '@/components/Toggle/Toggle';
 
 interface User {
   id: number;
@@ -158,8 +159,9 @@ export default function Slug() {
         </div>
         <div className={style.board__right_title}>
           <div className={style.board__right_title_checkbox}>
-            <h2>Demo Project</h2>
-            <input type="checkbox" />
+            <h2 style={{ marginRight: '24px' }}>Demo Project</h2>
+            <Toggle />
+            <span className={style.checkboxName}>Только мои</span>
           </div>
 
           {user?.is_admin && (
