@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Button from '@/components/Button';
 import Link from 'next/link';
@@ -40,6 +40,7 @@ function Sidebar() {
           style={{ cursor: 'pointer' }}
         />
       </div>
+
       <div className={style.board__left_user}>
         <h2 style={{ color: '#fff' }}>User</h2>
         <Button

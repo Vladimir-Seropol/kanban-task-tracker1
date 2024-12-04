@@ -10,9 +10,9 @@ import { useRouter } from 'next/router';
 import * as yup from 'yup';
 
 import { useTokenApiMutation } from '@/redux/services/AuthApi';
-import { useAppDispatch } from '@/redux/hooks/hooks';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks/hooks';
 import { useEffect } from 'react';
-import { setUser } from '@/redux/features/auth/authSlice';
+import { setToken, getUser } from '@/redux/features/auth/authSlice';
 import style from './login.module.css';
 
 const schema = yup
@@ -31,10 +31,10 @@ const schema = yup
   .required();
 export default function Login() {
   const dispatch = useAppDispatch();
-  // console.log(dispatch);
+
   const [tokenApi, { data: tokenData, isSuccess: tokenSuccess }] =
     useTokenApiMutation();
-  // console.log(tokenApi);
+
   const {
     register,
     handleSubmit,
@@ -51,7 +51,8 @@ export default function Login() {
       const response = await tokenApi(loginData).unwrap();
 
       if (response.token) {
-        dispatch(setUser({ token: response.token }));
+        dispatch(setToken({ token: response.token }));
+
         reset(); // Сбрасываем форму
         await router.push('/projects'); // Редирект на страницу проектов
       } else {
@@ -64,7 +65,7 @@ export default function Login() {
 
   useEffect(() => {
     if (tokenSuccess && tokenData?.token) {
-      dispatch(setUser({ token: tokenData.token }));
+      dispatch(setToken({ token: tokenData.token }));
     }
   }, [tokenSuccess, dispatch, tokenData?.token]);
 
