@@ -5,6 +5,7 @@ import Link from 'next/link';
 import style from './Sidebar.module.css';
 import { useGetAuthUserQuery } from '../../redux/services/AuthUser';
 import UserAuthIdComponent from '../../components/UserAuthIdComponent/UserAuthIdComponent';
+import { useRouter } from 'next/router';
 function Sidebar() {
   const [isClicked, setIsClicked] = useState(false); // Состояние для отслеживания клика
 
@@ -13,8 +14,8 @@ function Sidebar() {
   };
   //Получение данных по юзеру
   const { data: User } = useGetAuthUserQuery('user');
-  console.log(`user`, User);
 
+  const router = useRouter();
   return (
     <aside
       className={`${style.board__left} ${isClicked ? style.is_clicked : ''}`}
@@ -60,7 +61,7 @@ function Sidebar() {
             marginTop: '-9px',
           }}
           type="button"
-          onClick={() => {}}
+          onClick={() => router.push('/login')}
         />
       </div>
       <div className={style.board__left_project}>
