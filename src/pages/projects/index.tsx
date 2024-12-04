@@ -12,7 +12,6 @@ import {
   useGetProjectApiQuery,
   useGetprojectSlugQuery,
 } from '../../redux/services/ProjectUser';
-import { useGetAuthUserQuery } from '../../redux/services/AuthUser';
 
 export default function Board() {
   const [showArchived, setShowArchived] = useState(false); // Состояние для отображения архивных проектов
@@ -25,8 +24,7 @@ export default function Board() {
     setTimeout(() => setProjectsVisible(!projectsVisible), 300); // Плавный переход всех проектов после архивных
   };
   //Получение данных по юзеру
-  const { data: User } = useGetAuthUserQuery('user');
-  console.log(`user`, User);
+
   //Получение данных по всем проектам
   const { data: projectAll } = useGetProjectApiQuery('project');
   console.log(`Проекты`, projectAll);

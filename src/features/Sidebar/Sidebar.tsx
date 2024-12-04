@@ -3,13 +3,17 @@ import Image from 'next/image';
 import Button from '@/components/Button';
 import Link from 'next/link';
 import style from './Sidebar.module.css';
-
+import { useGetAuthUserQuery } from '../../redux/services/AuthUser';
+import UserAuthIdComponent from '../../components/UserAuthIdComponent/UserAuthIdComponent';
 function Sidebar() {
   const [isClicked, setIsClicked] = useState(false); // Состояние для отслеживания клика
 
   const handleClick = () => {
     setIsClicked(!isClicked); // Меняем состояние при клике
   };
+  //Получение данных по юзеру
+  const { data: User } = useGetAuthUserQuery('user');
+  console.log(`user`, User);
 
   return (
     <aside
@@ -40,9 +44,9 @@ function Sidebar() {
           style={{ cursor: 'pointer' }}
         />
       </div>
-
+      {User && <UserAuthIdComponent User={User} />}
       <div className={style.board__left_user}>
-        <h2 style={{ color: '#fff' }}>User</h2>
+        {/* <h2 style={{ color: '#fff' }}>User</h2> */}
         <Button
           text="Выйти"
           inlineStyle={{
@@ -53,6 +57,7 @@ function Sidebar() {
             fontSize: '12px',
             lineHeight: '14.52px',
             color: '#787878',
+            marginTop: '-9px',
           }}
           type="button"
           onClick={() => {}}

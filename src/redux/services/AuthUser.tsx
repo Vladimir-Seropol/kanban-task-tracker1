@@ -22,7 +22,13 @@ export const authUser = createApi({
         method: 'GET',
       }),
     }),
+    getUserId: builder.query({
+      query: (id) => ({
+        url: `/user/${id}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
-export const { useGetAuthUserQuery } = authUser;
+export const { useGetAuthUserQuery, useGetUserIdQuery } = authUser;
