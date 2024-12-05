@@ -25,7 +25,9 @@ const FileUpload = () => {
 
   // Удаление файла из списка
   const handleRemoveFile = (fileName) => {
-    setSelectedFiles((prevFiles) => prevFiles.filter(file => file.name !== fileName));
+    setSelectedFiles((prevFiles) =>
+      prevFiles.filter((file) => file.name !== fileName),
+    );
   };
 
   return (
@@ -48,8 +50,9 @@ const FileUpload = () => {
         id="fileInput"
         onChange={handleFileSelect}
       />
-      <label className={style.label}  
-            htmlFor="fileInput"
+      <label
+        className={style.label}
+        htmlFor="fileInput"
         style={{
           display: 'inline-block',
           color: '#ABBED1',
@@ -66,9 +69,7 @@ const FileUpload = () => {
           fontSize: '14px',
           color: '#ABBED1',
         }}
-      >
-       
-      </div>
+      ></div>
 
       <div style={{ marginTop: '20px' }}>
         {selectedFiles.length > 0 && (

@@ -1,44 +1,54 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from 'react';
+import React, { useRef } from 'react';
 import styles from '../InputBase.module.css';
 
 interface TextInputProps {
   label: string;
-  placeholder: string;
   value: string;
+  placeholder: string;
   onChange: (value: string) => void;
-  // eslint-disable-next-line react/require-default-props
   disabled?: boolean;
-  // eslint-disable-next-line react/require-default-props
   status?: 'default' | 'warning' | 'error' | 'success' | 'loading';
 }
 
 export default function TextInput({
   label,
   placeholder,
-  value,
   onChange,
   disabled = false,
   status = 'default',
 }: TextInputProps) {
+  const inputRef = useRef<HTMLInputElement>(null); // Используем ref для управления значением
+
   const classNames = `${styles.input} ${styles[status]} ${disabled ? styles.disabled : ''}`;
+
+  // Объект для сообщений в зависимости от статуса
+  const statusMessages: { [key in TextInputProps['status']]: string } = {
+    default: '',
+    warning: 'Warning message',
+    error: 'Error message',
+    success: 'Success message',
+    loading: '',
+  };
 
   return (
     <div className={styles.wrapper}>
-      <label className={styles.label}>{label}</label>
+      <label className={styles.label} htmlFor="text-input">
+        {label}
+      </label>
       <input
+        id="text-input" // Для связывания с label
         type="text"
         placeholder={placeholder}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
+        ref={inputRef} // Используем ref для отслеживания значения
         className={classNames}
         disabled={disabled}
+        onChange={(e) => onChange(e.target.value)}
       />
+      {/* Выводим сообщение в зависимости от статуса */}
       {(status === 'warning' || status === 'error' || status === 'success') && (
         <span className={`${styles.message} ${styles[status]}`}>
-          {status === 'warning' && 'Warning message'}
-          {status === 'error' && 'Error message'}
-          {status === 'success' && 'Success message'}
+          {statusMessages[status]}
         </span>
       )}
     </div>

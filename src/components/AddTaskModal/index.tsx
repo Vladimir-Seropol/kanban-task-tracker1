@@ -3,11 +3,12 @@
 import React, { useState } from 'react';
 import style from './style.module.css';
 import SelectInput from '../Inputs/SelectInput/SelectInput';
-import { UserType } from '@/types/UserType';
+import { UserType } from '../../types/UserType';
 import TextInput from '../Inputs/TextInput/TextInput';
 import CustomDatePicker from '../Inputs/DatePicker/CustomDatePicker';
 import TextEditor from '../TextEditor';
 import FileUpload from '../FileUpload';
+import Button from '../Button';
 interface AddTaskModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -23,6 +24,11 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
   const [executor, setExecutor] = useState('');
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+  const [inputValue, setInputValue] = useState<string>('');
+
+  const handleInputChange = (value: string) => {
+    setInputValue(value); // Обновляем состояние с новым значением
+  };
 
   const handleSave = () => {
     if (taskTitle && executor) {
@@ -40,18 +46,16 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
       <div className={style.modal_content}>
         <h3>Создание задачи</h3>
         <div className={style.modal_task}>
-          <SelectInput
-            label={'Название *'}
-            data={[]}
-            value={[]}
-            onChange={function (value: UserType[]): void {
-              throw new Error('Function not implemented.');
-            }}
+          <TextInput
+            label="Название *" // Текст метки
+            placeholder="Название задачи"
+            value={inputValue} // Значение, которое передается из состояния
+            onChange={handleInputChange} // Функция для обработки изменений
           />
         </div>
         <div className={style.modal_select}>
           <SelectInput
-            label={'Тип задачи *'}
+            label="Тип задачи *"
             data={[]}
             value={[]}
             onChange={function (value: UserType[]): void {
@@ -59,7 +63,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
             }}
           />
           <SelectInput
-            label={'Компонент *'}
+            label="Компонент *"
             data={[]}
             value={[]}
             onChange={function (value: UserType[]): void {
@@ -67,7 +71,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
             }}
           />
           <SelectInput
-            label={'Исполнитель *'}
+            label="Исполнитель *"
             data={[]}
             value={[]}
             onChange={function (value: UserType[]): void {
@@ -77,7 +81,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
         </div>
         <div className={style.modal_priority}>
           <SelectInput
-            label={'Приоритет *'}
+            label="Приоритет *"
             data={[]}
             value={[]}
             onChange={function (value: UserType[]): void {
@@ -85,12 +89,10 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
             }}
           />
           <TextInput
-            label={'Оценка'}
-            placeholder={'Оценка'}
-            value={''}
-            onChange={function (value: string): void {
-              throw new Error('Function not implemented.');
-            }}
+            label="Оценка"
+            placeholder="Оценка"
+            value={inputValue} // Значение, которое передается из состояния
+            onChange={handleInputChange} // Функция для обработки изменений
           />
         </div>
         <div className={style.modal_date}>
@@ -111,14 +113,49 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
         </div>
         <div className={style.modal_text_editor}>
           <TextEditor />
-           
+
           <FileUpload />
-       
         </div>
-      
+        <div className={style.modal_link}>
+          <TextInput
+            label="Layout link"
+            placeholder="Layout link"
+            value={inputValue} // Значение, которое передается из состояния
+            onChange={handleInputChange} // Функция для обработки изменений
+          />
+          <TextInput
+            label="Markup link "
+            placeholder="Markup link "
+            value={inputValue} // Значение, которое передается из состояния
+            onChange={handleInputChange} // Функция для обработки изменений
+          />
+          <TextInput
+            label="Dev Link"
+            placeholder="Dev Link"
+            value={inputValue} // Значение, которое передается из состояния
+            onChange={handleInputChange} // Функция для обработки изменений
+          />
+        </div>
+
         <div className={style.modalActions}>
-          <button onClick={onClose}>Отмена</button>
-          <button onClick={handleSave}>Сохранить</button>
+          <Button
+            text="Добавить"
+            type="button"
+            onClick={handleSave}
+            inlineStyle={{ width: '130px', height: '48px' }}
+          />
+          <Button
+            text="Отменить"
+            type="button"
+            onClick={onClose}
+            inlineStyle={{
+              width: '130px',
+              height: '48px',
+              background: 'none',
+              border: '1px solid #3787EB',
+              color: '#3787EB',
+            }}
+          />
         </div>
       </div>
     </div>
