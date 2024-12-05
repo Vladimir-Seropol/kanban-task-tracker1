@@ -1,0 +1,58 @@
+.cards {
+  display: flex;
+  margin-top: 16px;
+  padding-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.board__right_projects {
+  width: 264px;
+  height: 124px;
+  background-color: #f4f6f8;
+  padding: 16px;
+}
+
+.board__right_selected_project_item p:nth-child(1) {
+  margin-bottom: 16px;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 16.8px;
+  color: #1b1a1d;
+}
+
+.board__right_selected_projects {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+/* Скрываем иконку по умолчанию */
+.icon_star {
+  display: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Показываем иконку при наведении на родительский контейнер */
+.board__right_projects:hover .icon_star {
+  display: block;
+}
+
+/* Цвет иконки звезды, если она в избранном */
+.icon_star_favorite {
+  filter: brightness(0) saturate(100%) invert(34%) sepia(100%) saturate(747%)
+    hue-rotate(196deg) brightness(99%) contrast(100%);
+  /* Цвет #3787EB в формате фильтра */
+  fill: #3787eb;
+  display: block;
+}
+
+.board__right_projects p {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 14.52px;
+  text-align: left;
+  color: #a6a6a6;
+}

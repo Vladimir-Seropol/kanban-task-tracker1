@@ -12,6 +12,7 @@ import {
   useGetProjectApiQuery,
   useGetprojectSlugQuery,
 } from '../../redux/services/ProjectUser';
+import CardProjectAllApi from '../../components/CardProjectAllApi/CardProjectAllApi';
 
 export default function Board() {
   const [showArchived, setShowArchived] = useState(false); // Состояние для отображения архивных проектов
@@ -25,15 +26,14 @@ export default function Board() {
   };
   //Получение данных по юзеру
 
-  //Получение данных по всем проектам
-  const { data: projectAll } = useGetProjectApiQuery('project');
-  console.log(`Проекты`, projectAll);
-
   //Получение данных по определенному  проекту
 
   const { data: projectSlug } = useGetprojectSlugQuery('project4');
   console.log(`Получение данных о проекте`, projectSlug);
-
+  //Получение данных по   проектам
+  const { data: projectAll } = useGetProjectApiQuery('project');
+  console.log(`Проекты`, projectAll);
+  const handleChengeInput = () => {};
   return (
     <Layout>
       <main className={style.board__right}>
@@ -62,7 +62,7 @@ export default function Board() {
               label="Номер задачи"
               placeholder="Введите номер задачи"
               value={''}
-              onChange={() => {}}
+              onChange={() => handleChengeInput}
             />
           </div>
         </div>
@@ -119,6 +119,7 @@ export default function Board() {
               </div>
             </div>
           )}
+          {projectAll && <CardProjectAllApi projectAll={projectAll} />}
         </div>
       </main>
     </Layout>
