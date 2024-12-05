@@ -2,20 +2,28 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Button from '@/components/Button';
 import Link from 'next/link';
-import style from './Sidebar.module.css';
-import { useGetAuthUserQuery } from '../../redux/services/AuthUser';
-import UserAuthIdComponent from '../../components/UserAuthIdComponent/UserAuthIdComponent';
 import { useRouter } from 'next/router';
+import { useGetAuthUserQuery } from '@/redux/services/AuthUser';
+import UserAuthIdComponent from '@/components/UserAuthIdComponent/UserAuthIdComponent';
+import style from './Sidebar.module.css';
+
 function Sidebar() {
   const [isClicked, setIsClicked] = useState(false); // Состояние для отслеживания клика
+  const router = useRouter();
 
   const handleClick = () => {
     setIsClicked(!isClicked); // Меняем состояние при клике
   };
+
   //Получение данных по юзеру
   const { data: User } = useGetAuthUserQuery('user');
 
-  const router = useRouter();
+  const clearAuthCookies = () => {
+    document.cookie =
+      'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+    router.push('/login');
+  };
+
   return (
     <aside
       className={`${style.board__left} ${isClicked ? style.is_clicked : ''}`}
@@ -61,7 +69,7 @@ function Sidebar() {
             marginTop: '-9px',
           }}
           type="button"
-          onClick={() => router.push('/login')}
+          onClick={clearAuthCookies}
         />
       </div>
       <div className={style.board__left_project}>
