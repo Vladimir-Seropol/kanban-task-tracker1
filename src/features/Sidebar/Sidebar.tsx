@@ -1,33 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Button from '@/components/Button';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import UserInfo from '@/components/UserInfo/UserInfo';
 import { UserResponseType } from '@/types/UserResponseType';
+import useSWR, { BareFetcher } from 'swr';
 import style from './Sidebar.module.css';
+
+const fetcher: BareFetcher<UserResponseType> = async (url: string) => {
+  const response = await fetch(url);
+  const result = await response.json();
+  return result.data;
+};
 
 function Sidebar() {
   const [isClicked, setIsClicked] = useState(false); // Состояние для отслеживания клика
   const router = useRouter();
-  const [user, setUser] = useState<UserResponseType>();
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch('/api/auth/user');
-        if (!response.ok) {
-          throw new Error(await response.text());
-        }
-        const data = await response.json();
-        setUser(data.data);
-      } catch (err: any) {
-        console.error(err);
-      }
-    };
-
-    fetchUserData();
-  }, []);
+  const { data } = useSWR('/api/auth/user', fetcher);
 
   const handleClick = () => {
     setIsClicked(!isClicked); // Меняем состояние при клике
@@ -68,7 +58,7 @@ function Sidebar() {
           style={{ cursor: 'pointer' }}
         />
       </div>
-      {user && <UserInfo name={user.name} position={user.position} />}
+      {data && <UserInfo name={data.name} position={data.position} />}
       <div className={style.board__left_user}>
         <Button
           text="Выйти"
