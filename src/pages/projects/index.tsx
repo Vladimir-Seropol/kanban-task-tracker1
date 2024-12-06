@@ -14,6 +14,7 @@ import {
   useGetprojectSlugQuery,
 } from '../../redux/services/ProjectUser';
 import CardProjectAllApi from '../../components/CardProjectAllApi/CardProjectAllApi';
+import { useGetAuthUserQuery } from '../../redux/services/AuthUser';
 
 export default function Board() {
   const [showArchived, setShowArchived] = useState(false); // Состояние для отображения архивных проектов
@@ -34,7 +35,9 @@ export default function Board() {
   //Получение данных по   проектам
   const { data: projectAll } = useGetProjectApiQuery('project');
   console.log(`Проекты`, projectAll);
+
   const handleChengeInput = () => {};
+
   return (
     <Layout>
       <main className={style.board__right}>
@@ -46,6 +49,7 @@ export default function Board() {
             <span>Проекты</span>
           </nav>
         </div>
+
         <div className={style.board__right_title}>
           <h2>Проекты</h2>
         </div>
@@ -105,12 +109,18 @@ export default function Board() {
             >
               <h5 style={{ marginBottom: '16px' }}>Избранные проекты</h5>
               <div className={style.board__right_selected_projects}>
-              <CardProjectAllApi projectAll={{ data: [{
-                  name: 'Project 1', user_count: 5,
-                  id: 0
-              }] }} 
-              style={{}}
-              />
+                <CardProjectAllApi
+                  projectAll={{
+                    data: [
+                      {
+                        name: 'Project 1',
+                        user_count: 5,
+                        id: 0,
+                      },
+                    ],
+                  }}
+                  style={{}}
+                />
                 <CardDemo />
               </div>
               {/* <div className={style.board__right_internal_projects}>

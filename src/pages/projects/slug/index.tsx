@@ -11,7 +11,7 @@ import { UserType } from '@/types/UserType';
 import CardTask from '@/components/CardTask';
 import AddTaskModal from '@/components/AddTaskModal';
 import Toggle from '@/components/Toggle/Toggle';
-
+import { useGetAuthUserQuery } from '../../../redux/services/AuthUser';
 interface User {
   id: number;
   firstName: string;
@@ -35,14 +35,16 @@ export default function Slug() {
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { data: Admin } = useGetAuthUserQuery('user');
+  console.log(`Admin`, Admin);
+
   // Эмуляция запроса данных о пользователе (например, через fetch)
   useEffect(() => {
     const fetchUserData = async () => {
-      const userData = {
-        name: 'User',
-        is_admin: true,
-      };
-      setUser(userData);
+      if (Admin?.data?.is_admin) {
+        setUser(Admin);
+      }
     };
 
     fetchUserData();
@@ -164,7 +166,7 @@ export default function Slug() {
             <span className={style.checkboxName}>Только мои</span>
           </div>
 
-          {user?.is_admin && (
+          {user && (
             <Button
               svg={
                 <Image
