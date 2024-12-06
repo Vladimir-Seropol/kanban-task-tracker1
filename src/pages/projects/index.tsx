@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-curly-brace-presence */
 /* eslint-disable react/no-array-index-key */
@@ -104,10 +105,15 @@ export default function Board() {
             >
               <h5 style={{ marginBottom: '16px' }}>Избранные проекты</h5>
               <div className={style.board__right_selected_projects}>
-                <CardInternal />
+              <CardProjectAllApi projectAll={{ data: [{
+                  name: 'Project 1', user_count: 5,
+                  id: 0
+              }] }} 
+              style={{}}
+              />
                 <CardDemo />
               </div>
-              <div className={style.board__right_internal_projects}>
+              {/* <div className={style.board__right_internal_projects}>
                 {Array.from({ length: 16 }).map((_, index) => (
                   <div
                     key={index}
@@ -116,7 +122,7 @@ export default function Board() {
                     <CardInternal />
                   </div>
                 ))}
-              </div>
+              </div> */}
             </div>
           )}
           {projectAll && <CardProjectAllApi projectAll={projectAll} />}

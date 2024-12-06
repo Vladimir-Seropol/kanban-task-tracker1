@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable func-names */
+/* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/function-component-definition */
 /* eslint-disable import/newline-after-import */
 import React, { useState } from 'react';
@@ -49,50 +52,55 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
           <TextInput
             label="Название *" // Текст метки
             placeholder="Название задачи"
-            value={inputValue} // Значение, которое передается из состояния
-            onChange={handleInputChange} // Функция для обработки изменений
+            value={inputValue} 
+            onChange={handleInputChange}
           />
         </div>
         <div className={style.modal_select}>
           <SelectInput
+            placeholder="Задача"
             label="Тип задачи *"
             data={[]}
             value={[]}
-            onChange={function (value: UserType[]): void {
+            onChange={function (_value: UserType[]): void {
               throw new Error('Function not implemented.');
             }}
           />
           <SelectInput
+            placeholder="Не выбран"
             label="Компонент *"
             data={[]}
             value={[]}
-            onChange={function (value: UserType[]): void {
+            onChange={function (_value: UserType[]): void {
               throw new Error('Function not implemented.');
             }}
           />
           <SelectInput
+            placeholder="Исполнитель "
             label="Исполнитель *"
+
             data={[]}
             value={[]}
-            onChange={function (value: UserType[]): void {
+            onChange={function (_value: UserType[]): void {
               throw new Error('Function not implemented.');
             }}
           />
         </div>
         <div className={style.modal_priority}>
           <SelectInput
+            placeholder="Приоритет"
             label="Приоритет *"
             data={[]}
             value={[]}
-            onChange={function (value: UserType[]): void {
+            onChange={function (_value: UserType[]): void {
               throw new Error('Function not implemented.');
             }}
           />
           <TextInput
             label="Оценка"
             placeholder="Оценка"
-            value={inputValue} // Значение, которое передается из состояния
-            onChange={handleInputChange} // Функция для обработки изменений
+            value={inputValue} 
+            onChange={handleInputChange}
           />
         </div>
         <div className={style.modal_date}>
@@ -120,20 +128,20 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
           <TextInput
             label="Layout link"
             placeholder="Layout link"
-            value={inputValue} // Значение, которое передается из состояния
-            onChange={handleInputChange} // Функция для обработки изменений
+            value={inputValue} 
+            onChange={handleInputChange}
           />
           <TextInput
             label="Markup link "
             placeholder="Markup link "
-            value={inputValue} // Значение, которое передается из состояния
-            onChange={handleInputChange} // Функция для обработки изменений
+            value={inputValue} 
+            onChange={handleInputChange}
           />
           <TextInput
             label="Dev Link"
             placeholder="Dev Link"
-            value={inputValue} // Значение, которое передается из состояния
-            onChange={handleInputChange} // Функция для обработки изменений
+            value={inputValue} 
+            onChange={handleInputChange} 
           />
         </div>
 

@@ -47,6 +47,10 @@
     color: #1b1a1d;
 }
 
+.board__right_selection_item{
+    width: 100%;
+}
+
 .board__right_title_checkbox {
     display: flex;
     gap: 8px;
@@ -69,10 +73,13 @@
 .board__right_selection {
     display: flex;
     justify-content: flex-start;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     gap: 16px;
     margin-bottom: 16px;
+}
 
+.board__right_selection_item{
+    width: 100%;
 }
 
 .board__right_projects {
@@ -88,11 +95,11 @@
     color: #1B1A1D;
 }
 
-/* Плавное исчезновение и появление всех проектов */
+
 
 .board__right_featured.show {
     opacity: 1;
-    max-height: 1500px; /* Достаточная высота для показа всех проектов */
+    max-height: 1500px; 
 }
 
 
@@ -112,7 +119,7 @@
     margin-bottom: 40px;
 }
 
-/* Плавное исчезновение и появление архивных проектов */
+
 .board__right_archived_projects {
     opacity: 0;
     max-height: 0;
@@ -122,17 +129,14 @@
 
 .board__right_archived_projects.show {
     opacity: 1;
-    max-height: 100vh; /* Достаточная высота для показа контента */
+    max-height: 100vh; 
 }
 
 
 .board__right_internal_projects {
     display: flex;
     flex-wrap: wrap;
-    /* overflow: hidden; */
-    /* height: 340px; */
-
-    gap: 16px;
+     gap: 16px;
     border-top: 1px solid #EEEEEE;
     padding-top: 40px;
 }
@@ -143,4 +147,11 @@
     display: flex;
     gap: 8px;
     align-items: center;
+}
+
+
+@media screen and (max-width: 880px) {
+    .board__right_selection {
+        flex-wrap: wrap;
+    }
 }

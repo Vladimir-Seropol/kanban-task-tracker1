@@ -1,3 +1,7 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react/jsx-no-useless-fragment */
+/* eslint-disable react/function-component-definition */
 import React, { useEffect, useState } from 'react';
 import style from './CardProjectAllApi.module.css';
 import { CardProjectAllApiProps } from '../../types/CardProjectAllApi/CardProjectAllApi';

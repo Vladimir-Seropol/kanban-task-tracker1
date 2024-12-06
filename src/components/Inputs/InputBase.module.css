@@ -3,8 +3,10 @@
     flex-direction: column;
     position: relative;
     /* max-width: 302px; */
-    width: 264px;
+    /* min-width: 264px; */
+    width: 100%;
     font-family: var(--font-inter) sans-serif;
+   
 }
 
 .inputContainer {
@@ -29,7 +31,7 @@
     transition: all ease 0.2s;
 
     border-radius: 8px;
-    padding: 16px 20px;
+    padding: 16px 11px;
     height: 40px;
 
     box-sizing: border-box;

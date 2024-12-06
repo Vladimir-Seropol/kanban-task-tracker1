@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable prettier/prettier */
 
@@ -12,52 +13,51 @@ interface MultiSelectProps {
   data: UserType[];
   value: UserType[];
   onChange: (value: UserType[]) => void;
-  // eslint-disable-next-line react/require-default-props
   disabled?: boolean;
+  placeholder?: string; // Новый пропс для placeholder
 }
 
-export default function MultiSelectInput({
+const MultiSelectInput: React.FC<MultiSelectProps> = ({
   label,
   data = [],
   value,
   onChange,
   disabled = false,
-}: MultiSelectProps) {
+  placeholder = '', // Значение по умолчанию
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  // Тогглинг открытия выпадающего списка
   const toggleDropdown = () => {
-    if (!disabled) setIsOpen(!isOpen);
+    if (!disabled) setIsOpen((prev) => !prev);
   };
 
+  // Обработка клавиш Enter или Space для открытия/закрытия выпадающего списка
   const handleKeyboardEvent = (event: React.KeyboardEvent) => {
-    // Проверяем, нажата ли клавиша Enter или Space
     if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault(); // Предотвращаем стандартное поведение (например, прокрутку при нажатии Space)
+      event.preventDefault(); // Предотвращаем стандартное поведение
       toggleDropdown();
     }
   };
 
+  // Обработчик изменения состояния выбранного пользователя
   const handleCheckboxChange = (user: UserType) => {
-    const isSelected = value.some(
-      (selectedUser) => selectedUser.id === user.id,
-    );
+    const isSelected = value.some((selectedUser) => selectedUser.id === user.id);
     const updatedValue = isSelected
       ? value.filter((selectedUser) => selectedUser.id !== user.id)
       : [...value, user];
     onChange(updatedValue);
   };
 
+  // Проверка, выбран ли пользователь
   const isChecked = (user: UserType) =>
     value.some((selectedUser) => selectedUser.id === user.id);
 
   // Закрытие выпадающего списка при клике вне компонента
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
@@ -77,6 +77,8 @@ export default function MultiSelectInput({
         tabIndex={0}
         onClick={toggleDropdown}
         onKeyDown={handleKeyboardEvent}
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
       >
         <div className={stylesSelect.selectedUsersContainer}>
           {value.length > 0 ? (
@@ -86,18 +88,21 @@ export default function MultiSelectInput({
               </span>
             ))
           ) : (
-            <span style={{ color: '#a6a6a6' }}>Пользователи</span>
+            <span className={stylesSelect.placeholder} style={{ color: '#a6a6a6' }}>{placeholder}</span> // Используем пропс placeholder
           )}
         </div>
       </div>
       {isOpen && (
-        <ul className={stylesSelect.dropdown}>
+        <ul className={stylesSelect.dropdown} role="listbox">
           {data.map((option) => (
             <li key={option.id} className={stylesSelect.dropdownItem}>
-              <label className={stylesSelect.checkboxLabel} htmlFor="checkbox">
+              <label
+                className={stylesSelect.checkboxLabel}
+                htmlFor={`checkbox-${option.id}`}
+              >
                 <input
                   type="checkbox"
-                  id="checkbox"
+                  id={`checkbox-${option.id}`}
                   checked={isChecked(option)}
                   onChange={() => handleCheckboxChange(option)}
                   disabled={disabled}
@@ -110,4 +115,6 @@ export default function MultiSelectInput({
       )}
     </div>
   );
-}
+};
+
+export default MultiSelectInput;

@@ -29,7 +29,6 @@ interface Task {
 }
 
 export default function Slug() {
-    
   const [user, setUser] = useState(null);
   const [selectedUsers, setSelectedUsers] = useState<UserType[]>([]);
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -192,15 +191,16 @@ export default function Slug() {
         <div className={style.board__right_selection}>
           <div className={style.board__right_selection_item}>
             <TextInput
-              placeholder="Название проекта"
+              placeholder="Название задачи"
               value=""
               onChange={() => {}}
-              label="Название проекта"
+              label="Название задачи"
             />
           </div>
           <div className={style.board__right_selection_item}>
             <SelectInput
               label="Выбрать пользователей"
+              placeholder="Пользователи"
               value={selectedUsers}
               onChange={setSelectedUsers}
               data={[]}
@@ -209,6 +209,7 @@ export default function Slug() {
           <div className={style.board__right_selection_item}>
             <SelectInput
               label="Выбрать тип"
+              placeholder="выбрать тип"
               data={[]}
               value={selectedUsers}
               onChange={setSelectedUsers}
@@ -217,6 +218,7 @@ export default function Slug() {
           <div className={style.board__right_selection_item}>
             <SelectInput
               label="Выбрать компонент"
+              placeholder="Выбрать компонент"
               data={[]}
               value={selectedUsers}
               onChange={setSelectedUsers}
