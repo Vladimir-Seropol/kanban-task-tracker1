@@ -31,7 +31,7 @@ export function middleware(request: NextRequest) {
   // Если токен есть, добавляем его в заголовок
   if (authToken) {
     const response = NextResponse.next();
-    response.headers.set('authorization', `Bearer ${authToken}`);
+    response.headers.set('Authorization', `Bearer ${authToken.value}`);
     return response;
   }
 
