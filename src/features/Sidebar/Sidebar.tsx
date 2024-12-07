@@ -1,22 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Button from '@/components/Button';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useGetAuthUserQuery } from '@/redux/services/AuthUser';
-import UserAuthIdComponent from '@/components/UserAuthIdComponent/UserAuthIdComponent';
+import UserInfo from '@/components/UserInfo/UserInfo';
+import { UserResponseType } from '@/types/UserResponseType';
+import useSWR, { BareFetcher } from 'swr';
 import style from './Sidebar.module.css';
+
+const fetcher: BareFetcher<UserResponseType> = async (url: string) => {
+  const response = await fetch(url);
+  const result = await response.json();
+  return result.data;
+};
 
 function Sidebar() {
   const [isClicked, setIsClicked] = useState(false); // Состояние для отслеживания клика
   const router = useRouter();
+  const { data } = useSWR('/api/auth/user', fetcher);
 
   const handleClick = () => {
     setIsClicked(!isClicked); // Меняем состояние при клике
   };
-
-  //Получение данных по юзеру
-  const { data: User } = useGetAuthUserQuery('user');
 
   const clearAuthCookies = () => {
     document.cookie =
@@ -33,14 +38,14 @@ function Sidebar() {
           className={style.board__left_header_logo}
           src="/logo_board.png"
           alt="logo_board"
-          width={103} // Укажите ширину изображения
+          width={103}
           height={21}
         />
         <Image
           className={style.board__left_header_icon}
           src="/icon_board1.svg"
           alt="icon_board"
-          width={24} // Укажите ширину изображения
+          width={24}
           height={24}
           onClick={handleClick}
           onKeyDown={(e: { key: string }) => {
@@ -53,9 +58,8 @@ function Sidebar() {
           style={{ cursor: 'pointer' }}
         />
       </div>
-      {User && <UserAuthIdComponent User={User} />}
+      {data && <UserInfo name={data.name} position={data.position} />}
       <div className={style.board__left_user}>
-        {/* <h2 style={{ color: '#fff' }}>User</h2> */}
         <Button
           text="Выйти"
           inlineStyle={{
@@ -73,12 +77,7 @@ function Sidebar() {
         />
       </div>
       <div className={style.board__left_project}>
-        <Image
-          src="/icon_board3.svg"
-          alt="icon_board"
-          width={18} // Укажите ширину изображения
-          height={18}
-        />
+        <Image src="/icon_board3.svg" alt="icon_board" width={18} height={18} />
         <Link href="/projects">
           <h4 className={`${style.sidebarLink}`} style={{ color: '#fff' }}>
             Проекты

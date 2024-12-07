@@ -5,6 +5,7 @@ import { authUser } from './services/AuthUser';
 import { projectUser } from './services/ProjectUser';
 import { TaskSlug } from './services/TaskSlug';
 import { TaskOne } from './services/TaskOne';
+
 export const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,

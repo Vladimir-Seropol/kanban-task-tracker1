@@ -1,7 +1,3 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable react/jsx-no-useless-fragment */
-/* eslint-disable react/function-component-definition */
 import React, { useEffect, useState } from 'react';
 import style from './CardProjectAllApi.module.css';
 import { CardProjectAllApiProps } from '../../types/CardProjectAllApi/CardProjectAllApi';
@@ -23,22 +19,23 @@ const CardProjectAllApi: React.FC<CardProjectAllApiProps> = ({
   }, []); // Этот эффект сработает только один раз при монтировании компонента
 
   //Обработчик клика по звездочке
-  const handleStarClick = () => {
-    const newFavoriteState = !isFavorite;
-    setIsFavorite(newFavoriteState); // Переключаем состояние
+  // const handleStarClick = () => {
+  //   const newFavoriteState = !isFavorite;
+  //   setIsFavorite(newFavoriteState); // Переключаем состояние
 
-    // Сохраняем состояние в localStorage
-    localStorage.setItem('isFavorite', JSON.stringify(newFavoriteState));
-  };
+  //   // Сохраняем состояние в localStorage
+  //   localStorage.setItem('isFavorite', JSON.stringify(newFavoriteState));
+  // };
 
   return (
     <>
       <div className={style.cards}>
-        {projectAll.data.map((item, id) => (
+        {projectAll.data.map((item) => (
           <div
             className={style.board__right_projects}
             style={{ width, height }}
-            key={id}
+            key={item.id}
+            onClick={() => console.log('клик', item.id)}
           >
             <div className={style.board__right_selected_projects}>
               <img src="/icon_work.svg" alt="icon" />
@@ -46,11 +43,11 @@ const CardProjectAllApi: React.FC<CardProjectAllApiProps> = ({
                 className={`${style.icon_star} ${isFavorite ? style.icon_star_favorite : ''}`}
                 src="/icon_star.svg"
                 alt="Star"
-                onClick={handleStarClick}
+                onClick={() => {}}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     // Обработка Enter или Space
-                    handleStarClick();
+                    // handleStarClick();
                   }
                 }}
                 role="button" // Указываем, что это кнопка
