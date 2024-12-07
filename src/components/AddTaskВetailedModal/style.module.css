@@ -1,0 +1,177 @@
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+   z-index: 5;
+   cursor: auto;
+  }
+  
+  .modal_content {
+    display: flex;
+    gap: 16px;
+    background-color: white;
+    width: 1200px;
+    height: auto;
+    padding: 16px 24px;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  .modal_left{
+    flex: 0 0 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 18.2px;
+    color: #2D2D2D;
+  }
+
+  .modal_title{
+display: flex;
+justify-content: space-between;
+align-items: center;
+  }
+
+
+  .modal_title h3{
+font-size: 20px;
+font-weight: 600;
+line-height: 24.2px;
+color: #222222;
+  }
+
+  .modal_title button{
+    border: none;
+    cursor: pointer;
+  }
+
+  .modal_left span{
+color: #3787EB;
+  }
+  
+  .modalActions {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .modal_item{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .modal_text_editor h4{
+    margin-top: 16px;
+font-size: 16px;
+font-weight: 500;
+line-height: 24px;
+color: #2D2D2D;
+  }
+
+  .modalActions button {
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+
+  .modal_priority,
+  .modal_select{
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .modal_text_editor{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .modal_link{
+    display: flex;
+    gap: 6px
+  }
+
+  .closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    z-index: 6;
+  }
+  
+
+
+  .board__right_date{
+    display: flex;
+  }
+
+  .board__right{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .board__right_actions{
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+  }
+
+  .board__right_actions button{
+    border: none;
+    cursor: pointer;
+  }
+  .board__right_actions_buttons_more,
+  .board__right_actions_buttons{
+    display: flex;
+    gap: 8px;
+  }
+
+  .board__right_rating{
+    display: flex;
+position: relative;
+  }
+
+  .board__right_rating img{
+    position: absolute;
+    right: 10px;
+    top: 15px;
+
+  }
+
+  .modal_text_input{
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  .modal_text_input button{
+    border: none;
+position: absolute;
+right: 0;
+top: 33px;
+cursor: pointer;
+
+  }
+  .modal_comments_buttons,
+  .modal_comments,
+  .modal_comments_buttons_more{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .modal_comments_buttons button{
+    border: none;
+  }
+
+  

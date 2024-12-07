@@ -46,8 +46,8 @@ export default function CardDemo() {
       </div>
       <Link href="/projects/slug">
         <div className={style.board__right_selected_project_item}>Demo</div>
+        <p>12 сотрудников</p>
       </Link>
-      <p>12 сотрудников</p>
     </div>
   );
 }

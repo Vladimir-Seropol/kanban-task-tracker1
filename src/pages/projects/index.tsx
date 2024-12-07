@@ -133,7 +133,7 @@ export default function Board() {
                       },
                     ],
                   }}
-                  style={{}}
+
                 />
                 <CardDemo />
               </div>
@@ -147,9 +147,10 @@ export default function Board() {
                   </div>
                 ))}
               </div> */}
+              {projectAll && <CardProjectAllApi projectAll={projectAll} />}
             </div>
           )}
-          {projectAll && <CardProjectAllApi projectAll={projectAll} />}
+          
         </div>
       </main>
     </Layout>
