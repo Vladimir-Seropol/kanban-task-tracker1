@@ -18,6 +18,7 @@ export const store = configureStore({
     projectAll: projectAllReducer,
     projectctArhived: projectArhivedReducer,
   },
+
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(authApi.middleware)

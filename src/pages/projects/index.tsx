@@ -16,10 +16,7 @@ import {
 import CardProjectAllApi from '../../components/CardProjectAllApi/CardProjectAllApi';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks/hooks';
 import { getProjectArchived } from '../../redux/features/projectArchived/projectArchivedSlice';
-import {
-  useGetAuthUserQuery,
-  useGetUserIdQuery,
-} from '../../redux/services/AuthUser';
+import { useGetAuthUserQuery } from '../../redux/services/AuthUser';
 export default function Board() {
   const [showArchived, setShowArchived] = useState(false); // Состояние для отображения архивных проектов
   const [archivedVisible, setArchivedVisible] = useState(false); // Для плавного отображения архивных проектов
@@ -133,7 +130,6 @@ export default function Board() {
                       },
                     ],
                   }}
-
                 />
                 <CardDemo />
               </div>
@@ -150,7 +146,6 @@ export default function Board() {
               {projectAll && <CardProjectAllApi projectAll={projectAll} />}
             </div>
           )}
-          
         </div>
       </main>
     </Layout>
