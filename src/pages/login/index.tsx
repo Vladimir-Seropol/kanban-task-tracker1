@@ -12,7 +12,7 @@ import * as yup from 'yup';
 import { useTokenApiMutation } from '@/redux/services/AuthApi';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks/hooks';
 import { useEffect } from 'react';
-import { setToken, getUser } from '@/redux/features/auth/authSlice';
+import { setToken } from '@/redux/features/auth/authSlice';
 import style from './login.module.css';
 
 const schema = yup

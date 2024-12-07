@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-curly-brace-presence */
 /* eslint-disable react/no-array-index-key */
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import TextInput from '@/components/Inputs/TextInput/TextInput';
 import CardInternal from '@/components/ProjectsCard/CardInternal';
@@ -14,29 +14,43 @@ import {
   useGetprojectSlugQuery,
 } from '../../redux/services/ProjectUser';
 import CardProjectAllApi from '../../components/CardProjectAllApi/CardProjectAllApi';
-import { useGetAuthUserQuery } from '../../redux/services/AuthUser';
-
+import { useAppDispatch, useAppSelector } from '@/redux/hooks/hooks';
+import { getProjectArchived } from '../../redux/features/projectArchived/projectArchivedSlice';
+import {
+  useGetAuthUserQuery,
+  useGetUserIdQuery,
+} from '../../redux/services/AuthUser';
 export default function Board() {
   const [showArchived, setShowArchived] = useState(false); // Состояние для отображения архивных проектов
   const [archivedVisible, setArchivedVisible] = useState(false); // Для плавного отображения архивных проектов
   const [projectsVisible, setProjectsVisible] = useState(true); // Для плавного отображения всех проектов
+  const dispatch = useAppDispatch();
 
   const handleCheckboxChange = () => {
     setShowArchived((prev) => !prev); // Переключаем состояние чекбокса
     setArchivedVisible((prev) => !prev); // Плавное скрытие/показ архивных проектов
     setTimeout(() => setProjectsVisible(!projectsVisible), 300); // Плавный переход всех проектов после архивных
+    dispatch(getProjectArchived(projectAll.data));
   };
-  //Получение данных по юзеру
+  const [searchTerm, setSearchTerm] = useState<string>('');
+
+  //Получение данных по проектам
+
+  const { data: projectAll } = useGetProjectApiQuery('project');
+  console.log(`Проекты`, projectAll);
+
+  //Получение данных по текущему пользователю
+  const { data: User } = useGetAuthUserQuery('user');
+  console.log(`Получение данных по текущему пользователю`, User);
 
   //Получение данных по определенному  проекту
 
   const { data: projectSlug } = useGetprojectSlugQuery('project4');
   console.log(`Получение данных о проекте`, projectSlug);
-  //Получение данных по   проектам
-  const { data: projectAll } = useGetProjectApiQuery('project');
-  console.log(`Проекты`, projectAll);
 
-  const handleChengeInput = () => {};
+  const handleChengeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
 
   return (
     <Layout>
@@ -58,8 +72,8 @@ export default function Board() {
             <TextInput
               label="Название проекта"
               placeholder="Введите название проекта"
-              value={''}
-              onChange={() => {}}
+              value={searchTerm}
+              onChange={() => handleChengeInput}
             />
           </div>
           <div className={style.board__right_selection_item}>

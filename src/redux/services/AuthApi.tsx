@@ -1,12 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import config from '../../utils/config';
 import { RootState } from '../store';
-import { selectUser } from '../features/auth/authSlice';
-export interface User {
-  data: {};
-}
+
 export interface UserResponse {
-  user: User;
   token: string;
 }
 
