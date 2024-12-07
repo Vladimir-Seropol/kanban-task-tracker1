@@ -29,26 +29,22 @@ interface Task {
 }
 
 export default function Slug() {
-  const [user, setUser] = useState(null);
   const [selectedUsers, setSelectedUsers] = useState<UserType[]>([]);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [admin, setIsAdmin] = useState<boolean>(false);
   const { data: Admin } = useGetAuthUserQuery('user');
   console.log(`Admin`, Admin);
 
   // Эмуляция запроса данных о пользователе (например, через fetch)
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (Admin?.data?.is_admin) {
-        setUser(Admin);
-      }
-    };
 
-    fetchUserData();
-  }, []);
+  useEffect(() => {
+    if (Admin?.data?.is_admin) {
+      setIsAdmin((prev) => !prev);
+    }
+  }, [Admin]);
 
   // Эмуляция данных о задачах
   useEffect(() => {
@@ -166,7 +162,7 @@ export default function Slug() {
             <span className={style.checkboxName}>Только мои</span>
           </div>
 
-          {user && (
+          {admin && (
             <Button
               svg={
                 <Image

@@ -17,6 +17,7 @@ import CardProjectAllApi from '../../components/CardProjectAllApi/CardProjectAll
 import { useAppDispatch, useAppSelector } from '@/redux/hooks/hooks';
 import { getProjectArchived } from '../../redux/features/projectArchived/projectArchivedSlice';
 import { useGetAuthUserQuery } from '../../redux/services/AuthUser';
+
 export default function Board() {
   const [showArchived, setShowArchived] = useState(false); // Состояние для отображения архивных проектов
   const [archivedVisible, setArchivedVisible] = useState(false); // Для плавного отображения архивных проектов

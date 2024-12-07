@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import config from '../../utils/config';
-import { RootState } from '../store';
-
+import { getCookies } from '../getCookies/getCookies';
 export interface UserResponse {
   token: string;
 }
@@ -15,8 +14,9 @@ export const authApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: config.API_URL,
 
-    prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).auth.token;
+    prepareHeaders: (headers) => {
+      const myCookies = getCookies();
+      const token = myCookies.auth_token;
       console.log(`token-user`, token);
       if (token) {
         headers.set('authorization', `Bearer ${token}`);
