@@ -105,12 +105,17 @@ export default function Board() {
             >
               <h5 style={{ marginBottom: '16px' }}>Избранные проекты</h5>
               <div className={style.board__right_selected_projects}>
-              <CardProjectAllApi projectAll={{ data: [{
-                  name: 'Project 1', user_count: 5,
-                  id: 0
-              }] }} 
-              style={{}}
-              />
+                <CardProjectAllApi
+                  projectAll={{
+                    data: [
+                      {
+                        name: 'Project 1',
+                        user_count: 5,
+                        id: 0,
+                      },
+                    ],
+                  }}
+                />
                 <CardDemo />
               </div>
               {/* <div className={style.board__right_internal_projects}>
@@ -123,9 +128,10 @@ export default function Board() {
                   </div>
                 ))}
               </div> */}
+              {projectAll && <CardProjectAllApi projectAll={projectAll} />}
             </div>
           )}
-          {projectAll && <CardProjectAllApi projectAll={projectAll} />}
+          
         </div>
       </main>
     </Layout>
