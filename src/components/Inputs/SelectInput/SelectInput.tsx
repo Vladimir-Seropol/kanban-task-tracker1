@@ -69,7 +69,7 @@ const MultiSelectInput: React.FC<MultiSelectProps> = ({
   }, []);
 
   return (
-    <div className={`${styles.wrapper} ${inter.className}`} ref={dropdownRef}>
+    <div className={styles.wrapper} ref={dropdownRef}>
       <label className={styles.label}>{label}</label>
       <div
         className={`${styles.input} ${disabled ? styles.disabled : ''} ${stylesSelect.input}`}

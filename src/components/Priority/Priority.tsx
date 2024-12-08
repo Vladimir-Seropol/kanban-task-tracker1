@@ -40,7 +40,7 @@ export default function Priority(props: PriorityProps) {
   return (
     visible && (
       <div
-        className={`${styles.priority} ${inter.className}`}
+        className={styles.priority}
         style={{ color, backgroundColor }}
       >
         <span>{namePriority}</span>

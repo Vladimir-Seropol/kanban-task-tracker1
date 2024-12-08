@@ -70,7 +70,7 @@ export default function Login() {
   }, [tokenSuccess, dispatch, tokenData?.token]);
 
   return (
-    <main className={`${style.login} ${inter.className}`}>
+    <main className={style.login}>
       <div className="container">
         <h2 className={style.title}>Вход</h2>
         <form className={style.form} onSubmit={handleSubmit(onSubmit)}>

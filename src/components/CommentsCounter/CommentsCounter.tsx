@@ -18,7 +18,7 @@ export default function CommentsCounter(props: CommentsCounterProps) {
   }, [count]);
 
   return (
-    <div className={`${style.commentsCounter} ${inter.className}`}>
+    <div className={style.commentsCounter}>
       <div className={`${isNewMessage && style.newMessage}`}>
         <svg
           width="16"
