@@ -6,17 +6,12 @@ import CustomDatePicker from '@/components/Inputs/DatePicker/CustomDatePicker';
 import SelectInput from '@/components/Inputs/SelectInput/SelectInput';
 import TextInput from '@/components/Inputs/TextInput/TextInput';
 import Layout from '@/pages/projects/layout';
-import style from './style.module.css';
 import { UserType } from '@/types/UserType';
 import CardTask from '@/components/CardTask';
 import AddTaskModal from '@/components/AddTaskModal';
 import Toggle from '@/components/Toggle/Toggle';
-import { useGetAuthUserQuery } from '../../../redux/services/AuthUser';
-interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-}
+import { useGetAuthUserQuery } from '@/redux/services/AuthUser';
+import style from './style.module.css';
 
 interface Task {
   id: number;
@@ -37,8 +32,6 @@ export default function Slug() {
   const [admin, setIsAdmin] = useState<boolean>(false);
   const { data: Admin } = useGetAuthUserQuery('user');
   console.log(`Admin`, Admin);
-
-  // Эмуляция запроса данных о пользователе (например, через fetch)
 
   useEffect(() => {
     if (Admin?.data?.is_admin) {
@@ -109,6 +102,7 @@ export default function Slug() {
       ...task,
       id: tasks.length + 1,
       status: 'Новые',
+      stage: 'Новые',
     };
     setTasks([...tasks, newTask]); // Добавляем задачу в список
   };
