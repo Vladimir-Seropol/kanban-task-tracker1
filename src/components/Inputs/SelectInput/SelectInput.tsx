@@ -1,12 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable jsx-a11y/control-has-associated-label */
-/* eslint-disable react/function-component-definition */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable prettier/prettier */
-
 import React, { useState, useEffect, useRef } from 'react';
-import { UserType } from '@/types/UserType';
-import { inter } from '@/assets/fonts/fonts';
+import Image from 'next/image';
 import styles from '../InputBase.module.css';
 import stylesSelect from './SelectInput.module.css';
 
@@ -16,17 +9,23 @@ interface MultiSelectProps {
   value: any[];
   onChange: (value: any[]) => void;
   disabled?: boolean;
-  placeholder?: string; // Новый пропс для placeholder
+  placeholder?: string;
 }
 
-const MultiSelectInput: React.FC<MultiSelectProps> = ({
+interface SelectItemProps {
+  id: number;
+  name: string;
+  surname?: string;
+}
+
+export default function MultiSelectInput({
   label,
-  data = [],
+  data,
   value,
   onChange,
-  disabled = false,
-  placeholder = '', // Значение по умолчанию
-}) => {
+  disabled,
+  placeholder,
+}: MultiSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -44,22 +43,27 @@ const MultiSelectInput: React.FC<MultiSelectProps> = ({
   };
 
   // Обработчик изменения состояния выбранного пользователя
-  const handleCheckboxChange = (user: UserType) => {
-    const isSelected = value.some((selectedUser) => selectedUser.id === user.id);
+  const handleCheckboxChange = (item: SelectItemProps) => {
+    const isSelected = value.some(
+      (selectedItem) => selectedItem.id === item.id,
+    );
     const updatedValue = isSelected
-      ? value.filter((selectedUser) => selectedUser.id !== user.id)
-      : [...value, user];
+      ? value.filter((selectedItem) => selectedItem.id !== item.id)
+      : [...value, item];
     onChange(updatedValue);
   };
 
   // Проверка, выбран ли пользователь
-  const isChecked = (user: UserType) =>
-    value.some((selectedUser) => selectedUser.id === user.id);
+  const isChecked = (item: SelectItemProps) =>
+    value.some((selectedItem) => selectedItem.id === item.id);
 
   // Закрытие выпадающего списка при клике вне компонента
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -72,7 +76,7 @@ const MultiSelectInput: React.FC<MultiSelectProps> = ({
 
   return (
     <div className={styles.wrapper} ref={dropdownRef}>
-      <label className={styles.label}>{label}</label>
+      <span className={styles.label}>{label}</span>
       <div
         className={`${styles.input} ${disabled ? styles.disabled : ''} ${stylesSelect.input}`}
         role="button"
@@ -82,17 +86,26 @@ const MultiSelectInput: React.FC<MultiSelectProps> = ({
         aria-haspopup="listbox"
         aria-expanded={isOpen}
       >
-        <div className={stylesSelect.selectedUsersContainer}>
+        <div className={stylesSelect.selectedItemsContainer}>
           {value.length > 0 ? (
-            value.map((user) => (
-              <span key={user.id} className={stylesSelect.selectedUser}>
-                {`${user.name} ${user.surname}`}
+            value.map((item) => (
+              <span key={item.id} className={stylesSelect.selectedItem}>
+                {item.name && item.surname
+                  ? `${item.name} ${item.surname}`
+                  : `${item.name}`}
               </span>
             ))
           ) : (
-            <span className={stylesSelect.placeholder} style={{ color: '#a6a6a6' }}>{placeholder}</span> // Используем пропс placeholder
+            <span
+              className={stylesSelect.placeholder}
+              style={{ color: '#a6a6a6' }}
+            >
+              {placeholder}
+            </span> // Используем пропс placeholder
           )}
-          <button type="button" className={stylesSelect.selectButton}><img src="/Vector_1.png" alt="" /></button>
+          <button type="button" className={stylesSelect.selectButton}>
+            <Image src="/arrow-down.png" alt="" width={16} height={16} />
+          </button>
         </div>
       </div>
       {isOpen && (
@@ -110,16 +123,20 @@ const MultiSelectInput: React.FC<MultiSelectProps> = ({
                   onChange={() => handleCheckboxChange(option)}
                   disabled={disabled}
                 />
-                
-                {`${option.name} ${option.surname}`}
+
+                {option.name && option.surname
+                  ? `${option.name} ${option.surname}`
+                  : `${option.name}`}
               </label>
-              
             </li>
           ))}
         </ul>
       )}
     </div>
   );
-};
+}
 
-export default MultiSelectInput;
+MultiSelectInput.defaultProps = {
+  placeholder: '',
+  disabled: false,
+};

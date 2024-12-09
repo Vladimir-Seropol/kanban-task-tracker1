@@ -55,7 +55,7 @@
     cursor: pointer;
 }
 
-.selectedUsersContainer {
+.selectedItemsContainer {
     margin-right: 44px;
     display: flex;
     column-gap: 6px;
@@ -66,11 +66,11 @@
     font-size: 14px;
 }
 
-.selectedUsersContainer::-webkit-scrollbar {
+.selectedItemsContainer::-webkit-scrollbar {
     display: none;
 }
 
-.selectedUser {
+.selectedItem {
     border-radius: 4px;
     padding: 2px 8px;
     background: #fff;
@@ -79,35 +79,37 @@
 }
 
 /* Для placeholder */
-/* .placeholder {
+.placeholder {
     width: 100%;
-    display: flex;
     align-items: center;
     justify-content: space-between;
     color: #a6a6a6;
     display: inline-flex;
-    align-items: center;
-  }
-  
-  .placeholder::after {
-    position: absolute;
-    right: 12px;
-    content: '';
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid #a6a6a6;  
-    margin-left: 5px; 
-  } */
-  
-  .selectButton{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 143%;
+}
+
+/*.placeholder::after {*/
+/*    position: absolute;*/
+/*    right: 12px;*/
+/*    content: '';*/
+/*    width: 0;*/
+/*    height: 0;*/
+/*    border-left: 5px solid transparent;*/
+/*    border-right: 5px solid transparent;*/
+/*    border-top: 5px solid #a6a6a6;*/
+/*    margin-left: 5px;*/
+/*}*/
+
+.selectButton {
     position: absolute;
     border: none;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-  }
+    background: transparent;
+}
   
  

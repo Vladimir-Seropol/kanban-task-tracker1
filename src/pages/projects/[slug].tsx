@@ -32,6 +32,8 @@ export default function Slug() {
   console.log(`Получение данных о проекте`, projectSlug);
 
   const [selectedUsers, setSelectedUsers] = useState<UserType[]>([]);
+  const [selectedComponents, setSelectedComponents] = useState<string[]>([]);
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [startDate, setStartDate] = useState<Date | null>(
     projectSlug?.data?.begin,
   );
@@ -210,10 +212,10 @@ export default function Slug() {
           <div className={style.board__right_selection_item}>
             <SelectInput
               label="Выбрать тип"
-              placeholder="выбрать тип"
+              placeholder="Выбрать тип"
               data={[]}
-              value={selectedUsers}
-              onChange={setSelectedUsers}
+              value={selectedTypes}
+              onChange={setSelectedTypes}
             />
           </div>
           <div className={style.board__right_selection_item}>
@@ -221,8 +223,8 @@ export default function Slug() {
               label="Выбрать компонент"
               placeholder="Выбрать компонент"
               data={projectSlug?.data?.flow.possibleProjectComponents}
-              value={selectedUsers}
-              onChange={setSelectedUsers}
+              value={selectedComponents}
+              onChange={setSelectedComponents}
             />
           </div>
         </div>
