@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import style from './CardProjectAllApi.module.css';
 import { CardProjectAllApiProps } from '../../types/CardProjectAllApi/CardProjectAllApi';
+import Link from 'next/link';
 
 const CardProjectAllApi: React.FC<CardProjectAllApiProps> = ({
   projectAll,
@@ -55,7 +56,9 @@ const CardProjectAllApi: React.FC<CardProjectAllApiProps> = ({
               />
             </div>
             <div className={style.board__right_selected_project_item}>
-              <p>{item.name} </p>
+              <Link href={`/projects/${item.slug}`}>
+                <p>{item.name} </p>
+              </Link>
             </div>
             <p>{item.user_count} сотрудников</p>
           </div>
