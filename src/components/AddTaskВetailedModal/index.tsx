@@ -1,3 +1,6 @@
+/* eslint-disable react/jsx-curly-brace-presence */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/function-component-definition */
 import React, { useState } from 'react';
 import style from './style.module.css';
@@ -10,6 +13,7 @@ import { UserType } from '@/types/UserType';
 import TextInput from '../Inputs/TextInput/TextInput';
 import CustomDatePicker from '../Inputs/DatePicker/CustomDatePicker';
 import FileUploadTop from '../FileUploadTop';
+import Image from 'next/image'; // Необходим импорт для компонента Image
 
 interface AddTaskВetailedModalProps {
   isOpen: boolean;
@@ -35,10 +39,6 @@ const AddTaskВetailedModal: React.FC<AddTaskВetailedModalProps> = ({
   const [taskTitle, setTaskTitle] = useState(task.title);
   const [executor, setExecutor] = useState(task.executor);
 
-  // Добавляем состояния для файлов для каждого блока
-  const [topFiles, setTopFiles] = useState<File[]>([]); // Для верхнего блока
-  const [bottomFiles, setBottomFiles] = useState<File[]>([]); // Для нижнего блока
-
   const handleSave = () => {
     if (taskTitle && executor) {
       onSave({ title: taskTitle, executor });
@@ -62,8 +62,13 @@ const AddTaskВetailedModal: React.FC<AddTaskВetailedModalProps> = ({
         <div className={style.modal_left}>
           <div className={style.modal_title}>
             <h3>{task.title}</h3>
-            <button>
-              <img src="/CopyLinkButton.png" alt="Copy link button" />
+            <button type="button">
+              <Image
+                src="/CopyLinkButton.png"
+                alt="Copy link button"
+                width={24}
+                height={24}
+              />
             </button>
           </div>
 
@@ -87,7 +92,6 @@ const AddTaskВetailedModal: React.FC<AddTaskВetailedModalProps> = ({
             </div>
           </div>
 
-          {/* Верхний блок для загрузки файлов */}
           <div className={style.modal_file_upload}>
             <FileUploadTop />
           </div>
@@ -97,7 +101,6 @@ const AddTaskВetailedModal: React.FC<AddTaskВetailedModalProps> = ({
             <TextEditor />
           </div>
 
-          {/* Нижний блок для загрузки файлов */}
           <div className={style.modal_file_upload}>
             <FileUpload />
           </div>
@@ -110,13 +113,35 @@ const AddTaskВetailedModal: React.FC<AddTaskВetailedModalProps> = ({
               inlineStyle={{ width: '130px', height: '48px' }}
             />
           </div>
-          <div className={style.modal_comments}>{'messegs'}
+          <div className={style.modal_comments}>
+            {'messegs'}
             <div className={style.modal_comments_buttons}>
-                <button><img src="/task-icons.png" alt="Button copy" /></button>
-                <div className={style.modal_comments_buttons_more}>
-                    <button><img src="/Edit_icon.png" alt="Button edit" /></button>
-                    <button><img src="/Delete.png" alt="Button delete" /></button>
-                </div>
+              <button type="button">
+                <Image
+                  src="/task-icons.png"
+                  alt="Button copy"
+                  width={24}
+                  height={24}
+                />
+              </button>
+              <div className={style.modal_comments_buttons_more}>
+                <button type="button">
+                  <Image
+                    src="/Edit_icon.png"
+                    alt="Button edit"
+                    width={24}
+                    height={24}
+                  />
+                </button>
+                <button type="button">
+                  <Image
+                    src="/Delete.png"
+                    alt="Button delete"
+                    width={24}
+                    height={24}
+                  />
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -126,15 +151,30 @@ const AddTaskВetailedModal: React.FC<AddTaskВetailedModalProps> = ({
             <div className={style.board__right_actions}>
               <div>id: {task.id}</div>
               <div className={style.board__right_actions_buttons}>
-                <button>
-                  <img src="/Task_actions.png" alt="Button task actions " />
+                <button type="button">
+                  <Image
+                    src="/Task_actions.png"
+                    alt="Button task actions "
+                    width={24}
+                    height={24}
+                  />
                 </button>
                 <div className={style.board__right_actions_buttons_more}>
-                  <button>
-                    <img src="/Delete1.png" alt="Button delete" />
+                  <button type="button">
+                    <Image
+                      src="/Delete1.png"
+                      alt="Button delete"
+                      width={24}
+                      height={24}
+                    />
                   </button>
-                  <button>
-                    <img src="/Copy.png" alt="Button copy" />
+                  <button type="button">
+                    <Image
+                      src="/Copy.png"
+                      alt="Button copy"
+                      width={24}
+                      height={24}
+                    />
                   </button>
                 </div>
               </div>
@@ -145,9 +185,7 @@ const AddTaskВetailedModal: React.FC<AddTaskВetailedModalProps> = ({
               placeholder="Новая"
               data={[]}
               value={[]}
-              onChange={function (value: UserType[]): void {
-                throw new Error('Function not implemented.');
-              }}
+              onChange={() => {}}
             />
             <div>Приоритет: {task.priority ? task.priority : 'Не указан'}</div>
             <div className={style.board__right_rating}>
@@ -155,25 +193,23 @@ const AddTaskВetailedModal: React.FC<AddTaskВetailedModalProps> = ({
                 label={''}
                 value={''}
                 placeholder={'Оценка'}
-                onChange={function (value: string): void {
-                  throw new Error('Function not implemented.');
-                }}
+                onChange={() => {}}
               />
-              <img src="/SidebarIcon.png" alt="" />
+              <Image src="/SidebarIcon.png" alt="" width={24} height={24} />
             </div>
 
             <div className={style.board__right_date}>
               <CustomDatePicker
                 placeholder="Дата создания"
-                value={''}
-                onChange={''}
+                // value={''}
+                onChange={() => {}}
                 className={style.my_custom_class}
                 inputClassName={style.my_input_class}
               />
               <CustomDatePicker
                 placeholder="Дата начала"
-                value={''}
-                onChange={''}
+                // value={''}
+                onChange={() => {}}
                 className={style.my_custom_class}
                 inputClassName={style.my_input_class}
               />
@@ -184,7 +220,7 @@ const AddTaskВetailedModal: React.FC<AddTaskВetailedModalProps> = ({
               label=""
               placeholder="Эпик"
               value={'inputValue'}
-              onChange={'handleInputChange'}
+              onChange={() => {}}
             />
             <div className={style.modal_comments}>{'messegs'}</div>
             <div className={style.modal_link_down}>
@@ -193,10 +229,15 @@ const AddTaskВetailedModal: React.FC<AddTaskВetailedModalProps> = ({
                   label="Layout link"
                   placeholder="Layout link"
                   value={'inputValue'}
-                  onChange={'handleInputChange'}
+                  onChange={() => {}}
                 />
-                <button>
-                  <img src="/Counter.png" alt="Follow the link" />
+                <button type="button">
+                  <Image
+                    src="/Counter.png"
+                    alt="Follow the link"
+                    width={24}
+                    height={24}
+                  />
                 </button>
               </div>
               <div className={style.modal_text_input}>
@@ -204,10 +245,15 @@ const AddTaskВetailedModal: React.FC<AddTaskВetailedModalProps> = ({
                   label="Dev Link"
                   placeholder="Dev Link"
                   value={'inputValue'}
-                  onChange={'handleInputChange'}
+                  onChange={() => {}}
                 />
-                <button>
-                  <img src="/Counter.png" alt="Follow the link" />
+                <button type="button">
+                  <Image
+                    src="/Counter.png"
+                    alt="Follow the link"
+                    width={24}
+                    height={24}
+                  />
                 </button>
               </div>
             </div>
@@ -215,11 +261,12 @@ const AddTaskВetailedModal: React.FC<AddTaskВetailedModalProps> = ({
         </div>
 
         <button
+          type="button"
           className={style.closeButton}
           onClick={onClose}
           aria-label="Close"
         >
-          <img src="/close_button.png" alt="" />
+          <Image src="/close_button.png" alt="" width={24} height={24} />
         </button>
       </div>
     </div>

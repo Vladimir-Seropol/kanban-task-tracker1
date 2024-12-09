@@ -1,7 +1,37 @@
-.ql-toolbar.ql-snow{
-    border: none;
-}
-.ql-container.ql-snow{
+/* Убираем обводку для панели инструментов (ql-toolbar) */
+.ql-toolbar {
+    border: none !important;  /* Убираем обводку */
+  }
+  
+  /* Убираем обводку для контейнера редактора (ql-container) */
+  .ql-container {
+    border: none !important;  /* Убираем обводку */
+  }
+  
+  /* Убираем обводку для контейнера с темой snow */
+  .ql-snow .ql-container {
+    border: none !important;  /* Убираем обводку */
+  }
+  
+  /* Убираем обводку для контейнера с темой snow */
+  .ql-snow .ql-toolbar {
+    border: none !important;  /* Убираем обводку */
+  }
+
+  /* Убираем обводку для панели инструментов в snow-теме */
+.ql-snow .ql-toolbar {
+    border: none !important;  /* Обязательно используем !important, чтобы перезаписать стили */
+  }
+  
+  /* Убираем обводку для контейнера с редактором в snow-теме */
+  .ql-snow .ql-container {
+    border: none !important;
+  }
+
+
+
+
+.ql-container .ql-snow{
     min-height: 116px;
     border: none;
     border-top: white;
@@ -9,9 +39,9 @@
 
 /* В styles.module.css */
 
-/* Стиль для кнопок undo и redo */
+
 .ql-undo::before, .ql-redo::before {
-    content: ''; /* Очищаем стандартное содержимое кнопок */
+    content: ''; 
     display: block;
     width: 0;
     height: 0;

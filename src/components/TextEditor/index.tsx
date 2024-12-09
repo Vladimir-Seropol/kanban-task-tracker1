@@ -23,7 +23,7 @@ const TextEditor = () => {
   };
 
   return (
-    <div className={style.container} style={{ width: '100%', minHeight: '228px', margin: '0 auto', backgroundColor: '#F4F6F8' }}>
+    <div className={style.container} style={{ width: '100%', minHeight: '228px', margin: '0 auto', backgroundColor: '#F4F6F8', border: 'none' }}>
       <ReactQuill
         value={editorValue}
         onChange={handleEditorChange}

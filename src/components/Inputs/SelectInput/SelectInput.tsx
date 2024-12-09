@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable react/function-component-definition */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable prettier/prettier */
@@ -90,6 +92,7 @@ const MultiSelectInput: React.FC<MultiSelectProps> = ({
           ) : (
             <span className={stylesSelect.placeholder} style={{ color: '#a6a6a6' }}>{placeholder}</span> // Используем пропс placeholder
           )}
+          <button type="button" className={stylesSelect.selectButton}><img src="/Vector_1.png" alt="" /></button>
         </div>
       </div>
       {isOpen && (
@@ -107,8 +110,10 @@ const MultiSelectInput: React.FC<MultiSelectProps> = ({
                   onChange={() => handleCheckboxChange(option)}
                   disabled={disabled}
                 />
+                
                 {`${option.name} ${option.surname}`}
               </label>
+              
             </li>
           ))}
         </ul>

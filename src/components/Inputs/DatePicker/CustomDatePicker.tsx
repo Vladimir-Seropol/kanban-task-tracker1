@@ -7,7 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import styles from '../InputBase.module.css';
 
 interface DatePickerProps {
-  value: Date | null;
+  value?: Date | null;
   onChange: (date: Date | null) => void;
   disabled?: boolean;
   className?: string; // Для кастомного класса контейнера

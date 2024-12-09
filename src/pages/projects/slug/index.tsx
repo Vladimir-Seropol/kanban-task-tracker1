@@ -6,12 +6,12 @@ import CustomDatePicker from '@/components/Inputs/DatePicker/CustomDatePicker';
 import SelectInput from '@/components/Inputs/SelectInput/SelectInput';
 import TextInput from '@/components/Inputs/TextInput/TextInput';
 import Layout from '@/pages/projects/layout';
-import style from './style.module.css';
 import { UserType } from '@/types/UserType';
 import CardTask from '@/components/CardTask';
 import AddTaskModal from '@/components/AddTaskModal';
 import Toggle from '@/components/Toggle/Toggle';
 import { useGetAuthUserQuery } from '../../../redux/services/AuthUser';
+import style from './style.module.css';
 interface User {
   id: number;
   firstName: string;
@@ -166,7 +166,7 @@ export default function Slug() {
             <span className={style.checkboxName}>Только мои</span>
           </div>
 
-          {user && (
+          {/* {user?.data.is_admin && ( */}
             <Button
               svg={
                 <Image
@@ -181,7 +181,7 @@ export default function Slug() {
               type="button"
               onClick={openModal}
             />
-          )}
+           {/* )} */}
         </div>
         {/* Модальное окно */}
         <AddTaskModal
