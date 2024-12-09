@@ -12,9 +12,9 @@ import stylesSelect from './SelectInput.module.css';
 
 interface MultiSelectProps {
   label: string;
-  data: UserType[];
-  value: UserType[];
-  onChange: (value: UserType[]) => void;
+  data: any[];
+  value: any[];
+  onChange: (value: any[]) => void;
   disabled?: boolean;
   placeholder?: string; // Новый пропс для placeholder
 }
