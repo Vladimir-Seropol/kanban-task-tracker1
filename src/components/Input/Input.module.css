@@ -3,7 +3,6 @@
   flex-direction: column;
   position: relative;
   max-width: 302px;
-  font-family: var(--font-inter) sans-serif;
 }
 
 .inputContainer {

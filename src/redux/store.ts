@@ -5,7 +5,8 @@ import { authUser } from './services/AuthUser';
 import { projectUser } from './services/ProjectUser';
 import { TaskSlug } from './services/TaskSlug';
 import { TaskOne } from './services/TaskOne';
-
+import projectArhivedReducer from './features/projectArchived/projectArchivedSlice';
+import projectAllReducer from './features/projectAll/projectAll';
 export const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
@@ -14,7 +15,10 @@ export const store = configureStore({
     [TaskSlug.reducerPath]: TaskSlug.reducer,
     [TaskOne.reducerPath]: TaskOne.reducer,
     auth: authReducer,
+    projectAll: projectAllReducer,
+    projectctArhived: projectArhivedReducer,
   },
+
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(authApi.middleware)

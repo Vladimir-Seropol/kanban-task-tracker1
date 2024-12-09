@@ -1,12 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { RootState } from '../store';
+import { getCookies } from '../getCookies/getCookies';
+
 export const projectUser = createApi({
   reducerPath: 'project',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://trainee-academy.devds.ru/api',
-    prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).auth.token;
-      console.log(`token-project`, token);
+    prepareHeaders: (headers) => {
+      const myCookies = getCookies();
+      const token = myCookies.auth_token;
       if (token) {
         headers.set('authorization', `Bearer ${token}`);
       }

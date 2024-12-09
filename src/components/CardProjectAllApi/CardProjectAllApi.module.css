@@ -14,7 +14,7 @@
 
 .board__right_selected_project_item p:nth-child(1) {
   margin-bottom: 16px;
-  font-family: Inter;
+
   font-size: 14px;
   font-weight: 600;
   line-height: 16.8px;

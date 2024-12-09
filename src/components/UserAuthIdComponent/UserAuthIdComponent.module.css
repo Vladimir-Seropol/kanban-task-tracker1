@@ -1,0 +1,30 @@
+.wrapper_UserAuth {
+  display: flex;
+  width: 240px;
+  height: 48px;
+}
+.wrapper_UserAuth img {
+  border-radius: 50%;
+}
+
+.div_info_UserAuth {
+  display: flex;
+  flex-direction: column;
+  margin-left: 8px;
+  margin-top: 5px;
+}
+.div_info_UserAuth p {
+  font-size: 14px;
+  line-height: 16.94px;
+}
+
+.div_info_UserAuth p:nth-child(1) {
+  font-weight: 500;
+  color: #fff;
+}
+
+.div_info_UserAuth p:nth-child(2) {
+  font-weight: 400;
+  color: #787878;
+  margin-top: 7px;
+}

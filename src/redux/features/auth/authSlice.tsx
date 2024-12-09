@@ -1,15 +1,12 @@
 import { RootState } from '@/redux/store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { User } from '../../services/AuthApi';
 
 export interface AuthState {
   token: string | null;
-  user: User | null;
 }
 
 const initialState: AuthState = {
   token: null,
-  user: null,
 };
 
 const auth = createSlice({
@@ -20,13 +17,10 @@ const auth = createSlice({
       document.cookie = `auth_token=${encodeURIComponent(action.payload.token)}; path=/; samesite=strict`;
       state.token = action.payload.token;
     },
-    getUser: (state, action: PayloadAction<{ token: string; user: User }>) => {
-      state.user = action.payload.user;
-    },
   },
 });
 
-export const { setToken, getUser } = auth.actions;
+export const { setToken } = auth.actions;
 
 export default auth.reducer;
 

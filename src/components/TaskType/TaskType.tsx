@@ -60,7 +60,7 @@ export default function TaskType(props: TaskTypeProps) {
   return (
     visible && (
       <span
-        className={`${styles.taskComponent} ${inter.className}`}
+        className={styles.taskComponent}
         style={{ backgroundColor, color }}
       >
         {taskTypeName}

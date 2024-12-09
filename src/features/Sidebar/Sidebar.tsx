@@ -7,6 +7,8 @@ import UserInfo from '@/components/UserInfo/UserInfo';
 import { UserResponseType } from '@/types/UserResponseType';
 import useSWR, { BareFetcher } from 'swr';
 import style from './Sidebar.module.css';
+import { useGetAuthUserQuery } from '../../redux/services/AuthUser';
+import UserAuthIdComponent from '../../components/UserAuthIdComponent/UserAuthIdComponent';
 
 const fetcher: BareFetcher<UserResponseType> = async (url: string) => {
   const response = await fetch(url);
@@ -18,7 +20,7 @@ function Sidebar() {
   const [isClicked, setIsClicked] = useState(false); // Состояние для отслеживания клика
   const router = useRouter();
   const { data } = useSWR('/api/auth/user', fetcher);
-
+  console.log('AuthUser', data);
   const handleClick = () => {
     setIsClicked(!isClicked); // Меняем состояние при клике
   };
@@ -28,7 +30,8 @@ function Sidebar() {
       'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
     router.push('/login');
   };
-
+  //Получение данных по юзеру
+  const { data: User } = useGetAuthUserQuery('user');
   return (
     <aside
       className={`${style.board__left} ${isClicked ? style.is_clicked : ''}`}
@@ -58,7 +61,8 @@ function Sidebar() {
           style={{ cursor: 'pointer' }}
         />
       </div>
-      {data && <UserInfo name={data.name} position={data.position} />}
+      {/* {data && <UserInfo name={data.name} position={data.position} />} */}
+      {User && <UserAuthIdComponent User={User} />}
       <div className={style.board__left_user}>
         <Button
           text="Выйти"

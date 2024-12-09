@@ -10,6 +10,7 @@ import { UserType } from '@/types/UserType';
 import CardTask from '@/components/CardTask';
 import AddTaskModal from '@/components/AddTaskModal';
 import Toggle from '@/components/Toggle/Toggle';
+<<<<<<< HEAD
 import { useGetAuthUserQuery } from '../../../redux/services/AuthUser';
 import style from './style.module.css';
 interface User {
@@ -17,6 +18,10 @@ interface User {
   firstName: string;
   lastName: string;
 }
+=======
+import { useGetAuthUserQuery } from '@/redux/services/AuthUser';
+import style from './style.module.css';
+>>>>>>> ac81d5e17f714700fc8950754314b2010a7a070a
 
 interface Task {
   id: number;
@@ -29,26 +34,20 @@ interface Task {
 }
 
 export default function Slug() {
-  const [user, setUser] = useState(null);
   const [selectedUsers, setSelectedUsers] = useState<UserType[]>([]);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [admin, setIsAdmin] = useState<boolean>(false);
   const { data: Admin } = useGetAuthUserQuery('user');
   console.log(`Admin`, Admin);
 
-  // Эмуляция запроса данных о пользователе (например, через fetch)
   useEffect(() => {
-    const fetchUserData = async () => {
-      if (Admin?.data?.is_admin) {
-        setUser(Admin);
-      }
-    };
-
-    fetchUserData();
-  }, []);
+    if (Admin?.data?.is_admin) {
+      setIsAdmin((prev) => !prev);
+    }
+  }, [Admin]);
 
   // Эмуляция данных о задачах
   useEffect(() => {
@@ -113,6 +112,7 @@ export default function Slug() {
       ...task,
       id: tasks.length + 1,
       status: 'Новые',
+      stage: 'Новые',
     };
     setTasks([...tasks, newTask]); // Добавляем задачу в список
   };
@@ -166,7 +166,8 @@ export default function Slug() {
             <span className={style.checkboxName}>Только мои</span>
           </div>
 
-          {/* {user?.data.is_admin && ( */}
+
+          {admin && (
             <Button
               svg={
                 <Image
