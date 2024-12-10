@@ -30,8 +30,10 @@ function Sidebar() {
       'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
     router.push('/login');
   };
-  //Получение данных по юзеру
+
+  // Получение данных по юзеру
   const { data: User } = useGetAuthUserQuery('user');
+  
   return (
     <aside
       className={`${style.board__left} ${isClicked ? style.is_clicked : ''}`}
@@ -61,9 +63,9 @@ function Sidebar() {
           style={{ cursor: 'pointer' }}
         />
       </div>
-      {/* {data && <UserInfo name={data.name} position={data.position} />} */}
-      {User && <UserAuthIdComponent User={User} />}
+
       <div className={style.board__left_user}>
+        {User && <UserAuthIdComponent User={User} />}
         <Button
           text="Выйти"
           inlineStyle={{
@@ -74,13 +76,17 @@ function Sidebar() {
             fontSize: '12px',
             lineHeight: '14.52px',
             color: '#787878',
-            marginTop: '-9px',
+            marginTop: '12px',
           }}
           type="button"
           onClick={clearAuthCookies}
         />
       </div>
-      <div className={style.board__left_project}>
+
+      <div
+        className={style.board__left_project}
+        style={{ marginLeft: isClicked ? '0' : '13px' }} // Изменение margin-left в зависимости от состояния
+      >
         <Image src="/icon_board3.svg" alt="icon_board" width={18} height={18} />
         <Link href="/projects">
           <h4 className={`${style.sidebarLink}`} style={{ color: '#fff' }}>

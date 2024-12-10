@@ -10,18 +10,8 @@ import { UserType } from '@/types/UserType';
 import CardTask from '@/components/CardTask';
 import AddTaskModal from '@/components/AddTaskModal';
 import Toggle from '@/components/Toggle/Toggle';
-<<<<<<< HEAD
-import { useGetAuthUserQuery } from '../../../redux/services/AuthUser';
-import style from './style.module.css';
-interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-}
-=======
 import { useGetAuthUserQuery } from '@/redux/services/AuthUser';
 import style from './style.module.css';
->>>>>>> ac81d5e17f714700fc8950754314b2010a7a070a
 
 interface Task {
   id: number;
@@ -41,6 +31,7 @@ export default function Slug() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [admin, setIsAdmin] = useState<boolean>(false);
   const { data: Admin } = useGetAuthUserQuery('user');
+
   console.log(`Admin`, Admin);
 
   useEffect(() => {
@@ -145,6 +136,11 @@ export default function Slug() {
     return tasks.filter((task) => task.stage === stage);
   };
 
+  const handleDateChange = (start: Date | null, end: Date | null) => {
+    setStartDate(start);
+    setEndDate(end);
+  };
+
   return (
     <Layout>
       <main className={style.board__right}>
@@ -166,7 +162,6 @@ export default function Slug() {
             <span className={style.checkboxName}>Только мои</span>
           </div>
 
-
           {admin && (
             <Button
               svg={
@@ -182,7 +177,7 @@ export default function Slug() {
               type="button"
               onClick={openModal}
             />
-           {/* )} */}
+          )}
         </div>
         {/* Модальное окно */}
         <AddTaskModal
@@ -231,19 +226,21 @@ export default function Slug() {
 
         <div className={style.board__right_date}>
           <CustomDatePicker
-            placeholder="Дата начала"
-            value={startDate}
-            onChange={setStartDate}
-            className={style.my_custom_class}
-            inputClassName={style.my_input_class}
+            startDate={startDate}
+            endDate={endDate}
+            onChange={handleDateChange}
+            placeholderStart="Выберите дату начала"
+            placeholderEnd="Выберите дату окончания"
           />
-          <CustomDatePicker
+         
+
+          {/* <CustomDatePicker
             placeholder="Дата завершения"
             value={endDate}
             onChange={setEndDate}
             className={style.my_custom_class}
             inputClassName={style.my_input_class}
-          />
+          /> */}
         </div>
 
         <div className={style.board__right_tasks}>
