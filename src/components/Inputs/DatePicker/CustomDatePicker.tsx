@@ -30,7 +30,7 @@ export default function CustomDatePicker({
     setEndDate(newEndDate);
     onChange(newStartDate, newEndDate);
 
-    // Закрываем календари ТОЛЬКО если выбраны обе даты
+  
     if (newStartDate && newEndDate) {
       setShowStartDatePicker(false);
       setShowEndDatePicker(false);
@@ -66,7 +66,6 @@ export default function CustomDatePicker({
                 disabled={disabled}
                 placeholderText={'Дата начала'}
                 className={styles.datePicker}
-                // Убрали onBlur
               />
             )}
           </div>
@@ -91,7 +90,6 @@ export default function CustomDatePicker({
                 disabled={disabled}
                 placeholderText={'Дата завершения'}
                 className={styles.datePicker}
-                // Убрали onBlur
               />
             )}
           </div>

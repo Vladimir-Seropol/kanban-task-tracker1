@@ -11,7 +11,10 @@ import CardTask from '@/components/CardTask';
 import AddTaskModal from '@/components/AddTaskModal';
 import Toggle from '@/components/Toggle/Toggle';
 import { useGetAuthUserQuery } from '@/redux/services/AuthUser';
-import style from './style.module.css';
+
+import { useRouter } from 'next/router';
+import { useGetprojectSlugQuery } from '@/redux/services/ProjectUser';
+import style from './slug.module.css';
 
 interface Task {
   id: number;
@@ -24,9 +27,18 @@ interface Task {
 }
 
 export default function Slug() {
+  const router = useRouter();
+  // Получение данных по определенному проекту
+  const { data: projectSlug } = useGetprojectSlugQuery(router.query.slug);
+  console.log(`Получение данных о проекте`, projectSlug);
+
   const [selectedUsers, setSelectedUsers] = useState<UserType[]>([]);
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [selectedComponents, setSelectedComponents] = useState<string[]>([]);
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [startDate, setStartDate] = useState<Date | null>(
+    projectSlug?.data?.begin,
+  );
+  const [endDate, setEndDate] = useState<Date | null>(projectSlug?.data?.end);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [admin, setIsAdmin] = useState<boolean>(false);
@@ -152,12 +164,12 @@ export default function Slug() {
             <Link href="/projects">
               <span>Проекты / </span>
             </Link>
-            <span>Demo Project</span>
+            <span>{projectSlug?.data?.name}</span>
           </nav>
         </div>
         <div className={style.board__right_title}>
           <div className={style.board__right_title_checkbox}>
-            <h2 style={{ marginRight: '24px' }}>Demo Project</h2>
+            <h2 style={{ marginRight: '24px' }}>{projectSlug?.data?.name}</h2>
             <Toggle />
             <span className={style.checkboxName}>Только мои</span>
           </div>
@@ -201,25 +213,25 @@ export default function Slug() {
               placeholder="Пользователи"
               value={selectedUsers}
               onChange={setSelectedUsers}
-              data={[]}
+              data={projectSlug?.data?.users}
             />
           </div>
           <div className={style.board__right_selection_item}>
             <SelectInput
               label="Выбрать тип"
-              placeholder="выбрать тип"
+              placeholder="Выбрать тип"
               data={[]}
-              value={selectedUsers}
-              onChange={setSelectedUsers}
+              value={selectedTypes}
+              onChange={setSelectedTypes}
             />
           </div>
           <div className={style.board__right_selection_item}>
             <SelectInput
               label="Выбрать компонент"
               placeholder="Выбрать компонент"
-              data={[]}
-              value={selectedUsers}
-              onChange={setSelectedUsers}
+              data={projectSlug?.data?.flow.possibleProjectComponents}
+              value={selectedComponents}
+              onChange={setSelectedComponents}
             />
           </div>
         </div>
@@ -232,7 +244,6 @@ export default function Slug() {
             placeholderStart="Выберите дату начала"
             placeholderEnd="Выберите дату окончания"
           />
-         
 
           {/* <CustomDatePicker
             placeholder="Дата завершения"

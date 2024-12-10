@@ -55,7 +55,7 @@
     cursor: pointer;
 }
 
-.selectedUsersContainer {
+.selectedItemsContainer {
     margin-right: 44px;
     display: flex;
     column-gap: 6px;
@@ -66,11 +66,11 @@
     font-size: 14px;
 }
 
-.selectedUsersContainer::-webkit-scrollbar {
+.selectedItemsContainer::-webkit-scrollbar {
     display: none;
 }
 
-.selectedUser {
+.selectedItem {
     border-radius: 4px;
     padding: 2px 8px;
     background: #fff;
@@ -79,7 +79,22 @@
 }
 
 
-  .selectButton{
+
+/* Для placeholder */
+.placeholder {
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    color: #a6a6a6;
+    display: inline-flex;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 143%;
+}
+
+
+
+.selectButton {
     position: absolute;
     border: none;
     background: none;
@@ -87,6 +102,7 @@
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-  }
+    background: transparent;
+}
   
  
