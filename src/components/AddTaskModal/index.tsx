@@ -12,6 +12,7 @@ import CustomDatePicker from '../Inputs/DatePicker/CustomDatePicker';
 import TextEditor from '../TextEditor';
 import FileUpload from '../FileUpload';
 import Button from '../Button';
+
 interface AddTaskModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -52,7 +53,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
           <TextInput
             label="Название *" // Текст метки
             placeholder="Название задачи"
-            value={inputValue} 
+            value={inputValue}
             onChange={handleInputChange}
           />
         </div>
@@ -78,7 +79,6 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
           <SelectInput
             placeholder="Исполнитель "
             label="Исполнитель *"
-
             data={[]}
             value={[]}
             onChange={function (_value: UserType[]): void {
@@ -99,7 +99,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
           <TextInput
             label="Оценка"
             placeholder="Оценка"
-            value={inputValue} 
+            value={inputValue}
             onChange={handleInputChange}
           />
         </div>
@@ -128,20 +128,20 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
           <TextInput
             label="Layout link"
             placeholder="Layout link"
-            value={inputValue} 
+            value={inputValue}
             onChange={handleInputChange}
           />
           <TextInput
             label="Markup link "
             placeholder="Markup link "
-            value={inputValue} 
+            value={inputValue}
             onChange={handleInputChange}
           />
           <TextInput
             label="Dev Link"
             placeholder="Dev Link"
-            value={inputValue} 
-            onChange={handleInputChange} 
+            value={inputValue}
+            onChange={handleInputChange}
           />
         </div>
 

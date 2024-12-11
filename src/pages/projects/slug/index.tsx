@@ -12,6 +12,7 @@ import CardTask from '@/components/CardTask';
 import AddTaskModal from '@/components/AddTaskModal';
 import Toggle from '@/components/Toggle/Toggle';
 import { useGetAuthUserQuery } from '../../../redux/services/AuthUser';
+
 interface User {
   id: number;
   firstName: string;

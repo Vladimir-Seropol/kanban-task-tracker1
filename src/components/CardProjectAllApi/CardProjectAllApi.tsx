@@ -12,9 +12,11 @@ const CardProjectAllApi: React.FC<CardProjectAllApiProps> = ({
   // Используем useEffect, чтобы работать с localStorage только на клиенте
   useEffect(() => {
     // Проверка на клиенте
-    const storedFavorite = localStorage.getItem('isFavorite');
-    if (storedFavorite) {
-      setIsFavorite(JSON.parse(storedFavorite)); // Загружаем сохраненное состояние
+    if (typeof window !== 'undefined') {
+      const storedFavorite = localStorage.getItem('isFavorite');
+      if (storedFavorite) {
+        setIsFavorite(JSON.parse(storedFavorite)); // Загружаем сохраненное состояние
+      }
     }
   }, []); // Этот эффект сработает только один раз при монтировании компонента
 
@@ -26,6 +28,22 @@ const CardProjectAllApi: React.FC<CardProjectAllApiProps> = ({
   //   // Сохраняем состояние в localStorage
   //   localStorage.setItem('isFavorite', JSON.stringify(newFavoriteState));
   // };
+
+  const handleStarClick = (itemId: number) => {
+    const newFavoriteState = !isFavorite;
+    setIsFavorite(newFavoriteState);
+    localStorage.setItem(
+      `isFavorite-${itemId}`,
+      JSON.stringify(newFavoriteState),
+    );
+    console.log(
+      `Проект ${itemId} ${newFavoriteState ? 'добавлен в избранное' : 'удален из избранного'}`,
+    );
+  };
+
+  if (!projectAll?.data?.length) {
+    return <p>Нет доступных проектов</p>;
+  }
 
   return (
     <>
@@ -43,11 +61,11 @@ const CardProjectAllApi: React.FC<CardProjectAllApiProps> = ({
                 className={`${style.icon_star} ${isFavorite ? style.icon_star_favorite : ''}`}
                 src="/icon_star.svg"
                 alt="Star"
-                onClick={() => {}}
+                onClick={() => handleStarClick(item.id)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     // Обработка Enter или Space
-                    // handleStarClick();
+                    handleStarClick(item.id);
                   }
                 }}
                 role="button" // Указываем, что это кнопка
