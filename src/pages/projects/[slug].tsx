@@ -10,21 +10,10 @@ import { UserType } from '@/types/UserType';
 import CardTask from '@/components/CardTask';
 import AddTaskModal from '@/components/AddTaskModal';
 import Toggle from '@/components/Toggle/Toggle';
-<<<<<<< HEAD:src/pages/projects/slug/index.tsx
-import { useGetAuthUserQuery } from '../../../redux/services/AuthUser';
-
-interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-}
-=======
 import { useGetAuthUserQuery } from '@/redux/services/AuthUser';
-
 import { useRouter } from 'next/router';
 import { useGetprojectSlugQuery } from '@/redux/services/ProjectUser';
 import style from './slug.module.css';
->>>>>>> a85b393fb78bade34e0105c855c05a047affb2a2:src/pages/projects/[slug].tsx
 
 interface Task {
   id: number;
