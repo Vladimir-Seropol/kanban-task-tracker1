@@ -78,12 +78,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
           />
           <SelectInput
             placeholder="Исполнитель "
-<<<<<<< HEAD
             label="Исполнитель *"
-=======
-            label="Исполнитель "
-
->>>>>>> a85b393fb78bade34e0105c855c05a047affb2a2
             data={[]}
             value={[]}
             onChange={function (_value: UserType[]): void {
