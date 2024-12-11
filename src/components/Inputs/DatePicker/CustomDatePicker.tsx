@@ -1,67 +1,100 @@
+// Отключение правил ESLint
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/require-default-props */
 /* eslint-disable jsx-a11y/label-has-associated-control */
+
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import styles from '../InputBase.module.css';
+import styles from './DatePicker.module.css';
 
 interface DatePickerProps {
-  value: Date | null;
-  onChange: (date: Date | null) => void;
+  onChange: (startDate: Date | null, endDate: Date | null) => void;
   disabled?: boolean;
-  className?: string; // Для кастомного класса контейнера
-  inputClassName?: string; // Для кастомного класса input
-  placeholder?: string;
+  className?: string;
 }
 
 export default function CustomDatePicker({
-  value,
   onChange,
   disabled = false,
   className,
-  inputClassName,
-  placeholder,
 }: DatePickerProps) {
-  const [showCalendar, setShowCalendar] = useState(false); // Состояние для отображения календаря
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [showStartDatePicker, setShowStartDatePicker] = useState(false);
+  const [showEndDatePicker, setShowEndDatePicker] = useState(false);
 
-  // Функция для переключения состояния календаря
-  const handleIconClick = () => {
-    setShowCalendar((prev) => !prev); // Меняем состояние видимости календаря
+  const handleDateChange = (dates: [Date | null, Date | null]) => {
+    const [newStartDate, newEndDate] = dates;
+    setStartDate(newStartDate);
+    setEndDate(newEndDate);
+    onChange(newStartDate, newEndDate);
+
+  
+    if (newStartDate && newEndDate) {
+      setShowStartDatePicker(false);
+      setShowEndDatePicker(false);
+    }
+  };
+
+  const formatDate = (date: Date | null): string => {
+    return date ? date.toLocaleDateString() : '';
   };
 
   return (
     <div className={`${styles.wrapper} ${className || ''}`}>
-      <DatePicker
-        selected={value}
-        onChange={onChange}
-        disabled={disabled}
-        placeholderText={placeholder}
-        className={`${styles.input} ${disabled ? styles.disabled : ''} ${inputClassName || ''}`}
-        open={showCalendar} // Используем свойство open для управления видимостью
-        onClickOutside={() => setShowCalendar(false)} // Закрытие календаря при клике вне поля
-      />
-
-      <img
-        src="/icon_calendar.svg"
-        alt="icon_calendar"
-        style={{
-          position: 'absolute',
-          top: '12px',
-          right: '20px',
-          cursor: 'pointer',
-        }}
-        onClick={handleIconClick}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            // Обработка Enter или Space
-            handleIconClick();
-          }
-        }}
-        // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
-        role="button" // Указываем, что это кнопка
-        tabIndex={0} // Даем элементу возможность быть фокусируемым
-      />
+      <div className={styles.inputWrapper}>
+        <div className={styles.inputContainer}>
+          <div className={styles.dateInput}>
+            <span
+              onClick={() => setShowStartDatePicker(true)}
+              className={styles.calendarIcon}
+            >
+              {formatDate(startDate) || 'Дата начала'}
+            </span>
+            <img src="/icon_calendar.svg" alt="Иконка Календарь" />
+            {showStartDatePicker && (
+              <DatePicker
+                id="startDatePicker"
+                selected={startDate}
+                onChange={handleDateChange}
+                startDate={startDate}
+                endDate={endDate}
+                selectsStart
+                selectsEnd
+                selectsRange
+                disabled={disabled}
+                placeholderText={'Дата начала'}
+                className={styles.datePicker}
+              />
+            )}
+          </div>
+          <div className={styles.dateInput}>
+            <span
+              onClick={() => setShowEndDatePicker(true)}
+              className={styles.calendarIcon}
+            >
+              {formatDate(endDate) || 'Дата завершения'}
+            </span>
+            <img src="/icon_calendar.svg" alt="Иконка Календарь" />
+            {showEndDatePicker && (
+              <DatePicker
+                id="endDatePicker"
+                selected={endDate}
+                onChange={handleDateChange}
+                startDate={startDate}
+                endDate={endDate}
+                selectsStart
+                selectsEnd
+                selectsRange
+                disabled={disabled}
+                placeholderText={'Дата завершения'}
+                className={styles.datePicker}
+              />
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

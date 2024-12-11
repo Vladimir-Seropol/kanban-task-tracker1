@@ -51,7 +51,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
         <h3>Создание задачи</h3>
         <div className={style.modal_task}>
           <TextInput
-            label="Название *" // Текст метки
+            label="Название " // Текст метки
             placeholder="Название задачи"
             value={inputValue}
             onChange={handleInputChange}
@@ -60,7 +60,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
         <div className={style.modal_select}>
           <SelectInput
             placeholder="Задача"
-            label="Тип задачи *"
+            label="Тип задачи "
             data={[]}
             value={[]}
             onChange={function (_value: UserType[]): void {
@@ -69,7 +69,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
           />
           <SelectInput
             placeholder="Не выбран"
-            label="Компонент *"
+            label="Компонент "
             data={[]}
             value={[]}
             onChange={function (_value: UserType[]): void {
@@ -78,7 +78,12 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
           />
           <SelectInput
             placeholder="Исполнитель "
+<<<<<<< HEAD
             label="Исполнитель *"
+=======
+            label="Исполнитель "
+
+>>>>>>> a85b393fb78bade34e0105c855c05a047affb2a2
             data={[]}
             value={[]}
             onChange={function (_value: UserType[]): void {
@@ -89,7 +94,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
         <div className={style.modal_priority}>
           <SelectInput
             placeholder="Приоритет"
-            label="Приоритет *"
+            label="Приоритет "
             data={[]}
             value={[]}
             onChange={function (_value: UserType[]): void {

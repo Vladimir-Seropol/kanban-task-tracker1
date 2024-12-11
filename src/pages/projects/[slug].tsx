@@ -6,11 +6,11 @@ import CustomDatePicker from '@/components/Inputs/DatePicker/CustomDatePicker';
 import SelectInput from '@/components/Inputs/SelectInput/SelectInput';
 import TextInput from '@/components/Inputs/TextInput/TextInput';
 import Layout from '@/pages/projects/layout';
-import style from './style.module.css';
 import { UserType } from '@/types/UserType';
 import CardTask from '@/components/CardTask';
 import AddTaskModal from '@/components/AddTaskModal';
 import Toggle from '@/components/Toggle/Toggle';
+<<<<<<< HEAD:src/pages/projects/slug/index.tsx
 import { useGetAuthUserQuery } from '../../../redux/services/AuthUser';
 
 interface User {
@@ -18,6 +18,13 @@ interface User {
   firstName: string;
   lastName: string;
 }
+=======
+import { useGetAuthUserQuery } from '@/redux/services/AuthUser';
+
+import { useRouter } from 'next/router';
+import { useGetprojectSlugQuery } from '@/redux/services/ProjectUser';
+import style from './slug.module.css';
+>>>>>>> a85b393fb78bade34e0105c855c05a047affb2a2:src/pages/projects/[slug].tsx
 
 interface Task {
   id: number;
@@ -30,16 +37,24 @@ interface Task {
 }
 
 export default function Slug() {
+  const router = useRouter();
+  // Получение данных по определенному проекту
+  const { data: projectSlug } = useGetprojectSlugQuery(router.query.slug);
+  console.log(`Получение данных о проекте`, projectSlug);
+
   const [selectedUsers, setSelectedUsers] = useState<UserType[]>([]);
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [selectedComponents, setSelectedComponents] = useState<string[]>([]);
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [startDate, setStartDate] = useState<Date | null>(
+    projectSlug?.data?.begin,
+  );
+  const [endDate, setEndDate] = useState<Date | null>(projectSlug?.data?.end);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [admin, setIsAdmin] = useState<boolean>(false);
   const { data: Admin } = useGetAuthUserQuery('user');
-  console.log(`Admin`, Admin);
 
-  // Эмуляция запроса данных о пользователе (например, через fetch)
+  console.log(`Admin`, Admin);
 
   useEffect(() => {
     if (Admin?.data?.is_admin) {
@@ -110,6 +125,7 @@ export default function Slug() {
       ...task,
       id: tasks.length + 1,
       status: 'Новые',
+      stage: 'Новые',
     };
     setTasks([...tasks, newTask]); // Добавляем задачу в список
   };
@@ -142,6 +158,11 @@ export default function Slug() {
     return tasks.filter((task) => task.stage === stage);
   };
 
+  const handleDateChange = (start: Date | null, end: Date | null) => {
+    setStartDate(start);
+    setEndDate(end);
+  };
+
   return (
     <Layout>
       <main className={style.board__right}>
@@ -153,12 +174,12 @@ export default function Slug() {
             <Link href="/projects">
               <span>Проекты / </span>
             </Link>
-            <span>Demo Project</span>
+            <span>{projectSlug?.data?.name}</span>
           </nav>
         </div>
         <div className={style.board__right_title}>
           <div className={style.board__right_title_checkbox}>
-            <h2 style={{ marginRight: '24px' }}>Demo Project</h2>
+            <h2 style={{ marginRight: '24px' }}>{projectSlug?.data?.name}</h2>
             <Toggle />
             <span className={style.checkboxName}>Только мои</span>
           </div>
@@ -202,44 +223,45 @@ export default function Slug() {
               placeholder="Пользователи"
               value={selectedUsers}
               onChange={setSelectedUsers}
-              data={[]}
+              data={projectSlug?.data?.users}
             />
           </div>
           <div className={style.board__right_selection_item}>
             <SelectInput
               label="Выбрать тип"
-              placeholder="выбрать тип"
+              placeholder="Выбрать тип"
               data={[]}
-              value={selectedUsers}
-              onChange={setSelectedUsers}
+              value={selectedTypes}
+              onChange={setSelectedTypes}
             />
           </div>
           <div className={style.board__right_selection_item}>
             <SelectInput
               label="Выбрать компонент"
               placeholder="Выбрать компонент"
-              data={[]}
-              value={selectedUsers}
-              onChange={setSelectedUsers}
+              data={projectSlug?.data?.flow.possibleProjectComponents}
+              value={selectedComponents}
+              onChange={setSelectedComponents}
             />
           </div>
         </div>
 
         <div className={style.board__right_date}>
           <CustomDatePicker
-            placeholder="Дата начала"
-            value={startDate}
-            onChange={setStartDate}
-            className={style.my_custom_class}
-            inputClassName={style.my_input_class}
+            startDate={startDate}
+            endDate={endDate}
+            onChange={handleDateChange}
+            placeholderStart="Выберите дату начала"
+            placeholderEnd="Выберите дату окончания"
           />
-          <CustomDatePicker
+
+          {/* <CustomDatePicker
             placeholder="Дата завершения"
             value={endDate}
             onChange={setEndDate}
             className={style.my_custom_class}
             inputClassName={style.my_input_class}
-          />
+          /> */}
         </div>
 
         <div className={style.board__right_tasks}>

@@ -1,16 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-console */
-
 import Button from '@/components/Button';
-import { inter } from '@/assets/fonts/fonts';
 import { useForm } from 'react-hook-form';
 import { LoginType } from '@/types/Login/Login';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import * as yup from 'yup';
-
 import { useTokenApiMutation } from '@/redux/services/AuthApi';
-import { useAppDispatch, useAppSelector } from '@/redux/hooks/hooks';
+import { useAppDispatch } from '@/redux/hooks/hooks';
 import { useEffect } from 'react';
 import { setToken } from '@/redux/features/auth/authSlice';
 import style from './login.module.css';
@@ -29,6 +24,7 @@ const schema = yup
       .required('Нужно заполнить'),
   })
   .required();
+
 export default function Login() {
   const dispatch = useAppDispatch();
 
@@ -42,7 +38,7 @@ export default function Login() {
     reset,
   } = useForm<LoginType>({ resolver: yupResolver(schema) });
 
-  // Пока оставим просто преход к странице проектов при нажатии на кнопку
+  // Пока оставим просто переход к странице проектов при нажатии на кнопку
   const router = useRouter(); // Инициализация хука
 
   const onSubmit = async (loginData: LoginType) => {
@@ -70,7 +66,7 @@ export default function Login() {
   }, [tokenSuccess, dispatch, tokenData?.token]);
 
   return (
-    <main className={`${style.login} ${inter.className}`}>
+    <main className={style.login}>
       <div className="container">
         <h2 className={style.title}>Вход</h2>
         <form className={style.form} onSubmit={handleSubmit(onSubmit)}>

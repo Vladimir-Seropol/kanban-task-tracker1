@@ -1,21 +1,19 @@
-/* eslint-disable prettier/prettier */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable react/jsx-curly-brace-presence */
 /* eslint-disable react/no-array-index-key */
 import React, { useState, useMemo, useEffect } from 'react';
+
 import Link from 'next/link';
 import TextInput from '@/components/Inputs/TextInput/TextInput';
 import CardInternal from '@/components/ProjectsCard/CardInternal';
 import { CardMyInternal } from '@/components/CardMyInternal/CardMyInternal';
 import CardDemo from '@/components/ProjectsCard/CardDemo';
 import Layout from '@/pages/projects/layout';
-import style from './style.module.css';
-import { useGetProjectApiQuery } from '../../redux/services/ProjectUser';
+import { useAppDispatch } from '@/redux/hooks/hooks';
+import { useGetProjectApiQuery } from '@/redux/services/ProjectUser';
 
-import CardProjectAllApi from '../../components/CardProjectAllApi/CardProjectAllApi';
-import { useAppDispatch, useAppSelector } from '@/redux/hooks/hooks';
-import { getProjectArchived } from '../../redux/features/projectArchived/projectArchivedSlice';
-import { useGetAuthUserQuery } from '../../redux/services/AuthUser';
+import CardProjectAllApi from '@/components/CardProjectAllApi/CardProjectAllApi';
+import { getProjectArchived } from '@/redux/features/projectArchived/projectArchivedSlice';
+import style from './style.module.css';
 import { ItemDataProjectType } from '../../types/ItemDataProjectType/ItemDataProjectType';
 import Button from '@/components/Button/index';
 export default function Board() {
@@ -154,6 +152,7 @@ export default function Board() {
                         name: 'Project 1',
                         user_count: 5,
                         id: 0,
+                        slug: '',
                       },
                     ],
                   }}

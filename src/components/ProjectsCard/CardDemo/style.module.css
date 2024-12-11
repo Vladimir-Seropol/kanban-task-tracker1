@@ -7,7 +7,7 @@
 }
 
 .board__right_projects p{
-    font-family: Inter;
+
 font-size: 12px;
 font-weight: 500;
 line-height: 14.52px;
@@ -22,7 +22,7 @@ color: #A6A6A6;
     margin-bottom: 12px;
 }
 .board__right_selected_project_item{
-    font-family: Inter;
+
 font-size: 14px;
 font-weight: 600;
 line-height: 16.8px;
