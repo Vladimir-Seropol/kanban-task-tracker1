@@ -5,7 +5,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import TextInput from '@/components/Inputs/TextInput/TextInput';
 import CardInternal from '@/components/ProjectsCard/CardInternal';
-import { CardMyInternal } from '@/components/CardMyInternal/CardMyInternal';
+import CardMyInternal from '@/components/CardMyInternal/CardMyInternal';
 import CardDemo from '@/components/ProjectsCard/CardDemo';
 import Layout from '@/pages/projects/layout';
 import { useAppDispatch } from '@/redux/hooks/hooks';
@@ -115,16 +115,16 @@ export default function Board() {
               <>
                 <h5 style={{ marginBottom: '16px' }}>Архивные проекты</h5>
                 <div className={style.board__right_selected_projects}>
-                  {Array.from({ length: 4 }).map((_, index) => (
+                  {/* {Array.from({ length: 4 }).map((_, index) => (
                     <div
                       key={index}
                       className={style.board__right_selected_internal_item}
                     >
                       <CardInternal />
                     </div>
-                  ))}
+                  ))} */}
+                  {archiveProject && <CardMyInternal />}
                 </div>
-                {/* <CardMyInternal /> */}
               </>
             )}
           </div>

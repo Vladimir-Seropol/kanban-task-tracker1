@@ -7,6 +7,7 @@ import { TaskSlug } from './services/TaskSlug';
 import { TaskOne } from './services/TaskOne';
 import projectArhivedReducer from './features/projectArchived/projectArchivedSlice';
 import slugReducer from './features/nameSlug/nameSlugSlice';
+
 export const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
