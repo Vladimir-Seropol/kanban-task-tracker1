@@ -1,5 +1,5 @@
 export type CardProjectAllApiProps = {
-  projectAll: {
+  projectAll?: {
     data: [{ id: number; name: string; user_count: number; slug: string }];
   };
   width?: string;

@@ -10,7 +10,7 @@ import CardDemo from '@/components/ProjectsCard/CardDemo';
 import Layout from '@/pages/projects/layout';
 import { useAppDispatch } from '@/redux/hooks/hooks';
 import { useGetProjectApiQuery } from '@/redux/services/ProjectUser';
-
+import CardProjectFavor from '@/components/CardProjectFavor/CardProjectFavor';
 import CardProjectAllApi from '@/components/CardProjectAllApi/CardProjectAllApi';
 import { getProjectArchived } from '@/redux/features/projectArchived/projectArchivedSlice';
 import style from './style.module.css';
@@ -44,16 +44,6 @@ export default function Board() {
 
     setArchiveProject((prev) => !prev);
   };
-
-  //Функция поиска проектов, которые должны быть в избранном
-  const favoritProject = () => {
-    if (!projectAll?.data) return [];
-    let favor = projectAll.data.filter(
-      (item: ItemDataProjectType) => item.is_favorite === true,
-    );
-    return favor;
-  };
-  console.log(`favoritProject`, favoritProject());
 
   const handleChangeInput = (value: string) => {
     if (value.length >= 3) return setSearchTerm(value);
@@ -134,7 +124,7 @@ export default function Board() {
                     </div>
                   ))}
                 </div>
-                {/* <CardMyInternal />  // -мой компонент с проектами в архиве*/}
+                {/* <CardMyInternal /> */}
               </>
             )}
           </div>
@@ -145,7 +135,7 @@ export default function Board() {
             >
               <h5 style={{ marginBottom: '16px' }}>Избранные проекты</h5>
               <div className={style.board__right_selected_projects}>
-                <CardProjectAllApi
+                {/* <CardProjectAllApi
                   projectAll={{
                     data: [
                       {
@@ -156,8 +146,9 @@ export default function Board() {
                       },
                     ],
                   }}
-                />
-                <CardDemo />
+                /> */}
+                {<CardProjectFavor />}
+                {/* <CardDemo /> // -закомментировал демо потому что избранные проекты определяются по значению .is_favorite */}
               </div>
               <div className={style.board__right_internal_projects}>
                 {filteredProjects.length > 0 && (
