@@ -44,9 +44,13 @@ const CardProjectAllApi: React.FC<CardProjectAllApiProps> = ({
     );
   };
 
-  // const logoImg = projectAll?.data?.map((elem) => elem.logo);
-  // console.log(`logoImg`, logoImg);
-
+  // let srcImg = projectAll?.data
+  //   .map((item) => item.logo?.link)
+  //   .filter((elem) => elem !== undefined)
+  //   .join();
+  // console.log(`srcImg`, srcImg);
+  // let srcUrl = `https://trainee-academy.devds.ru/${srcImg}`;
+  // console.log(`srcUrl`, srcUrl);
   // let srcImg;
   // if (logoImg) {
   //   for (let elem of logoImg) {
@@ -62,6 +66,7 @@ const CardProjectAllApi: React.FC<CardProjectAllApiProps> = ({
   //     }
   //   }
   // }
+
   if (!projectAll?.data?.length) {
     return <p>Нет доступных проектов</p>;
   }
@@ -82,6 +87,7 @@ const CardProjectAllApi: React.FC<CardProjectAllApiProps> = ({
             <div className={style.board__right_selected_projects}>
               <img src="/icon_work.svg" alt="icon" />
 
+              <img src={`${srcImg}`} alt="icon" />
               <img
                 className={`${style.icon_star} ${isFavorite ? style.icon_star_favorite : ''}`}
                 src="/icon_star.svg"
