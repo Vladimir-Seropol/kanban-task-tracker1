@@ -87,7 +87,7 @@ const CardProjectAllApi: React.FC<CardProjectAllApiProps> = ({
             <div className={style.board__right_selected_projects}>
               <img src="/icon_work.svg" alt="icon" />
 
-              <img src={`${srcImg}`} alt="icon" />
+              {/* <img src={`${srcImg}`} alt="icon" /> */}
               <img
                 className={`${style.icon_star} ${isFavorite ? style.icon_star_favorite : ''}`}
                 src="/icon_star.svg"
