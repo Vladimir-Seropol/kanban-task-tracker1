@@ -1,9 +1,8 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable func-names */
-/* eslint-disable react/jsx-no-bind */
+/* eslint-disable react/button-has-type */
 /* eslint-disable react/function-component-definition */
-/* eslint-disable import/newline-after-import */
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import style from './style.module.css';
 import SelectInput from '../Inputs/SelectInput/SelectInput';
 import { UserType } from '../../types/UserType';
@@ -12,17 +11,12 @@ import CustomDatePicker from '../Inputs/DatePicker/CustomDatePicker';
 import TextEditor from '../TextEditor';
 import FileUpload from '../FileUpload';
 import Button from '../Button';
+import Image from 'next/image';
 
 interface AddTaskModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (task: { title: string; executor: string }) => void;
-}
-
-interface CustomDatePickerProps {
-  startDate: Date | null;
-  endDate: Date | null;
-  onChange: (start: Date | null, end: Date | null) => void;
 }
 
 const AddTaskModal: React.FC<AddTaskModalProps> = ({
@@ -35,145 +29,187 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [inputValue, setInputValue] = useState<string>('');
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
+
+  const modalRef = useRef<HTMLDivElement>(null);
 
   const handleInputChange = (value: string) => {
-    setInputValue(value); // Обновляем состояние с новым значением
+    setInputValue(value);
   };
 
   const handleSave = () => {
     if (taskTitle && executor) {
       onSave({ title: taskTitle, executor });
-      onClose(); // Закрыть модалку после сохранения задачи
+      onClose();
     } else {
       alert('Заполните все поля');
     }
   };
-
-  if (!isOpen) return null;
 
   const handleDateChange = (start: Date | null, end: Date | null) => {
     setStartDate(start);
     setEndDate(end);
   };
 
+  const handleConfirmClose = (confirm: boolean) => {
+    setConfirmModalOpen(false);
+    if (confirm) {
+      onClose();
+    }
+  };
+
+  if (!isOpen) return null;
+
   return (
-    <div className={style.modal}>
-      <div className={style.modal_content}>
-        <h3>Создание задачи</h3>
-        <div className={style.modal_task}>
-          <TextInput
-            label="Название " // Текст метки
-            placeholder="Название задачи"
-            value={inputValue}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className={style.modal_select}>
-          <SelectInput
-            placeholder="Задача"
-            label="Тип задачи "
-            data={[]}
-            value={[]}
-            onChange={function (_value: UserType[]): void {
-              throw new Error('Function not implemented.');
-            }}
-          />
-          <SelectInput
-            placeholder="Не выбран"
-            label="Компонент "
-            data={[]}
-            value={[]}
-            onChange={function (_value: UserType[]): void {
-              throw new Error('Function not implemented.');
-            }}
-          />
-          <SelectInput
-            placeholder="Исполнитель "
+    <>
+      <div className={style.modal} ref={modalRef}>
+        <div className={style.modal_content}>
+          <button
+            style={{ position: 'absolute', top: '10px', right: '10px' }}
+            className={style.closeButton}
+            onClick={() => setConfirmModalOpen(true)}
+          >
+           <Image src="/close_button.png" alt="" width={24} height={24} />
+          </button>
+          <h3>Создание задачи</h3>
+          <div className={style.modal_task}>
+            <TextInput
+              label="Название "
+              placeholder="Название задачи"
+              value={inputValue}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className={style.modal_select}>
+            <SelectInput
+              placeholder="Задача"
+              label="Тип задачи "
+              data={[]}
+              value={[]}
+              onChange={(_value: UserType[]) => {}}
+            />
+            <SelectInput
+              placeholder="Не выбран"
+              label="Компонент "
+              data={[]}
+              value={[]}
+              onChange={(_value: UserType[]) => {}}
+            />
+            <SelectInput
+              placeholder="Исполнитель "
+              label="Исполнитель "
+              data={[]}
+              value={[]}
+              onChange={(_value: UserType[]) => {}}
+            />
+          </div>
+          <div className={style.modal_priority}>
+            <SelectInput
+              placeholder="Приоритет"
+              label="Приоритет "
+              data={[]}
+              value={[]}
+              onChange={(_value: UserType[]) => {}}
+            />
+            <TextInput
+              label="Оценка"
+              placeholder="Оценка"
+              value={inputValue}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className={style.modal_date}>
+            <CustomDatePicker
+              startLabel="Дата начала"
+              endLabel="Дата завершения"
+              startDate={startDate}
+              endDate={endDate}
+              onChange={handleDateChange}
+              startPlaceholder="Дата начала"
+              endPlaceholder="Дата завершения"
+            />
+          </div>
+          <div className={style.modal_text_editor}>
+            <TextEditor />
 
-            label="Исполнитель *"
-            data={[]}
-            value={[]}
-            onChange={function (_value: UserType[]): void {
-              throw new Error('Function not implemented.');
-            }}
-          />
-        </div>
-        <div className={style.modal_priority}>
-          <SelectInput
-            placeholder="Приоритет"
-            label="Приоритет "
-            data={[]}
-            value={[]}
-            onChange={function (_value: UserType[]): void {
-              throw new Error('Function not implemented.');
-            }}
-          />
-          <TextInput
-            label="Оценка"
-            placeholder="Оценка"
-            value={inputValue}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className={style.modal_date}>
-          <CustomDatePicker
-            startLabel="Дата начала"
-            endLabel="Дата завершения"
-            startDate={startDate}
-            endDate={endDate}
-            onChange={handleDateChange}
-            startPlaceholder="Дата начала"
-            endPlaceholder="Дата завершения"
-          />
-        </div>
-        <div className={style.modal_text_editor}>
-          <TextEditor />
+            <FileUpload />
+          </div>
+          <div className={style.modal_link}>
+            <TextInput
+              label="Layout link"
+              placeholder="Layout link"
+              value={inputValue}
+              onChange={handleInputChange}
+            />
+            <TextInput
+              label="Markup link "
+              placeholder="Markup link "
+              value={inputValue}
+              onChange={handleInputChange}
+            />
+            <TextInput
+              label="Dev Link"
+              placeholder="Dev Link"
+              value={inputValue}
+              onChange={handleInputChange}
+            />
+          </div>
 
-          <FileUpload />
-        </div>
-        <div className={style.modal_link}>
-          <TextInput
-            label="Layout link"
-            placeholder="Layout link"
-            value={inputValue}
-            onChange={handleInputChange}
-          />
-          <TextInput
-            label="Markup link "
-            placeholder="Markup link "
-            value={inputValue}
-            onChange={handleInputChange}
-          />
-          <TextInput
-            label="Dev Link"
-            placeholder="Dev Link"
-            value={inputValue}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div className={style.modalActions}>
-          <Button
-            text="Добавить"
-            type="button"
-            onClick={handleSave}
-            inlineStyle={{ width: '130px', height: '48px' }}
-          />
-          <Button
-            text="Отменить"
-            type="button"
-            onClick={onClose}
-            inlineStyle={{
-              width: '130px',
-              height: '48px',
-              background: 'none',
-              border: '1px solid #3787EB',
-              color: '#3787EB',
-            }}
-          />
+          <div className={style.modalActions}>
+            <Button
+              text="Добавить"
+              type="button"
+              onClick={handleSave}
+              inlineStyle={{ width: '130px', height: '48px', padding: '0' }}
+            />
+            <Button
+              text="Отменить"
+              type="button"
+              onClick={onClose}
+              inlineStyle={{
+                width: '130px',
+                height: '48px',
+                background: 'none',
+                border: '1px solid #3787EB',
+                color: '#3787EB',
+              }}
+            />
+          </div>
         </div>
       </div>
-    </div>
+
+      {confirmModalOpen && (
+        <div className={style.confirmModal}>
+          <div className={style.confirmModal_content}>
+            <p className={style.confirmModal_text}>Закрыть окно?</p>
+            <div className={style.confirmModal_actions}>
+              <Button
+                text="Да"
+                type="button"
+                onClick={() => handleConfirmClose(true)}
+                inlineStyle={{
+                  width: '128px',
+                  height: '32px',
+                  marginRight: '8px',
+                }}
+              />
+              <Button
+                text="Нет"
+                type="button"
+                onClick={() => handleConfirmClose(false)}
+                inlineStyle={{
+                  width: '128px',
+                  height: '32px',
+                  background: 'none',
+                  border: '1px solid #3787EB',
+                  color: '#3787EB',
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
