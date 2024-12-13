@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable import/newline-after-import */
+/* eslint-disable import/order */
 import Link from 'next/link';
 import Button from '@/components/Button';
 import Image from 'next/image';
@@ -16,11 +20,11 @@ import { useGetprojectSlugQuery } from '@/redux/services/ProjectUser';
 import style from './slug.module.css';
 import { useAppSelector } from '@/redux/hooks/hooks';
 import { useGetTaskAllQuery } from '../../redux/services/TaskSlug';
-interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-}
+// interface User {
+//   id: number;
+//   firstName: string;
+//   lastName: string;
+// }
 
 interface Task {
   id: number;
@@ -259,7 +263,7 @@ export default function Slug() {
 
         <div className={style.board__right_date}>
           <CustomDatePicker
-            startDate={startDate}
+            // startDate={startDate}
             endDate={endDate}
             startPlaceholder="Дата начала"
             onChange={handleDateChange}
