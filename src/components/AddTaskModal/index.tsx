@@ -18,6 +18,12 @@ interface AddTaskModalProps {
   onSave: (task: { title: string; executor: string }) => void;
 }
 
+interface CustomDatePickerProps {
+  startDate: Date | null;
+  endDate: Date | null;
+  onChange: (start: Date | null, end: Date | null) => void;
+}
+
 const AddTaskModal: React.FC<AddTaskModalProps> = ({
   isOpen,
   onClose,
@@ -44,6 +50,11 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
 
   if (!isOpen) return null;
 
+  const handleDateChange = (start: Date | null, end: Date | null) => {
+    setStartDate(start);
+    setEndDate(end);
+  };
+
   return (
     <div className={style.modal}>
       <div className={style.modal_content}>
@@ -52,7 +63,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
           <TextInput
             label="Название " // Текст метки
             placeholder="Название задачи"
-            value={inputValue} 
+            value={inputValue}
             onChange={handleInputChange}
           />
         </div>
@@ -78,7 +89,6 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
           <SelectInput
             placeholder="Исполнитель "
             label="Исполнитель "
-
             data={[]}
             value={[]}
             onChange={function (_value: UserType[]): void {
@@ -99,24 +109,19 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
           <TextInput
             label="Оценка"
             placeholder="Оценка"
-            value={inputValue} 
+            value={inputValue}
             onChange={handleInputChange}
           />
         </div>
         <div className={style.modal_date}>
           <CustomDatePicker
-            placeholder="Дата начала"
-            value={startDate}
-            onChange={setStartDate}
-            className={style.my_custom_class}
-            inputClassName={style.my_input_class}
-          />
-          <CustomDatePicker
-            placeholder="Дата завершения"
-            value={endDate}
-            onChange={setEndDate}
-            className={style.my_custom_class}
-            inputClassName={style.my_input_class}
+            startLabel="Дата начала"
+            endLabel="Дата завершения"
+            startDate={startDate}
+            endDate={endDate}
+            onChange={handleDateChange}
+            startPlaceholder="Дата начала"
+            endPlaceholder="Дата завершения"
           />
         </div>
         <div className={style.modal_text_editor}>
@@ -128,20 +133,20 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
           <TextInput
             label="Layout link"
             placeholder="Layout link"
-            value={inputValue} 
+            value={inputValue}
             onChange={handleInputChange}
           />
           <TextInput
             label="Markup link "
             placeholder="Markup link "
-            value={inputValue} 
+            value={inputValue}
             onChange={handleInputChange}
           />
           <TextInput
             label="Dev Link"
             placeholder="Dev Link"
-            value={inputValue} 
-            onChange={handleInputChange} 
+            value={inputValue}
+            onChange={handleInputChange}
           />
         </div>
 

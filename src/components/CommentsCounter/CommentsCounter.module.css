@@ -25,6 +25,7 @@
 }
 
 .commentsCounter {
+    font-family: var(--font-inter);
     font-weight: 600;
     font-size: 11px;
     color: #d2d2d2;

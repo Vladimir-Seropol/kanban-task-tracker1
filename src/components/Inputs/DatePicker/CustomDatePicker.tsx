@@ -12,12 +12,20 @@ interface DatePickerProps {
   onChange: (startDate: Date | null, endDate: Date | null) => void;
   disabled?: boolean;
   className?: string;
+  startLabel?: string;
+  endLabel?: string;
+  startPlaceholder?: string;
+  endPlaceholder?: string;
 }
 
 export default function CustomDatePicker({
   onChange,
   disabled = false,
   className,
+  startLabel = '',
+  endLabel = '',
+  startPlaceholder = '',
+  endPlaceholder = '',
 }: DatePickerProps) {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
@@ -50,7 +58,7 @@ export default function CustomDatePicker({
               onClick={() => setShowStartDatePicker(true)}
               className={styles.calendarIcon}
             >
-              {formatDate(startDate) || 'Дата начала'}
+              {formatDate(startDate) || startLabel || 'Дата начала'}
             </span>
             <img src="/icon_calendar.svg" alt="Иконка Календарь" />
             {showStartDatePicker && (
@@ -64,7 +72,7 @@ export default function CustomDatePicker({
                 selectsEnd
                 selectsRange
                 disabled={disabled}
-                placeholderText={'Дата начала'}
+                placeholderText={startPlaceholder}
                 className={styles.datePicker}
               />
             )}
@@ -74,7 +82,7 @@ export default function CustomDatePicker({
               onClick={() => setShowEndDatePicker(true)}
               className={styles.calendarIcon}
             >
-              {formatDate(endDate) || 'Дата завершения'}
+              {formatDate(endDate) || endLabel || 'Дата завершения'}
             </span>
             <img src="/icon_calendar.svg" alt="Иконка Календарь" />
             {showEndDatePicker && (
@@ -88,7 +96,7 @@ export default function CustomDatePicker({
                 selectsEnd
                 selectsRange
                 disabled={disabled}
-                placeholderText={'Дата завершения'}
+                placeholderText={endPlaceholder}
                 className={styles.datePicker}
               />
             )}

@@ -1,0 +1,48 @@
+
+
+.container{
+display: flex;
+gap: 16px;
+border: none;
+
+}
+
+
+
+.datePicker{
+    position: relative;
+    margin-top: 8px;
+   
+}
+
+.datePickerContainer{
+    font-family: var(--font-inter);
+font-size: 12px;
+font-weight: 400;
+line-height: 14.52px;
+color: #ABBED1;
+/* margin-bottom: 8px; */
+}
+
+.datePicker input{
+    height: 16px;
+    padding-left: 15px;
+     border: none;
+     font-family: var(--font-inter);
+font-size: 12px;
+font-weight: 400;
+line-height: 14.4px;
+color: #222222;
+
+}
+
+.datePicker input:focus{
+    border: none;
+    outline: none;
+}
+
+.calendarIcon{
+    position: absolute;
+    top: 0;
+    left: 0;
+}

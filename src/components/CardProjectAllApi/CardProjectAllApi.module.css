@@ -14,7 +14,7 @@
 
 .board__right_selected_project_item p:nth-child(1) {
   margin-bottom: 16px;
-
+  font-family: var(--font-inter);
   font-size: 14px;
   font-weight: 600;
   line-height: 16.8px;
@@ -50,6 +50,7 @@
 }
 
 .board__right_projects p {
+    font-family: var(--font-inter);
   font-size: 12px;
   font-weight: 500;
   line-height: 14.52px;

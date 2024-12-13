@@ -64,4 +64,13 @@
     gap: 16px
   }
 
-  
+  .modal_date{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+    max-width: 544px;
+    /* flex-wrap: wrap; */
+    margin-bottom: 40px;
+  }

@@ -13,6 +13,7 @@
 
 .label {
   transition: 0.2s ease;
+  font-family: var(--font-inter);
   font-size: 14px;
   color: #999;
   margin-bottom: 6px;

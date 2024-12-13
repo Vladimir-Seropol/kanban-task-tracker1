@@ -240,9 +240,10 @@ export default function Slug() {
           <CustomDatePicker
             startDate={startDate}
             endDate={endDate}
+            startPlaceholder="Дата начала"
             onChange={handleDateChange}
-            placeholderStart="Выберите дату начала"
-            placeholderEnd="Выберите дату окончания"
+            endPlaceholder="Дата завершения"
+            // placeholderEnd="Выберите дату окончания"
           />
 
           {/* <CustomDatePicker

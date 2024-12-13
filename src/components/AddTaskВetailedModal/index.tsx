@@ -14,6 +14,7 @@ import TextInput from '../Inputs/TextInput/TextInput';
 import CustomDatePicker from '../Inputs/DatePicker/CustomDatePicker';
 import FileUploadTop from '../FileUploadTop';
 import Image from 'next/image'; // Необходим импорт для компонента Image
+import DatePickerBlue from '../Inputs/DatePickerBlue/DatePickerBlue';
 
 interface AddTaskВetailedModalProps {
   isOpen: boolean;
@@ -199,21 +200,9 @@ const AddTaskВetailedModal: React.FC<AddTaskВetailedModalProps> = ({
             </div>
 
             <div className={style.board__right_date}>
-              <CustomDatePicker
-                placeholder="Дата создания"
-                // value={''}
-                onChange={() => {}}
-                className={style.my_custom_class}
-                inputClassName={style.my_input_class}
-              />
-              <CustomDatePicker
-                placeholder="Дата начала"
-                // value={''}
-                onChange={() => {}}
-                className={style.my_custom_class}
-                inputClassName={style.my_input_class}
-              />
+              <DatePickerBlue style={undefined} />
             </div>
+
             <div>Исполнитель: {task.executor}</div>
             <div>Постановщик: {task.executor}</div>
             <TextInput
