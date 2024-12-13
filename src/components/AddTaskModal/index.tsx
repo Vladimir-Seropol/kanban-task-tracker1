@@ -12,6 +12,7 @@ import CustomDatePicker from '../Inputs/DatePicker/CustomDatePicker';
 import TextEditor from '../TextEditor';
 import FileUpload from '../FileUpload';
 import Button from '../Button';
+
 interface AddTaskModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -88,7 +89,8 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
           />
           <SelectInput
             placeholder="Исполнитель "
-            label="Исполнитель "
+
+            label="Исполнитель *"
             data={[]}
             value={[]}
             onChange={function (_value: UserType[]): void {

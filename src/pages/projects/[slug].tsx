@@ -11,10 +11,16 @@ import CardTask from '@/components/CardTask';
 import AddTaskModal from '@/components/AddTaskModal';
 import Toggle from '@/components/Toggle/Toggle';
 import { useGetAuthUserQuery } from '@/redux/services/AuthUser';
-
 import { useRouter } from 'next/router';
 import { useGetprojectSlugQuery } from '@/redux/services/ProjectUser';
 import style from './slug.module.css';
+import { useAppSelector } from '@/redux/hooks/hooks';
+import { useGetTaskAllQuery } from '../../redux/services/TaskSlug';
+interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+}
 
 interface Task {
   id: number;
@@ -32,19 +38,30 @@ export default function Slug() {
   const { data: projectSlug } = useGetprojectSlugQuery(router.query.slug);
   console.log(`Получение данных о проекте`, projectSlug);
 
+  // Получение данных по определенному проекту через useAppSelector
+  const nameSlug = useAppSelector((state) => state.slug);
+  const { item } = nameSlug;
+
+  const { data: Slug } = useGetprojectSlugQuery(`${item.slug}`);
+  console.log(`Получение данных о проекте-Slug`, Slug);
+
+  // Получение данных по задачам
+  const { data: TaskAll } = useGetTaskAllQuery(`${item.slug}`);
+  console.log(` задачи по проекту-TaskAll`, TaskAll);
+
   const [selectedUsers, setSelectedUsers] = useState<UserType[]>([]);
   const [selectedComponents, setSelectedComponents] = useState<string[]>([]);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
-  const [startDate, setStartDate] = useState<Date | null>(
-    projectSlug?.data?.begin,
-  );
-  const [endDate, setEndDate] = useState<Date | null>(projectSlug?.data?.end);
+  // const [startDate, setStartDate] = useState<Date | null>(
+  //   projectSlug?.data?.begin,
+  // );
+  const [startDate, setStartDate] = useState<Date | null>(Slug?.data?.begin);
+  // const [endDate, setEndDate] = useState<Date | null>(projectSlug?.data?.end);
+  const [endDate, setEndDate] = useState<Date | null>(Slug?.data?.end);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [admin, setIsAdmin] = useState<boolean>(false);
   const { data: Admin } = useGetAuthUserQuery('user');
-
-  console.log(`Admin`, Admin);
 
   useEffect(() => {
     if (Admin?.data?.is_admin) {
@@ -164,12 +181,14 @@ export default function Slug() {
             <Link href="/projects">
               <span>Проекты / </span>
             </Link>
-            <span>{projectSlug?.data?.name}</span>
+            {/* <span>{projectSlug?.data?.name}</span> */}
+            <span>{Slug?.data?.name}</span>
           </nav>
         </div>
         <div className={style.board__right_title}>
           <div className={style.board__right_title_checkbox}>
-            <h2 style={{ marginRight: '24px' }}>{projectSlug?.data?.name}</h2>
+            {/* <h2 style={{ marginRight: '24px' }}>{projectSlug?.data?.name}</h2> */}
+            <h2 style={{ marginRight: '24px' }}>{Slug?.data?.name}</h2>
             <Toggle />
             <span className={style.checkboxName}>Только мои</span>
           </div>
@@ -213,7 +232,8 @@ export default function Slug() {
               placeholder="Пользователи"
               value={selectedUsers}
               onChange={setSelectedUsers}
-              data={projectSlug?.data?.users}
+              // data={projectSlug?.data?.users}
+              data={Slug?.data?.users}
             />
           </div>
           <div className={style.board__right_selection_item}>
@@ -230,6 +250,7 @@ export default function Slug() {
               label="Выбрать компонент"
               placeholder="Выбрать компонент"
               data={projectSlug?.data?.flow.possibleProjectComponents}
+              // data={Slug?.data?.flow}
               value={selectedComponents}
               onChange={setSelectedComponents}
             />

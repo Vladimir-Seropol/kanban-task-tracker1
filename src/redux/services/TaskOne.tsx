@@ -25,7 +25,14 @@ export const TaskOne = createApi({
         method: 'GET',
       }),
     }),
+    addTask: builder.mutation({
+      query: (slug) => ({
+        url: `/project/${slug}/task`,
+        method: 'POST',
+        body: slug,
+      }),
+    }),
   }),
 });
 
-export const { useGetTaskOneQuery } = TaskOne;
+export const { useGetTaskOneQuery, useAddTaskMutation } = TaskOne;

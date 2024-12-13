@@ -1,49 +1,56 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/no-array-index-key */
-import React, { useState } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+
 import Link from 'next/link';
 import TextInput from '@/components/Inputs/TextInput/TextInput';
 import CardInternal from '@/components/ProjectsCard/CardInternal';
+import CardMyInternal from '@/components/CardMyInternal/CardMyInternal';
 import CardDemo from '@/components/ProjectsCard/CardDemo';
 import Layout from '@/pages/projects/layout';
 import { useAppDispatch } from '@/redux/hooks/hooks';
-import {
-  useGetProjectApiQuery,
-  useGetprojectSlugQuery,
-} from '@/redux/services/ProjectUser';
+import { useGetProjectApiQuery } from '@/redux/services/ProjectUser';
+import CardProjectFavor from '@/components/CardProjectFavor/CardProjectFavor';
 import CardProjectAllApi from '@/components/CardProjectAllApi/CardProjectAllApi';
 import { getProjectArchived } from '@/redux/features/projectArchived/projectArchivedSlice';
-import { useGetAuthUserQuery } from '@/redux/services/AuthUser';
 import style from './style.module.css';
-
+import { ItemDataProjectType } from '../../types/ItemDataProjectType/ItemDataProjectType';
+import Button from '@/components/Button/index';
 export default function Board() {
   const [showArchived, setShowArchived] = useState(false); // Состояние для отображения архивных проектов
   const [archivedVisible, setArchivedVisible] = useState(false); // Для плавного отображения архивных проектов
   const [projectsVisible, setProjectsVisible] = useState(true); // Для плавного отображения всех проектов
+  const [archiveProject, setArchiveProject] = useState<boolean>(false); //Для показа проектов, которые являются архивными
+  //Получение данных по проектам
   const dispatch = useAppDispatch();
-
-  // Получение данных по проектам
   const { data: projectAll } = useGetProjectApiQuery('project');
-  console.log(`Проекты`, projectAll);
 
-  // Получение данных по текущему пользователю
-  const { data: User } = useGetAuthUserQuery('user');
-  console.log(`Получение данных по текущему пользователю`, User);
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
-  // Получение данных по определенному проекту
-  const { data: projectSlug } = useGetprojectSlugQuery('project4');
-  console.log(`Получение данных о проекте`, projectSlug);
+  // Мемоизация отфильтрованных данных
+  const filteredProjects = useMemo(() => {
+    if (!projectAll?.data) return [];
+    return projectAll.data.filter((item: ItemDataProjectType) =>
+      item.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+  }, [projectAll, searchTerm]);
 
   const handleCheckboxChange = () => {
     setShowArchived((prev) => !prev); // Переключаем состояние чекбокса
     setArchivedVisible((prev) => !prev); // Плавное скрытие/показ архивных проектов
     setTimeout(() => setProjectsVisible(!projectsVisible), 300); // Плавный переход всех проектов после архивных
-    dispatch(getProjectArchived(projectAll.data));
-  };
-  const [searchTerm, setSearchTerm] = useState<string>('');
 
-  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
+    dispatch(getProjectArchived(projectAll?.data)); // fixed here
+
+    setArchiveProject((prev) => !prev);
+  };
+
+  const handleChangeInput = (value: string) => {
+    if (value.length >= 3) return setSearchTerm(value);
+  };
+
+  const handleClearSearch = () => {
+    setSearchTerm('');
   };
 
   return (
@@ -67,15 +74,24 @@ export default function Board() {
               label="Название проекта"
               placeholder="Введите название проекта"
               value={searchTerm}
-              onChange={() => handleChangeInput}
+              onChange={handleChangeInput}
             />
+
+            {searchTerm && (
+              <Button
+                text="Очистить"
+                type="button"
+                onClick={handleClearSearch}
+                inlineStyle={{ marginTop: '10px' }}
+              />
+            )}
           </div>
           <div className={style.board__right_selection_item}>
             <TextInput
               label="Номер задачи"
               placeholder="Введите номер задачи"
-              value=""
-              onChange={() => handleChangeInput}
+              value={''}
+              onChange={() => {}}
             />
           </div>
         </div>
@@ -89,6 +105,7 @@ export default function Board() {
           />
           <label htmlFor="checkbox">Показать архивные проекты</label>
         </div>
+        {/* {archiveProject && <CardMyInternal />  // -мой компонент с проектами в архиве} */}
 
         <div className={style.board__right_projects}>
           <div
@@ -98,14 +115,15 @@ export default function Board() {
               <>
                 <h5 style={{ marginBottom: '16px' }}>Архивные проекты</h5>
                 <div className={style.board__right_selected_projects}>
-                  {Array.from({ length: 4 }).map((_, index) => (
+                  {/* {Array.from({ length: 4 }).map((_, index) => (
                     <div
                       key={index}
                       className={style.board__right_selected_internal_item}
                     >
                       <CardInternal />
                     </div>
-                  ))}
+                  ))} */}
+                  {archiveProject && <CardMyInternal />}
                 </div>
               </>
             )}
@@ -117,20 +135,26 @@ export default function Board() {
             >
               <h5 style={{ marginBottom: '16px' }}>Избранные проекты</h5>
               <div className={style.board__right_selected_projects}>
-                <CardProjectAllApi
+                {/* <CardProjectAllApi
                   projectAll={{
                     data: [
                       {
                         name: 'Project 1',
                         user_count: 5,
                         id: 0,
+                        slug: '',
                       },
                     ],
                   }}
-                />
-                <CardDemo />
+                /> */}
+                {<CardProjectFavor />}
+                {/* <CardDemo /> // -закомментировал демо потому что избранные проекты определяются по значению .is_favorite */}
               </div>
-              {projectAll && <CardProjectAllApi projectAll={projectAll} />}
+              <div className={style.board__right_internal_projects}>
+                {filteredProjects.length > 0 && (
+                  <CardProjectAllApi projectAll={{ data: filteredProjects }} />
+                )}
+              </div>
             </div>
           )}
         </div>
