@@ -1,22 +1,35 @@
-import { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import TextInput from '@/components/Inputs/TextInput/TextInput';
-import SelectInput from '@/components/Inputs/SelectInput/SelectInput';
-import { UserType } from '@/types/UserType';
-import { users } from '@/components/Inputs/SelectInput/testSelectUsersData'; // Импорт тестового массива пользователей
-
 import { getServerSideToken } from '@/utils/getServerSideToken';
-
+import Image from 'next/image';
 import styles from '../styles/Home.module.css';
-
-const usersData: UserType[] = users; // Импорт тестового массива пользователей
 
 export const getServerSideProps = getServerSideToken;
 
-export default function Home({ token }: { token: string }) {
-  const [selectedUsers, setSelectedUsers] = useState<UserType[]>([]); // Состояние для хранения выбранных пользователей
+export default function Home() {
+  const [currentImage, setCurrentImage] = useState<string>('');
+
+  const images = [
+    '/images/notebook1.jpg',
+    '/images/notebook2.jpg',
+    '/images/notebook3.jpg',
+    '/images/notebook4.jpg',
+  ];
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentImage((prevImage) => {
+        const currentIndex = images.indexOf(prevImage);
+        const nextIndex = (currentIndex + 1) % images.length;
+        return images[nextIndex];
+      });
+    }, 3000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <>
@@ -28,28 +41,23 @@ export default function Home({ token }: { token: string }) {
 
       <div className={styles.wrapper}>
         <Header />
-        <main className={styles.main}>
-          <div className={styles.mainTitle}>
-            <h1>Полет фантазии</h1>
-            <p>Тестовые инпуты</p>
-            {token ? <p>Токен найден: {token}</p> : <p>Токен отсутствует.</p>}
-
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '16px' }}>
-              <TextInput
-                placeholder="Название проекта"
-                value=""
-                onChange={() => {}}
-                label="Название проекта"
-              />
-              <SelectInput
-                label="Выбрать пользователей"
-                data={usersData}
-                value={selectedUsers}
-                onChange={setSelectedUsers}
-              />
-            </div>
+        <div className={styles.main}>
+          <div className={styles.imageContainer}>
+            <Image
+              src={currentImage || '/images/notebook1.jpg'}
+              alt="Notebook"
+              width={1200}
+              height={800}
+              style={{
+                width: '100%',
+                height: '80vh',
+                boxShadow: '25px 25px 25px rgba(0, 0, 0, 0.25)',
+                borderRadius: '16px',
+              }}
+              priority
+            />
           </div>
-        </main>
+        </div>
         <Footer />
       </div>
     </>
