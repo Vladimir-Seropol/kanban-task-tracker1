@@ -105,26 +105,27 @@ export default function MultiSelectInput({
       </div>
       {isOpen && (
         <ul className={stylesSelect.dropdown} role="listbox">
-          {data.map((option) => (
-            <li key={option.id} className={stylesSelect.dropdownItem}>
-              <label
-                className={stylesSelect.checkboxLabel}
-                htmlFor={`checkbox-${option.id}`}
-              >
-                <input
-                  type="checkbox"
-                  id={`checkbox-${option.id}`}
-                  checked={isChecked(option)}
-                  onChange={() => handleCheckboxChange(option)}
-                  disabled={disabled}
-                />
-
-                {option.name && option.surname
-                  ? `${option.name} ${option.surname}`
-                  : `${option.name}`}
-              </label>
-            </li>
-          ))}
+          {data && data.length > 0 ? (
+            data.map((option) => (
+              <li key={option.id} className={stylesSelect.dropdownItem}>
+                <label
+                  className={stylesSelect.checkboxLabel}
+                  htmlFor={`checkbox-${option.id}`}
+                >
+                  <input
+                    type="checkbox"
+                    id={`checkbox-${option.id}`}
+                    checked={isChecked(option)}
+                    onChange={() => handleCheckboxChange(option)}
+                    disabled={disabled}
+                  />
+                  {option.name + (option.surname ? ` ${option.surname}` : '')}{' '}
+                </label>
+              </li>
+            ))
+          ) : (
+            <li className={stylesSelect.dropdownItem}>Нет данных</li>
+          )}
         </ul>
       )}
     </div>
