@@ -6,7 +6,7 @@ export const getServerSideToken: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      token, // Передаем токен в пропсах
+      token,
     },
   };
 };

@@ -1,3 +1,5 @@
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import style from './Toggle.module.css';
 
 export default function Toggle() {

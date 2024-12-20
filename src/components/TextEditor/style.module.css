@@ -73,4 +73,19 @@
     cursor: pointer;
   }
 
+  .container {
+    width: 100%;
+    min-height: 228px;
+    margin: 0 auto;
+    background-color: #F4F6F8;
+    border: none;
+    /* Добавьте стили для ReactQuill здесь, если нужно */
+    
+  }
+
+  .container > div { /*  Стиль для внешнего div ReactQuill */
+      border: none;
+      outline: none;
+      min-height: 116px;
+    }
   

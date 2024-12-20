@@ -1,12 +1,11 @@
+/* eslint-disable consistent-return */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable react/no-array-index-key */
-import React, { useState, useMemo, useEffect } from 'react';
+/* eslint-disable import/newline-after-import */
 
+import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import TextInput from '@/components/Inputs/TextInput/TextInput';
-import CardInternal from '@/components/ProjectsCard/CardInternal';
 import CardMyInternal from '@/components/CardMyInternal/CardMyInternal';
-import CardDemo from '@/components/ProjectsCard/CardDemo';
 import Layout from '@/pages/projects/layout';
 import { useAppDispatch } from '@/redux/hooks/hooks';
 import { useGetProjectApiQuery } from '@/redux/services/ProjectUser';
@@ -15,19 +14,17 @@ import CardProjectAllApi from '@/components/CardProjectAllApi/CardProjectAllApi'
 import { getProjectArchived } from '@/redux/features/projectArchived/projectArchivedSlice';
 import style from './style.module.css';
 import { ItemDataProjectType } from '../../types/ItemDataProjectType/ItemDataProjectType';
-import Button from '@/components/Button/index';
+import Button from '../../components/Button/index';
 export default function Board() {
-  const [showArchived, setShowArchived] = useState(false); // Состояние для отображения архивных проектов
-  const [archivedVisible, setArchivedVisible] = useState(false); // Для плавного отображения архивных проектов
-  const [projectsVisible, setProjectsVisible] = useState(true); // Для плавного отображения всех проектов
-  const [archiveProject, setArchiveProject] = useState<boolean>(false); //Для показа проектов, которые являются архивными
-  //Получение данных по проектам
+  const [showArchived, setShowArchived] = useState(false);
+  const [archivedVisible, setArchivedVisible] = useState(false);
+  const [projectsVisible, setProjectsVisible] = useState(true);
+  const [archiveProject, setArchiveProject] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const { data: projectAll } = useGetProjectApiQuery('project');
 
   const [searchTerm, setSearchTerm] = useState<string>('');
 
-  // Мемоизация отфильтрованных данных
   const filteredProjects = useMemo(() => {
     if (!projectAll?.data) return [];
     return projectAll.data.filter((item: ItemDataProjectType) =>
@@ -36,11 +33,11 @@ export default function Board() {
   }, [projectAll, searchTerm]);
 
   const handleCheckboxChange = () => {
-    setShowArchived((prev) => !prev); // Переключаем состояние чекбокса
-    setArchivedVisible((prev) => !prev); // Плавное скрытие/показ архивных проектов
-    setTimeout(() => setProjectsVisible(!projectsVisible), 300); // Плавный переход всех проектов после архивных
+    setShowArchived((prev) => !prev);
+    setArchivedVisible((prev) => !prev);
+    setTimeout(() => setProjectsVisible(!projectsVisible), 300);
 
-    dispatch(getProjectArchived(projectAll?.data)); // fixed here
+    dispatch(getProjectArchived(projectAll?.data));
 
     setArchiveProject((prev) => !prev);
   };
@@ -90,7 +87,7 @@ export default function Board() {
             <TextInput
               label="Номер задачи"
               placeholder="Введите номер задачи"
-              value={''}
+              value=""
               onChange={() => {}}
             />
           </div>
@@ -105,7 +102,6 @@ export default function Board() {
           />
           <label htmlFor="checkbox">Показать архивные проекты</label>
         </div>
-        {/* {archiveProject && <CardMyInternal />  // -мой компонент с проектами в архиве} */}
 
         <div className={style.board__right_projects}>
           <div
@@ -115,14 +111,6 @@ export default function Board() {
               <>
                 <h5 style={{ marginBottom: '16px' }}>Архивные проекты</h5>
                 <div className={style.board__right_selected_projects}>
-                  {/* {Array.from({ length: 4 }).map((_, index) => (
-                    <div
-                      key={index}
-                      className={style.board__right_selected_internal_item}
-                    >
-                      <CardInternal />
-                    </div>
-                  ))} */}
                   {archiveProject && <CardMyInternal />}
                 </div>
               </>
@@ -135,20 +123,7 @@ export default function Board() {
             >
               <h5 style={{ marginBottom: '16px' }}>Избранные проекты</h5>
               <div className={style.board__right_selected_projects}>
-                {/* <CardProjectAllApi
-                  projectAll={{
-                    data: [
-                      {
-                        name: 'Project 1',
-                        user_count: 5,
-                        id: 0,
-                        slug: '',
-                      },
-                    ],
-                  }}
-                /> */}
-                {<CardProjectFavor />}
-                {/* <CardDemo /> // -закомментировал демо потому что избранные проекты определяются по значению .is_favorite */}
+                <CardProjectFavor />
               </div>
               <div className={style.board__right_internal_projects}>
                 {filteredProjects.length > 0 && (

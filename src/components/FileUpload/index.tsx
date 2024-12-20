@@ -5,28 +5,23 @@ import React, { useState } from 'react';
 import style from './style.module.css';
 
 const FileUpload = () => {
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]); // Указан тип для состояния
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
-  // Обработка выбора файлов через стандартное поле input
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // Проверяем, что в event.target.files есть файлы
     const files = event.target.files ? Array.from(event.target.files) : [];
     setSelectedFiles((prevFiles) => [...prevFiles, ...files]);
   };
 
-  // Обработка перетаскивания файлов
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const files = Array.from(event.dataTransfer.files);
     setSelectedFiles((prevFiles) => [...prevFiles, ...files]);
   };
 
-  // Отмена стандартного поведения при перетаскивании в область
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
   };
 
-  // Удаление файла из списка
   const handleRemoveFile = (fileName: string) => {
     setSelectedFiles((prevFiles) =>
       prevFiles.filter((file) => file.name !== fileName),

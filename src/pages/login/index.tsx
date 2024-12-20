@@ -38,19 +38,17 @@ export default function Login() {
     reset,
   } = useForm<LoginType>({ resolver: yupResolver(schema) });
 
-  // Пока оставим просто переход к странице проектов при нажатии на кнопку
-  const router = useRouter(); // Инициализация хука
+  const router = useRouter();
 
   const onSubmit = async (loginData: LoginType) => {
     try {
-      // Вызов API для получения токена
       const response = await tokenApi(loginData).unwrap();
 
       if (response.token) {
         dispatch(setToken({ token: response.token }));
 
-        reset(); // Сбрасываем форму
-        await router.push('/projects'); // Редирект на страницу проектов
+        reset();
+        await router.push('/projects');
       } else {
         console.error('Токен отсутствует в ответе API');
       }

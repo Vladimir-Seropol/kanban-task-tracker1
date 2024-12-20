@@ -1,11 +1,10 @@
-// Отключение правил ESLint
-/* eslint-disable @next/next/no-img-element */
+/* eslint-disable no-restricted-globals */
+/* eslint-disable no-else-return */
 /* eslint-disable react/require-default-props */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import Image from 'next/image';
 import styles from './DatePicker.module.css';
 
 interface DatePickerProps {
@@ -15,6 +14,8 @@ interface DatePickerProps {
   startLabel?: string;
   endLabel?: string;
   startPlaceholder?: string;
+  startDate?: Date | null;
+  endDate?: Date | null;
   endPlaceholder?: string;
 }
 
@@ -26,9 +27,11 @@ export default function CustomDatePicker({
   endLabel = '',
   startPlaceholder = '',
   endPlaceholder = '',
+  startDate: propStartDate = null,
+  endDate: propEndDate = null,
 }: DatePickerProps) {
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [startDate, setStartDate] = useState<Date | null>(propStartDate);
+  const [endDate, setEndDate] = useState<Date | null>(propEndDate);
   const [showStartDatePicker, setShowStartDatePicker] = useState(false);
   const [showEndDatePicker, setShowEndDatePicker] = useState(false);
 
@@ -38,7 +41,6 @@ export default function CustomDatePicker({
     setEndDate(newEndDate);
     onChange(newStartDate, newEndDate);
 
-  
     if (newStartDate && newEndDate) {
       setShowStartDatePicker(false);
       setShowEndDatePicker(false);
@@ -46,7 +48,12 @@ export default function CustomDatePicker({
   };
 
   const formatDate = (date: Date | null): string => {
-    return date ? date.toLocaleDateString() : '';
+    if (date instanceof Date && !isNaN(date.getTime())) {
+      // Добавленная проверка
+      return date.toLocaleDateString();
+    } else {
+      return '';
+    }
   };
 
   return (
@@ -55,19 +62,32 @@ export default function CustomDatePicker({
         <div className={styles.inputContainer}>
           <div className={styles.dateInput}>
             <span
+              role="button"
+              tabIndex={0}
               onClick={() => setShowStartDatePicker(true)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  setShowStartDatePicker(true);
+                }
+              }}
               className={styles.calendarIcon}
             >
               {formatDate(startDate) || startLabel || 'Дата начала'}
             </span>
-            <img src="/icon_calendar.svg" alt="Иконка Календарь" />
+
+            <Image
+              src="/icon_calendar.svg"
+              alt="Иконка Календарь"
+              width={20}
+              height={20}
+            />
             {showStartDatePicker && (
               <DatePicker
                 id="startDatePicker"
-                selected={startDate}
+                selected={startDate || undefined}
                 onChange={handleDateChange}
-                startDate={startDate}
-                endDate={endDate}
+                startDate={startDate || undefined}
+                endDate={endDate || undefined}
                 selectsStart
                 selectsEnd
                 selectsRange
@@ -79,19 +99,31 @@ export default function CustomDatePicker({
           </div>
           <div className={styles.dateInput}>
             <span
+              role="button"
+              tabIndex={0}
               onClick={() => setShowEndDatePicker(true)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  setShowEndDatePicker(true);
+                }
+              }}
               className={styles.calendarIcon}
             >
               {formatDate(endDate) || endLabel || 'Дата завершения'}
             </span>
-            <img src="/icon_calendar.svg" alt="Иконка Календарь" />
+            <Image
+              src="/icon_calendar.svg"
+              alt="Иконка Календарь"
+              width={20}
+              height={20}
+            />
             {showEndDatePicker && (
               <DatePicker
                 id="endDatePicker"
-                selected={endDate}
+                selected={endDate || undefined}
                 onChange={handleDateChange}
-                startDate={startDate}
-                endDate={endDate}
+                startDate={startDate || undefined}
+                endDate={endDate || undefined}
                 selectsStart
                 selectsEnd
                 selectsRange

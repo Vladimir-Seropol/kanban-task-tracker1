@@ -1,3 +1,6 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable import/no-cycle */
 import { RootState } from '@/redux/store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 

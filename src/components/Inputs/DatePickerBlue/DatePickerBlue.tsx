@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable prefer-destructuring */
-/* eslint-disable prettier/prettier */
+/* eslint-disable react/no-unused-prop-types */
 /* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable prefer-destructuring */
 /* eslint-disable react/function-component-definition */
 /* eslint-disable react/require-default-props */
+
 import React, { CSSProperties, useState } from 'react';
 import Image from 'next/image';
 import styles from './DatePickerBlue.module.css';
@@ -13,10 +13,7 @@ interface DatePickerProps {
   style?: CSSProperties;
 }
 
-const DatePickerBlue: React.FC<DatePickerProps> = ({
-  id = 'datepicker',
-  style,
-}) => {
+const DatePickerBlue: React.FC<DatePickerProps> = ({ id = 'datepicker' }) => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
@@ -67,7 +64,7 @@ const DatePickerBlue: React.FC<DatePickerProps> = ({
             onChange={(e) => handleDateChange(e, 'endDate')}
             placeholder=""
             className={styles.dateInput}
-            aria-label="Дата начала" // Исправлено
+            aria-label="Дата начала"
           />
           <div className={styles.calendarIcon}>
             <Image

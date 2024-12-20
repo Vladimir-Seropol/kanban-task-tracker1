@@ -29,20 +29,17 @@ export default function MultiSelectInput({
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Тогглинг открытия выпадающего списка
   const toggleDropdown = () => {
     if (!disabled) setIsOpen((prev) => !prev);
   };
 
-  // Обработка клавиш Enter или Space для открытия/закрытия выпадающего списка
   const handleKeyboardEvent = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault(); // Предотвращаем стандартное поведение
+      event.preventDefault();
       toggleDropdown();
     }
   };
 
-  // Обработчик изменения состояния выбранного пользователя
   const handleCheckboxChange = (item: SelectItemProps) => {
     const isSelected = value.some(
       (selectedItem) => selectedItem.id === item.id,
@@ -53,11 +50,9 @@ export default function MultiSelectInput({
     onChange(updatedValue);
   };
 
-  // Проверка, выбран ли пользователь
   const isChecked = (item: SelectItemProps) =>
     value.some((selectedItem) => selectedItem.id === item.id);
 
-  // Закрытие выпадающего списка при клике вне компонента
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -101,7 +96,7 @@ export default function MultiSelectInput({
               style={{ color: '#a6a6a6' }}
             >
               {placeholder}
-            </span> // Используем пропс placeholder
+            </span>
           )}
           <button type="button" className={stylesSelect.selectButton}>
             <Image src="/arrow-down.png" alt="" width={16} height={16} />

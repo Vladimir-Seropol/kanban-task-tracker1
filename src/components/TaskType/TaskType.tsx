@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { inter } from '@/assets/fonts/fonts';
 import styles from './TaskType.module.css';
 
 interface TaskTypeProps {
@@ -59,10 +58,7 @@ export default function TaskType(props: TaskTypeProps) {
 
   return (
     visible && (
-      <span
-        className={styles.taskComponent}
-        style={{ backgroundColor, color }}
-      >
+      <span className={styles.taskComponent} style={{ backgroundColor, color }}>
         {taskTypeName}
       </span>
     )

@@ -1,9 +1,9 @@
+/* eslint-disable no-console */
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Button from '@/components/Button';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import UserInfo from '@/components/UserInfo/UserInfo';
 import { UserResponseType } from '@/types/UserResponseType';
 import useSWR, { BareFetcher } from 'swr';
 import style from './Sidebar.module.css';
@@ -17,12 +17,12 @@ const fetcher: BareFetcher<UserResponseType> = async (url: string) => {
 };
 
 function Sidebar() {
-  const [isClicked, setIsClicked] = useState(false); // Состояние для отслеживания клика
+  const [isClicked, setIsClicked] = useState(false);
   const router = useRouter();
   const { data } = useSWR('/api/auth/user', fetcher);
   console.log('AuthUser', data);
   const handleClick = () => {
-    setIsClicked(!isClicked); // Меняем состояние при клике
+    setIsClicked(!isClicked);
   };
 
   const clearAuthCookies = () => {
@@ -31,9 +31,8 @@ function Sidebar() {
     router.push('/login');
   };
 
-  // Получение данных по юзеру
   const { data: User } = useGetAuthUserQuery('user');
-  
+
   return (
     <aside
       className={`${style.board__left} ${isClicked ? style.is_clicked : ''}`}
@@ -85,7 +84,7 @@ function Sidebar() {
 
       <div
         className={style.board__left_project}
-        style={{ marginLeft: isClicked ? '0' : '13px' }} // Изменение margin-left в зависимости от состояния
+        style={{ marginLeft: isClicked ? '0' : '13px' }}
       >
         <Image src="/icon_board3.svg" alt="icon_board" width={18} height={18} />
         <Link href="/projects">

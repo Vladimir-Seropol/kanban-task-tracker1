@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/require-default-props */
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { inter } from '@/assets/fonts/fonts';
 
 import styles from './Input.module.css';
 
@@ -29,7 +27,7 @@ export default function Input({
   const [isFocused, setIsFocused] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [value, setValue] = useState('');
-  const [statusMessage, setStatusMessage] = useState(
+  const [statusMessage] = useState(
     status.charAt(0).toUpperCase() + status.slice(1),
   );
 

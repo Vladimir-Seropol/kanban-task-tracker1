@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { inter } from '@/assets/fonts/fonts';
 import style from './CommentsCounter.module.css';
 
 interface CommentsCounterProps {

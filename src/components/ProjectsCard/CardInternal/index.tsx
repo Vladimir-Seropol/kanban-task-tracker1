@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-no-useless-fragment */
+/* eslint-disable no-console */
 /* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
 /* eslint-disable react/require-default-props */
 /* eslint-disable prettier/prettier */
@@ -5,11 +7,10 @@
 import { useAppSelector } from '@/redux/hooks/hooks';
 import { useEffect, useState } from 'react';
 import style from './style.module.css';
-import { ArchivedType } from '../../../types/ArchivedType/ArchivedType';
 
 interface CardInternalProps {
-  width?: string; // Пропс для ширины (например, '200px' или '50%')
-  height?: string; // Пропс для высоты (например, '300px' или 'auto')
+  width?: string;
+  height?: string;
 }
 
 export default function CardInternal({
@@ -19,21 +20,18 @@ export default function CardInternal({
   const [isFavorite, setIsFavorite] = useState(false);
   const getArchived = useAppSelector((state) => state.projectctArhived.arhived);
   console.log(`getArchived`, getArchived);
-  // Используем useEffect, чтобы работать с localStorage только на клиенте
+
   useEffect(() => {
-    // Проверка на клиенте
     const storedFavorite = localStorage.getItem('isFavorite');
     if (storedFavorite) {
-      setIsFavorite(JSON.parse(storedFavorite)); // Загружаем сохраненное состояние
+      setIsFavorite(JSON.parse(storedFavorite));
     }
-  }, []); // Этот эффект сработает только один раз при монтировании компонента
+  }, []);
 
-  // Обработчик клика по звездочке
   const handleStarClick = () => {
     const newFavoriteState = !isFavorite;
-    setIsFavorite(newFavoriteState); // Переключаем состояние
+    setIsFavorite(newFavoriteState);
 
-    // Сохраняем состояние в localStorage
     localStorage.setItem('isFavorite', JSON.stringify(newFavoriteState));
   };
 
@@ -49,12 +47,11 @@ export default function CardInternal({
             onClick={handleStarClick}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
-                // Обработка Enter или Space
                 handleStarClick();
               }
             }}
-            role="button" // Указываем, что это кнопка
-            tabIndex={0} // Даем элементу возможность быть фокусируемым
+            role="button"
+            tabIndex={0}
           />
         </div>
         <div className={style.board__right_selected_project_item}>

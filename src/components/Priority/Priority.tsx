@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { inter } from '@/assets/fonts/fonts';
 import styles from './Priority.module.css';
 
 interface PriorityProps {
@@ -39,10 +38,7 @@ export default function Priority(props: PriorityProps) {
 
   return (
     visible && (
-      <div
-        className={styles.priority}
-        style={{ color, backgroundColor }}
-      >
+      <div className={styles.priority} style={{ color, backgroundColor }}>
         <span>{namePriority}</span>
       </div>
     )

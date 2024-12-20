@@ -1,6 +1,9 @@
+/* eslint-disable import/newline-after-import */
+/* eslint-disable consistent-return */
+
 import type { NextApiRequest, NextApiResponse } from 'next';
 import config from '@/utils/config';
-import { ProjectResponseType } from '@/types/ProjectResponseType/ProjectResponseType';
+import { ProjectResponseType } from '@/types/ProjectResponseType';
 export default async function project(
   req: NextApiRequest,
   res: NextApiResponse,

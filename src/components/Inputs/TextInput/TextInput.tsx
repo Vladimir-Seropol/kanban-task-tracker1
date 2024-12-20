@@ -1,3 +1,5 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable react/no-unused-prop-types */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useRef } from 'react';
 import styles from '../InputBase.module.css';
@@ -18,17 +20,16 @@ export default function TextInput({
   disabled = false,
   status = 'default',
 }: TextInputProps) {
-  const inputRef = useRef<HTMLInputElement>(null); // Используем ref для управления значением
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const classNames = `${styles.input} ${styles[status]} ${disabled ? styles.disabled : ''}`;
+  const classNames = `${styles.input} ${styles[status] ? styles[status] : ''} ${disabled ? styles.disabled : ''}`;
 
-  // Объект для сообщений в зависимости от статуса
-  const statusMessages: { [key in TextInputProps['status']]: string } = {
+  const statusMessages = {
     default: '',
     warning: 'Warning message',
     error: 'Error message',
     success: 'Success message',
-    loading: '',
+    loading: 'Loading...',
   };
 
   return (
@@ -37,15 +38,15 @@ export default function TextInput({
         {label}
       </label>
       <input
-        id="text-input" // Для связывания с label
+        id="text-input"
         type="text"
         placeholder={placeholder}
-        ref={inputRef} // Используем ref для отслеживания значения
+        ref={inputRef}
         className={classNames}
         disabled={disabled}
         onChange={(e) => onChange(e.target.value)}
       />
-      {/* Выводим сообщение в зависимости от статуса */}
+
       {(status === 'warning' || status === 'error' || status === 'success') && (
         <span className={`${styles.message} ${styles[status]}`}>
           {statusMessages[status]}

@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-shadow */
-/* eslint-disable import/newline-after-import */
-/* eslint-disable import/order */
+/* eslint-disable no-console */
+
 import Link from 'next/link';
 import Button from '@/components/Button';
 import Image from 'next/image';
@@ -18,13 +17,8 @@ import { useGetAuthUserQuery } from '@/redux/services/AuthUser';
 import { useRouter } from 'next/router';
 import { useGetprojectSlugQuery } from '@/redux/services/ProjectUser';
 import style from './slug.module.css';
-import { useAppSelector } from '@/redux/hooks/hooks';
+import { useAppSelector } from '../../redux/hooks/hooks';
 import { useGetTaskAllQuery } from '../../redux/services/TaskSlug';
-// interface User {
-//   id: number;
-//   firstName: string;
-//   lastName: string;
-// }
 
 interface Task {
   id: number;
@@ -38,29 +32,24 @@ interface Task {
 
 export default function Slug() {
   const router = useRouter();
-  // Получение данных по определенному проекту
+
   const { data: projectSlug } = useGetprojectSlugQuery(router.query.slug);
   console.log(`Получение данных о проекте`, projectSlug);
 
-  // Получение данных по определенному проекту через useAppSelector
   const nameSlug = useAppSelector((state) => state.slug);
   const { item } = nameSlug;
 
   const { data: Slug } = useGetprojectSlugQuery(`${item.slug}`);
   console.log(`Получение данных о проекте-Slug`, Slug);
 
-  // Получение данных по задачам
   const { data: TaskAll } = useGetTaskAllQuery(`${item.slug}`);
   console.log(` задачи по проекту-TaskAll`, TaskAll);
 
   const [selectedUsers, setSelectedUsers] = useState<UserType[]>([]);
   const [selectedComponents, setSelectedComponents] = useState<string[]>([]);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
-  // const [startDate, setStartDate] = useState<Date | null>(
-  //   projectSlug?.data?.begin,
-  // );
-  const [startDate, setStartDate] = useState<Date | null>(Slug?.data?.begin);
-  // const [endDate, setEndDate] = useState<Date | null>(projectSlug?.data?.end);
+
+  const [, setStartDate] = useState<Date | null>(Slug?.data?.begin);
   const [endDate, setEndDate] = useState<Date | null>(Slug?.data?.end);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -73,7 +62,6 @@ export default function Slug() {
     }
   }, [Admin]);
 
-  // Эмуляция данных о задачах
   useEffect(() => {
     const fetchTasks = () => {
       const tasksData = [
@@ -120,17 +108,14 @@ export default function Slug() {
     fetchTasks();
   }, []);
 
-  // Функция для открытия модального окна
   const openModal = () => {
     setIsModalOpen(true);
   };
 
-  // Функция для закрытия модального окна
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
-  // Функция для сохранения новой задачи
   const handleSaveTask = (task: { title: string; executor: string }) => {
     const newTask = {
       ...task,
@@ -138,33 +123,29 @@ export default function Slug() {
       status: 'Новые',
       stage: 'Новые',
     };
-    setTasks([...tasks, newTask]); // Добавляем задачу в список
+    setTasks([...tasks, newTask]);
   };
 
-  // Обработчик окончания перетаскивания
   const handleDragEnd = (draggedTaskId: number, targetStatus: string) => {
-    // Обновляем статус задачи
     const updatedTasks = tasks.map((task) => {
       if (task.id === draggedTaskId) {
-        return { ...task, stage: targetStatus }; // Обновляем статус
+        return { ...task, stage: targetStatus };
       }
       return task;
     });
     setTasks(updatedTasks);
   };
 
-  // Обработчик события drop
   const handleDrop = (e: DragEvent<HTMLDivElement>, targetStatus: string) => {
-    const draggedTaskId = Number(e.dataTransfer.getData('taskId')); // Преобразуем ID в число
+    const draggedTaskId = Number(e.dataTransfer.getData('taskId'));
     handleDragEnd(draggedTaskId, targetStatus);
     e.preventDefault();
   };
 
   const handleDragOver = (e: DragEvent) => {
-    e.preventDefault(); // Разрешаем перетаскивание
+    e.preventDefault();
   };
 
-  // Фильтруем задачи по статусу
   const getTasksByStatus = (stage: string) => {
     return tasks.filter((task) => task.stage === stage);
   };
@@ -185,13 +166,12 @@ export default function Slug() {
             <Link href="/projects">
               <span>Проекты / </span>
             </Link>
-            {/* <span>{projectSlug?.data?.name}</span> */}
+
             <span>{Slug?.data?.name}</span>
           </nav>
         </div>
         <div className={style.board__right_title}>
           <div className={style.board__right_title_checkbox}>
-            {/* <h2 style={{ marginRight: '24px' }}>{projectSlug?.data?.name}</h2> */}
             <h2 style={{ marginRight: '24px' }}>{Slug?.data?.name}</h2>
             <Toggle />
             <span className={style.checkboxName}>Только мои</span>
@@ -214,7 +194,7 @@ export default function Slug() {
             />
           )}
         </div>
-        {/* Модальное окно */}
+
         <AddTaskModal
           isOpen={isModalOpen}
           onClose={closeModal}
@@ -236,7 +216,6 @@ export default function Slug() {
               placeholder="Пользователи"
               value={selectedUsers}
               onChange={setSelectedUsers}
-              // data={projectSlug?.data?.users}
               data={Slug?.data?.users}
             />
           </div>
@@ -254,7 +233,6 @@ export default function Slug() {
               label="Выбрать компонент"
               placeholder="Выбрать компонент"
               data={projectSlug?.data?.flow.possibleProjectComponents}
-              // data={Slug?.data?.flow}
               value={selectedComponents}
               onChange={setSelectedComponents}
             />
@@ -263,21 +241,11 @@ export default function Slug() {
 
         <div className={style.board__right_date}>
           <CustomDatePicker
-            // startDate={startDate}
             endDate={endDate}
             startPlaceholder="Дата начала"
             onChange={handleDateChange}
             endPlaceholder="Дата завершения"
-            // placeholderEnd="Выберите дату окончания"
           />
-
-          {/* <CustomDatePicker
-            placeholder="Дата завершения"
-            value={endDate}
-            onChange={setEndDate}
-            className={style.my_custom_class}
-            inputClassName={style.my_input_class}
-          /> */}
         </div>
 
         <div className={style.board__right_tasks}>

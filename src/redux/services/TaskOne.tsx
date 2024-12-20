@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { getCookies } from '../getCookies/getCookies';
 

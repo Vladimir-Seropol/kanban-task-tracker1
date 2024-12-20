@@ -1,19 +1,16 @@
-/* eslint-disable react/jsx-curly-brace-presence */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable no-alert */
 /* eslint-disable react/function-component-definition */
 import React, { useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 import style from './style.module.css';
 import Button from '../Button';
-import Link from 'next/link';
 import FileUpload from '../FileUpload';
 import TextEditor from '../TextEditor';
 import SelectInput from '../Inputs/SelectInput/SelectInput';
-import { UserType } from '@/types/UserType';
 import TextInput from '../Inputs/TextInput/TextInput';
-import CustomDatePicker from '../Inputs/DatePicker/CustomDatePicker';
 import FileUploadTop from '../FileUploadTop';
-import Image from 'next/image'; // Необходим импорт для компонента Image
+
 import DatePickerBlue from '../Inputs/DatePickerBlue/DatePickerBlue';
 
 interface AddTaskВetailedModalProps {
@@ -37,13 +34,13 @@ const AddTaskВetailedModal: React.FC<AddTaskВetailedModalProps> = ({
   onSave,
   task,
 }) => {
-  const [taskTitle, setTaskTitle] = useState(task.title);
-  const [executor, setExecutor] = useState(task.executor);
+  const [taskTitle] = useState(task.title);
+  const [executor] = useState(task.executor);
 
   const handleSave = () => {
     if (taskTitle && executor) {
       onSave({ title: taskTitle, executor });
-      onClose(); // Закрытие модального окна
+      onClose();
     } else {
       alert('Заполните все поля');
     }
@@ -54,25 +51,38 @@ const AddTaskВetailedModal: React.FC<AddTaskВetailedModalProps> = ({
       onClose();
     }
   };
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      onClose();
+    }
+  };
 
-  if (!isOpen) return null; // Если окно не открыто, ничего не рендерим
+  if (!isOpen) return null;
 
   return (
-    <div className={style.modal} onClick={handleOutsideClick}>
-      <div className={style.modal_content} onClick={(e) => e.stopPropagation()}>
+    <div
+      className={style.modal}
+      onClick={handleOutsideClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          handleKeyDown(e);
+        }
+      }}
+    >
+      <div
+        className={style.modal_content}
+        onClick={(e) => e.stopPropagation()}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.stopPropagation();
+          }
+        }}
+      >
         <div className={style.modal_left}>
-          <div className={style.modal_title}>
-            <h3>{task.title}</h3>
-            <button type="button">
-              <Image
-                src="/CopyLinkButton.png"
-                alt="Copy link button"
-                width={24}
-                height={24}
-              />
-            </button>
-          </div>
-
           <div className={style.modal_item}>
             <div className={style.modal_link}>
               <Link href={`https://task.demo.ru/task-${task.id}`}>
@@ -115,7 +125,7 @@ const AddTaskВetailedModal: React.FC<AddTaskВetailedModalProps> = ({
             />
           </div>
           <div className={style.modal_comments}>
-            {'messegs'}
+            messegs
             <div className={style.modal_comments_buttons}>
               <button type="button">
                 <Image
@@ -182,7 +192,7 @@ const AddTaskВetailedModal: React.FC<AddTaskВetailedModalProps> = ({
             </div>
 
             <SelectInput
-              label={''}
+              label=""
               placeholder="Новая"
               data={[]}
               value={[]}
@@ -191,9 +201,9 @@ const AddTaskВetailedModal: React.FC<AddTaskВetailedModalProps> = ({
             <div>Приоритет: {task.priority ? task.priority : 'Не указан'}</div>
             <div className={style.board__right_rating}>
               <TextInput
-                label={''}
-                value={''}
-                placeholder={'Оценка'}
+                label=""
+                value=""
+                placeholder="Оценка"
                 onChange={() => {}}
               />
               <Image src="/SidebarIcon.png" alt="" width={24} height={24} />
@@ -208,16 +218,16 @@ const AddTaskВetailedModal: React.FC<AddTaskВetailedModalProps> = ({
             <TextInput
               label=""
               placeholder="Эпик"
-              value={'inputValue'}
+              value="inputValue"
               onChange={() => {}}
             />
-            <div className={style.modal_comments}>{'messegs'}</div>
+            <div className={style.modal_comments}>messegs</div>
             <div className={style.modal_link_down}>
               <div className={style.modal_text_input}>
                 <TextInput
                   label="Layout link"
                   placeholder="Layout link"
-                  value={'inputValue'}
+                  value=""
                   onChange={() => {}}
                 />
                 <button type="button">
@@ -233,7 +243,7 @@ const AddTaskВetailedModal: React.FC<AddTaskВetailedModalProps> = ({
                 <TextInput
                   label="Dev Link"
                   placeholder="Dev Link"
-                  value={'inputValue'}
+                  value=""
                   onChange={() => {}}
                 />
                 <button type="button">

@@ -1,11 +1,12 @@
+/* eslint-disable no-console */
 /* eslint-disable react/function-component-definition */
 import React, { useState, useRef } from 'react';
-import style from './style.module.css';
 import Priority from '@/components/Priority/Priority';
 import TaskType from '@/components/TaskType/TaskType';
 import TaskComponent from '@/components/TaskComponent/TaskComponent';
 import CommentsCounter from '@/components/CommentsCounter/CommentsCounter';
 import AddTaskВetailedModal from '../AddTaskВetailedModal';
+import style from './style.module.css';
 
 interface Task {
   id: number;
@@ -14,12 +15,12 @@ interface Task {
   priority?: number;
   task_type?: number;
   component?: number;
-  stage: string; // потом это тоже будет number
+  stage: string;
 }
 
 interface CardTaskProps {
   task: Task | undefined;
-  onDragEnd: (taskId: number, targetStatus: string) => void; // Изменили тип onDragEnd
+  onDragEnd: (taskId: number, targetStatus: string) => void;
 }
 
 const CardTask: React.FC<CardTaskProps> = ({ task, onDragEnd }) => {
@@ -27,57 +28,62 @@ const CardTask: React.FC<CardTaskProps> = ({ task, onDragEnd }) => {
   const [selectedTask, setSelectedTask] = useState<Task | undefined>(undefined);
   const cardRef = useRef<HTMLDivElement>(null);
 
-  // Обработчик начала перетаскивания
   const handleDragStart = (e: React.DragEvent) => {
     if (task) {
-      e.dataTransfer.setData('taskId', String(task.id)); // передаем id задачи
+      e.dataTransfer.setData('taskId', String(task.id));
       if (cardRef.current) {
         cardRef.current.style.opacity = '0.5';
       }
     }
   };
 
-  // Открытие модального окна
   const openModal = () => {
-    setSelectedTask(task); // Сохраняем выбранную задачу
-    setIsModalOpen(true); // Открываем модальное окно
+    setSelectedTask(task);
+    setIsModalOpen(true);
   };
 
-  // Закрытие модального окна
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
-  // Обработчик окончания перетаскивания
-  const handleDragEnd = () => {
+  const handleDragEnd = (e: React.DragEvent) => {
     if (cardRef.current) {
       cardRef.current.style.opacity = '1';
     }
+    if (task && e.target) {
+      const targetStatus =
+        (e.target as HTMLElement).dataset.status || 'unknown';
+      onDragEnd(task.id, targetStatus);
+    }
   };
 
-  // Обработчик сохранения задачи (можно передать сюда логику сохранения)
-  const handleSaveTask = (taskData: Task) => {
-    // Логика сохранения задачи
-    console.log('Task saved:', taskData);
-    closeModal(); // Закрываем модальное окно после сохранения
+  const handleSaveTask = () => {
+    closeModal();
   };
 
   return (
     <div
       className={style.cardTask}
+      role="button"
+      tabIndex={0}
       ref={cardRef}
       draggable
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
-      onClick={openModal} // Открытие модального окна при клике
+      onClick={openModal}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          // Corrected this line
+          openModal();
+        }
+      }}
     >
-      {/* Модальное окно */}
-      {isModalOpen && selectedTask && ( // Проверяем, что есть задача для отображения
+      {isModalOpen && selectedTask && (
         <AddTaskВetailedModal
           isOpen={isModalOpen}
           onClose={closeModal}
-          onSave={handleSaveTask} // Передаем функцию сохранения задачи
-          task={selectedTask} // Передаем задачу для отображения в модальном окне
+          onSave={handleSaveTask}
+          task={selectedTask}
         />
       )}
 

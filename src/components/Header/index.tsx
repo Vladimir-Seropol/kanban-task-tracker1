@@ -1,29 +1,25 @@
-/* eslint-disable @next/next/no-img-element */
-import { useRouter } from 'next/router'; // Импортируем useRouter
-import { useEffect, useState } from 'react'; // Импортируем useState
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Button from '../Button';
 import style from './style.module.css';
 
 export default function Header() {
-  const router = useRouter(); // Инициализация хука
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Состояние для авторизации
+  const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    // Проверяем, авторизован ли пользователь в cookies
     const authToken = document.cookie.match(/auth_token=([^;]+)/);
     setIsLoggedIn(!!authToken);
   }, []);
 
   const handleLoginLogout = () => {
     if (isLoggedIn) {
-      // Логика для выхода из системы
       document.cookie =
         'auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
       setIsLoggedIn(false);
       router.push('/login');
     } else {
-      // Перенаправление на страницу входа
       router.push('/login');
     }
   };
@@ -42,8 +38,8 @@ export default function Header() {
           <Image src="/Logo.png" alt="Logo" width={160} height={43} />
         </div>
         <Button
-          text={isLoggedIn ? 'Выйти' : 'Войти'} // Меняем текст кнопки
-          onClick={handleLoginLogout} // Вешаем обработчик клика
+          text={isLoggedIn ? 'Выйти' : 'Войти'}
+          onClick={handleLoginLogout}
           type="button"
           inlineStyle={{ width: '106px' }}
         />

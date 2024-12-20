@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable import/newline-after-import */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { getCookies } from '../getCookies/getCookies';
 export const authUser = createApi({

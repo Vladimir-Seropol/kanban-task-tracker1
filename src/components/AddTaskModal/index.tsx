@@ -1,8 +1,9 @@
-/* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react/button-has-type */
 /* eslint-disable react/function-component-definition */
-import React, { useState, useEffect, useRef } from 'react';
+/* eslint-disable no-alert */
+
+import React, { useState, useRef } from 'react';
+import Image from 'next/image';
 import style from './style.module.css';
 import SelectInput from '../Inputs/SelectInput/SelectInput';
 import { UserType } from '../../types/UserType';
@@ -11,7 +12,6 @@ import CustomDatePicker from '../Inputs/DatePicker/CustomDatePicker';
 import TextEditor from '../TextEditor';
 import FileUpload from '../FileUpload';
 import Button from '../Button';
-import Image from 'next/image';
 
 interface AddTaskModalProps {
   isOpen: boolean;
@@ -24,8 +24,6 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
   onClose,
   onSave,
 }) => {
-  const [taskTitle, setTaskTitle] = useState('');
-  const [executor, setExecutor] = useState('');
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [inputValue, setInputValue] = useState<string>('');
@@ -38,8 +36,8 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
   };
 
   const handleSave = () => {
-    if (taskTitle && executor) {
-      onSave({ title: taskTitle, executor });
+    if (inputValue.trim()) {
+      onSave({ title: inputValue, executor: 'Executor Name' });
       onClose();
     } else {
       alert('Заполните все поля');
@@ -65,16 +63,22 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
       <div className={style.modal} ref={modalRef}>
         <div className={style.modal_content}>
           <button
+            type="button"
             style={{ position: 'absolute', top: '10px', right: '10px' }}
             className={style.closeButton}
             onClick={() => setConfirmModalOpen(true)}
           >
-           <Image src="/close_button.png" alt="" width={24} height={24} />
+            <Image
+              src="/close_button.png"
+              alt="Закрыть окно"
+              width={24}
+              height={24}
+            />
           </button>
           <h3>Создание задачи</h3>
           <div className={style.modal_task}>
             <TextInput
-              label="Название "
+              label="Название"
               placeholder="Название задачи"
               value={inputValue}
               onChange={handleInputChange}
@@ -83,21 +87,21 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
           <div className={style.modal_select}>
             <SelectInput
               placeholder="Задача"
-              label="Тип задачи "
+              label="Тип задачи"
               data={[]}
               value={[]}
               onChange={(_value: UserType[]) => {}}
             />
             <SelectInput
               placeholder="Не выбран"
-              label="Компонент "
+              label="Компонент"
               data={[]}
               value={[]}
               onChange={(_value: UserType[]) => {}}
             />
             <SelectInput
-              placeholder="Исполнитель "
-              label="Исполнитель "
+              placeholder="Исполнитель"
+              label="Исполнитель"
               data={[]}
               value={[]}
               onChange={(_value: UserType[]) => {}}
@@ -106,7 +110,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
           <div className={style.modal_priority}>
             <SelectInput
               placeholder="Приоритет"
-              label="Приоритет "
+              label="Приоритет"
               data={[]}
               value={[]}
               onChange={(_value: UserType[]) => {}}
@@ -122,16 +126,15 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
             <CustomDatePicker
               startLabel="Дата начала"
               endLabel="Дата завершения"
+              onChange={handleDateChange}
               startDate={startDate}
               endDate={endDate}
-              onChange={handleDateChange}
               startPlaceholder="Дата начала"
               endPlaceholder="Дата завершения"
             />
           </div>
           <div className={style.modal_text_editor}>
             <TextEditor />
-
             <FileUpload />
           </div>
           <div className={style.modal_link}>
@@ -142,8 +145,8 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
               onChange={handleInputChange}
             />
             <TextInput
-              label="Markup link "
-              placeholder="Markup link "
+              label="Markup link"
+              placeholder="Markup link"
               value={inputValue}
               onChange={handleInputChange}
             />
@@ -154,7 +157,6 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
               onChange={handleInputChange}
             />
           </div>
-
           <div className={style.modalActions}>
             <Button
               text="Добавить"
@@ -177,7 +179,6 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
           </div>
         </div>
       </div>
-
       {confirmModalOpen && (
         <div className={style.confirmModal}>
           <div className={style.confirmModal_content}>

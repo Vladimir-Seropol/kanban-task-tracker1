@@ -1,56 +1,60 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/no-array-index-key */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/function-component-definition */
+
 import React, { useState } from 'react';
 import style from './style.module.css';
 
 const FileUploadTop = () => {
-  const [selectedFilesTop, setSelectedFilesTop] = useState<{ file: File; addedAt: Date }[]>([]); // Теперь хранится объект с файлом и датой добавления
+  const [selectedFilesTop, setSelectedFilesTop] = useState<
+    { file: File; addedAt: Date }[]
+  >([]);
 
-  // Обработка выбора файлов через стандартное поле input
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files ? Array.from(event.target.files) : [];
-    const newFiles = files.map((file) => ({ file, addedAt: new Date() })); // Добавляем дату добавления
+    const newFiles = files.map((file) => ({ file, addedAt: new Date() }));
     setSelectedFilesTop((prevFiles) => [...prevFiles, ...newFiles]);
   };
 
-  // Обработка перетаскивания файлов
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const files = Array.from(event.dataTransfer.files);
-    const newFiles = files.map((file) => ({ file, addedAt: new Date() })); // Добавляем дату добавления
+    const newFiles = files.map((file) => ({ file, addedAt: new Date() }));
     setSelectedFilesTop((prevFiles) => [...prevFiles, ...newFiles]);
   };
 
-  // Отмена стандартного поведения при перетаскивании в область
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
   };
 
-  // Удаление файла из списка
   const handleRemoveFileTop = (fileName: string) => {
     setSelectedFilesTop((prevFiles) =>
       prevFiles.filter((file) => file.file.name !== fileName),
     );
   };
 
-  // Функция для отображения превью изображения
   const renderFilePreview = (file: File) => {
     if (file.type.startsWith('image/')) {
       const objectURL = URL.createObjectURL(file);
-      return <img src={objectURL} alt={file.name} style={{ width: '100px', height: '100px', objectFit: 'cover' }} />;
+      return (
+        <img
+          src={objectURL}
+          alt={file.name}
+          style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+        />
+      );
     }
     return null;
   };
 
-  // Форматирование даты в нужный формат
   const formatDate = (date: Date) => {
     const options: Intl.DateTimeFormatOptions = {
       day: 'numeric',
       month: 'long',
       year: 'numeric',
     };
-    return date.toLocaleDateString('ru-RU', options); // "ru-RU" — локаль для России
+    return date.toLocaleDateString('ru-RU', options);
   };
 
   return (
@@ -112,11 +116,10 @@ const FileUploadTop = () => {
                   color: '#3787EB',
                 }}
               >
-                {/* Превью изображения */}
                 {renderFilePreview(item.file)}
                 <div>{item.file.name}</div>
                 <div style={{ fontSize: '10px', color: '#8e8e8e' }}>
-                   {formatDate(item.addedAt)} {/* Дата добавления */}
+                  {formatDate(item.addedAt)}
                 </div>
                 <button
                   onClick={() => handleRemoveFileTop(item.file.name)}
