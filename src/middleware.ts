@@ -5,9 +5,13 @@ export function middleware(request: NextRequest) {
   const authToken = request.cookies.get('auth_token');
 
   if (
-    pathname.startsWith('/_next') ||
-    pathname.startsWith('/static') ||
-    pathname.startsWith('/Logo.png')
+    pathname.startsWith('/_next/') ||
+    pathname.startsWith('/static/') ||
+    pathname.includes('/images/') ||
+    pathname.endsWith('.jpg') ||
+    pathname.endsWith('.png') ||
+    pathname.endsWith('.svg') ||
+    pathname.endsWith('.gif')
   ) {
     return NextResponse.next();
   }
