@@ -4,20 +4,20 @@ import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { getServerSideToken } from '@/utils/getServerSideToken';
+// import { getServerSideToken } from '@/utils/getServerSideToken';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 
-export const getServerSideProps = getServerSideToken;
+// export const getServerSideProps = getServerSideToken;
 
 export default function Home() {
-  const [currentImage, setCurrentImage] = useState<string>('/images/notebook1.jpg');
+  const [currentImage, setCurrentImage] = useState<string>('/notebook1.jpg');
 
   const images = [
-    '/images/notebook1.jpg',
-    '/images/notebook2.jpg',
-    '/images/notebook3.jpg',
-    '/images/notebook4.jpg',
+    '/notebook1.jpg',
+    '/notebook2.jpg',
+    '/notebook3.jpg',
+    '/notebook4.jpg',
   ];
 
   useEffect(() => {

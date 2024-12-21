@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="container">
         <div className={style.footerContent}>
           <div className={style.topDevelopers}>
-            <strong>Developers:</strong>
+            <strong>Developer:</strong>
             <p>Vladimir Seropol</p>
           </div>
         </div>
