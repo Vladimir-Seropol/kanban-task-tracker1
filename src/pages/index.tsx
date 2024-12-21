@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
@@ -10,7 +11,7 @@ import styles from '../styles/Home.module.css';
 export const getServerSideProps = getServerSideToken;
 
 export default function Home() {
-  const [currentImage, setCurrentImage] = useState<string>('');
+  const [currentImage, setCurrentImage] = useState<string>('/images/notebook1.jpg');
 
   const images = [
     '/images/notebook1.jpg',
@@ -44,7 +45,7 @@ export default function Home() {
         <div className={styles.main}>
           <div className={styles.imageContainer}>
             <Image
-              src={currentImage || '/images/notebook1.jpg'}
+              src={currentImage} 
               alt="Notebook"
               width={1200}
               height={800}

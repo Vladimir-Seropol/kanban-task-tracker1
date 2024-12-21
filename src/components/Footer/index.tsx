@@ -7,9 +7,7 @@ export default function Footer() {
         <div className={style.footerContent}>
           <div className={style.topDevelopers}>
             <strong>Developers:</strong>
-            <p>Дмитрий Варенов</p>
-            <p>Vladimir S</p>
-            <p>Aleksandr</p>
+            <p>Vladimir Seropol</p>
           </div>
         </div>
       </div>
